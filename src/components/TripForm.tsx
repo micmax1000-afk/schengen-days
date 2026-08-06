@@ -76,48 +76,50 @@ export default function TripForm({ onAdd, editingTrip, onUpdate, onCancelEdit }:
   return (
     <form className="trip-form" onSubmit={handleSubmit}>
       <div className="trip-form__fields">
-        <label>
-          {t.entryDate}
-          <input type="date" value={entry} onChange={(e) => setEntry(e.target.value)} required />
-        </label>
-        <label>
-          {t.exitDate}
-          <input type="date" value={exit} onChange={(e) => setExit(e.target.value)} required />
-        </label>
-      </div>
-      <div className="trip-form__fields">
-        <label>
-          {t.entryCountry}
-          <span className="trip-form__country-row">
-            {entryCountry && (
-              <img src={flagImageUrl(entryCountry)} alt={entryCountry} width={20} height={20} className="trip-form__flag-preview" />
-            )}
-            <select value={entryCountry} onChange={(e) => setEntryCountry(e.target.value)}>
-              <option value="">{t.countryPlaceholder}</option>
-              {SCHENGEN_COUNTRIES.map((c) => (
-                <option key={c.code} value={c.code}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
-          </span>
-        </label>
-        <label>
-          {t.exitCountry}
-          <span className="trip-form__country-row">
-            {exitCountry && (
-              <img src={flagImageUrl(exitCountry)} alt={exitCountry} width={20} height={20} className="trip-form__flag-preview" />
-            )}
-            <select value={exitCountry} onChange={(e) => setExitCountry(e.target.value)}>
-              <option value="">{t.countryPlaceholder}</option>
-              {SCHENGEN_COUNTRIES.map((c) => (
-                <option key={c.code} value={c.code}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
-          </span>
-        </label>
+        <div className="trip-form__column">
+          <label>
+            {t.entryDate}
+            <input type="date" value={entry} onChange={(e) => setEntry(e.target.value)} required />
+          </label>
+          <label>
+            {t.entryCountry}
+            <span className="trip-form__country-row">
+              {entryCountry && (
+                <img src={flagImageUrl(entryCountry)} alt={entryCountry} width={20} height={20} className="trip-form__flag-preview" />
+              )}
+              <select value={entryCountry} onChange={(e) => setEntryCountry(e.target.value)}>
+                <option value="">{t.countryPlaceholder}</option>
+                {SCHENGEN_COUNTRIES.map((c) => (
+                  <option key={c.code} value={c.code}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </span>
+          </label>
+        </div>
+        <div className="trip-form__column">
+          <label>
+            {t.exitDate}
+            <input type="date" value={exit} onChange={(e) => setExit(e.target.value)} required />
+          </label>
+          <label>
+            {t.exitCountry}
+            <span className="trip-form__country-row">
+              {exitCountry && (
+                <img src={flagImageUrl(exitCountry)} alt={exitCountry} width={20} height={20} className="trip-form__flag-preview" />
+              )}
+              <select value={exitCountry} onChange={(e) => setExitCountry(e.target.value)}>
+                <option value="">{t.countryPlaceholder}</option>
+                {SCHENGEN_COUNTRIES.map((c) => (
+                  <option key={c.code} value={c.code}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </span>
+          </label>
+        </div>
       </div>
       <div className="trip-form__fields">
         <label className="trip-form__note-label">

@@ -101,8 +101,15 @@ body {
   flex-wrap: wrap;
 }
 
-.trip-form__fields label {
+.trip-form__column {
   flex: 1 1 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.trip-form__column label,
+.trip-form__note-label {
   display: flex;
   flex-direction: column;
   gap: 6px;
