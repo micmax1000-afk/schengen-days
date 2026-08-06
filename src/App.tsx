@@ -38,6 +38,7 @@ export default function App() {
     <div className="app">
       <Header />
       <main className="app__main">
+        <Summary status={status} />
         <TripForm
           onAdd={addTrip}
           editingTrip={editingTrip}
@@ -47,7 +48,6 @@ export default function App() {
         <TripList trips={trips} onRemove={handleRemove} onEdit={handleEdit} editingId={editingTrip?.id} />
         <CalendarView trips={trips} />
         <SimulateEntry trips={trips} />
-        <Summary status={status} />
         <BackupControls exportTrips={exportTrips} importTrips={importTrips} />
       </main>
       <footer className="app__footer">
