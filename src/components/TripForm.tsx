@@ -17,6 +17,12 @@ interface Props {
   onCancelEdit?: () => void;
 }
 
+function formatPreviewDate(iso: string): string {
+  if (!iso) return "";
+  const [y, m, d] = iso.split("-");
+  return `${d}/${m}/${y.slice(2)}`;
+}
+
 export default function TripForm({ onAdd, editingTrip, onUpdate, onCancelEdit }: Props) {
   const { t } = useLanguage();
   const [entry, setEntry] = useState("");
@@ -133,6 +139,31 @@ export default function TripForm({ onAdd, editingTrip, onUpdate, onCancelEdit }:
           />
         </label>
       </div>
+      {(entry || exit || entryCountry || exitCountry) && (
+        <div className="trip-form__preview">
+          <span className="trip-form__preview-side">
+            {entryCountry && (
+              <img src={flagImageUrl(entryCountry)} alt={entryCountry} width={18} height={18} />
+            )}
+            <span>
+              {SCHENGEN_COUNTRIES.find((c) => c.code === entryCountry)?.name}
+              {entryCountry && entry ? " · " : ""}
+              {formatPreviewDate(entry)}
+            </span>
+          </span>
+          <span className="trip-form__preview-arrow">—</span>
+          <span className="trip-form__preview-side">
+            {exitCountry && (
+              <img src={flagImageUrl(exitCountry)} alt={exitCountry} width={18} height={18} />
+            )}
+            <span>
+              {SCHENGEN_COUNTRIES.find((c) => c.code === exitCountry)?.name}
+              {exitCountry && exit ? " · " : ""}
+              {formatPreviewDate(exit)}
+            </span>
+          </span>
+        </div>
+      )}
       {error && <p className="trip-form__error">{error}</p>}
       <div className="trip-form__actions">
         <button type="submit">{editingTrip ? t.saveChanges : t.add}</button>

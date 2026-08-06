@@ -147,6 +147,34 @@ body {
   flex: 1 1 100%;
 }
 
+.trip-form__preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--paper);
+  border: 1px dashed var(--paper-line);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  color: #5b6470;
+  flex-wrap: wrap;
+}
+
+.trip-form__preview-side {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.trip-form__preview-side img {
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.trip-form__preview-arrow {
+  color: #b0b6bf;
+}
+
 .trip-form__error {
   color: var(--stamp-red);
   font-size: 0.82rem;

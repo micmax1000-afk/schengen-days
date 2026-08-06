@@ -23,21 +23,26 @@ export default function BackupControls({ exportTrips, importTrips }: Props) {
     URL.revokeObjectURL(url);
   };
 
-  const canShare = typeof navigator !== "undefined" && "canShare" in navigator;
-
   const handleShare = async () => {
     const json = exportTrips();
     const date = new Date().toISOString().slice(0, 10);
     const file = new File([json], `schengen-days-backup-${date}.json`, { type: "application/json" });
+
+    let shared = false;
     try {
-      if (canShare && navigator.canShare({ files: [file] })) {
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
         await navigator.share({ files: [file], title: "Schengen Days — backup" });
-      } else {
-        handleExport();
+        shared = true;
       }
-    } catch {
-      // L'utente ha annullato la condivisione: nessuna azione necessaria.
+    } catch (err) {
+      // AbortError = l'utente ha annullato volontariamente: va bene così, nessun fallback.
+      if (err instanceof DOMException && err.name === "AbortError") {
+        shared = true;
+      }
     }
+    // In ogni altro caso (condivisione non supportata, file non condivisibile,
+    // errore imprevisto) scarichiamo comunque il backup invece di non fare nulla.
+    if (!shared) handleExport();
   };
 
   const handleImportClick = () => {
@@ -64,11 +69,9 @@ export default function BackupControls({ exportTrips, importTrips }: Props) {
         <button type="button" onClick={handleExport} className="backup__export">
           ⬇ {t.exportBackup}
         </button>
-        {canShare && (
-          <button type="button" onClick={handleShare} className="backup__share">
-            ⤴ {t.shareBackup}
-          </button>
-        )}
+        <button type="button" onClick={handleShare} className="backup__share">
+          ⤴ {t.shareBackup}
+        </button>
         <button type="button" onClick={handleImportClick} className="backup__import">
           ⬆ {t.importBackup}
         </button>
