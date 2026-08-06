@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "dev.workers.mic_max_1000.schengen_entry_exit_calculator.twa",
+        "sha256_cert_fingerprints": ["44:15:EC:EC:AA:D5:FE:9C:68:CC:5D:09:D4:61:08:4B:C7:5C:E7:7F:A6:B6:EE:8E:C3:1D:25:07:19:1F:71:76"]
+      }
+    }]
