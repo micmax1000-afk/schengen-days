@@ -1,0 +1,55 @@
+import { Trip, tripDuration, sortTripsDesc } from "../utils/calculator";
+import { useLanguage } from "../i18n/LanguageContext";
+import { flagForCode } from "../data/schengenCountries";
+
+interface Props {
+  trips: Trip[];
+  onRemove: (id: string) => void;
+  onEdit: (trip: Trip) => void;
+  editingId?: string | null;
+}
+
+function formatDate(iso: string): string {
+  const [y, m, d] = iso.split("-");
+  return `${d}/${m}/${y.slice(2)}`;
+}
+
+export default function TripList({ trips, onRemove, onEdit, editingId }: Props) {
+  const { t } = useLanguage();
+
+  if (trips.length === 0) {
+    return <p className="trip-list__empty">{t.noTrips}</p>;
+  }
+
+  const sorted = sortTripsDesc(trips);
+
+  return (
+    <ul className="trip-list">
+      {sorted.map((trip) => (
+        <li
+          key={trip.id}
+          className={`trip-list__item${editingId === trip.id ? " trip-list__item--editing" : ""}`}
+        >
+          <div className="trip-list__row">
+            {trip.country && <span className="trip-list__flag">{flagForCode(trip.country)}</span>}
+            <span className="trip-list__dates">
+              {formatDate(trip.entry)} → {formatDate(trip.exit)}
+            </span>
+            <span className="trip-list__days">{tripDuration(trip)} {t.daysUnit}</span>
+            <button className="trip-list__edit" onClick={() => onEdit(trip)} aria-label={t.editTrip}>
+              ✎
+            </button>
+            <button
+              className="trip-list__remove"
+              onClick={() => onRemove(trip.id)}
+              aria-label={t.deleteTrip}
+            >
+              ✕
+            </button>
+          </div>
+          {trip.note && <p className="trip-list__note">{trip.note}</p>}
+        </li>
+      ))}
+    </ul>
+  );
+}
