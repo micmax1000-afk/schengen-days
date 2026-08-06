@@ -1,7 +1,7 @@
 import { useState, useEffect, FormEvent } from "react";
 import { isValidTrip, Trip } from "../utils/calculator";
 import { useLanguage } from "../i18n/LanguageContext";
-import { SCHENGEN_COUNTRIES } from "../data/schengenCountries";
+import { SCHENGEN_COUNTRIES, flagImageUrl } from "../data/schengenCountries";
 
 interface Props {
   onAdd: (entry: string, exit: string, country?: string, note?: string) => void;
@@ -76,14 +76,19 @@ export default function TripForm({ onAdd, editingTrip, onUpdate, onCancelEdit }:
       <div className="trip-form__fields">
         <label>
           {t.country}
-          <select value={country} onChange={(e) => setCountry(e.target.value)}>
-            <option value="">{t.countryPlaceholder}</option>
-            {SCHENGEN_COUNTRIES.map((c) => (
-              <option key={c.code} value={c.code}>
-                {c.flag} {c.name}
-              </option>
-            ))}
-          </select>
+          <span className="trip-form__country-row">
+            {country && (
+              <img src={flagImageUrl(country)} alt={country} width={20} height={20} className="trip-form__flag-preview" />
+            )}
+            <select value={country} onChange={(e) => setCountry(e.target.value)}>
+              <option value="">{t.countryPlaceholder}</option>
+              {SCHENGEN_COUNTRIES.map((c) => (
+                <option key={c.code} value={c.code}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+          </span>
         </label>
         <label>
           {t.note}

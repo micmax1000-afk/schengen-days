@@ -1,6 +1,6 @@
 import { Trip, tripDuration, sortTripsDesc } from "../utils/calculator";
 import { useLanguage } from "../i18n/LanguageContext";
-import { flagForCode } from "../data/schengenCountries";
+import { flagImageUrl } from "../data/schengenCountries";
 
 interface Props {
   trips: Trip[];
@@ -31,7 +31,15 @@ export default function TripList({ trips, onRemove, onEdit, editingId }: Props) 
           className={`trip-list__item${editingId === trip.id ? " trip-list__item--editing" : ""}`}
         >
           <div className="trip-list__row">
-            {trip.country && <span className="trip-list__flag">{flagForCode(trip.country)}</span>}
+            {trip.country && (
+              <img
+                className="trip-list__flag"
+                src={flagImageUrl(trip.country)}
+                alt={trip.country}
+                width={20}
+                height={20}
+              />
+            )}
             <span className="trip-list__dates">
               {formatDate(trip.entry)} → {formatDate(trip.exit)}
             </span>

@@ -54,3 +54,16 @@ export function flagForCode(code?: string): string {
   if (!code) return "";
   return flagEmoji(code);
 }
+
+/** URL di un'immagine bandiera (Twemoji), che funziona identica su ogni
+ *  sistema operativo — a differenza dell'emoji di sistema, che su Windows
+ *  mostra solo la sigla del paese invece della bandiera. */
+export function flagImageUrl(code?: string): string {
+  if (!code) return "";
+  const hex = code
+    .toUpperCase()
+    .split("")
+    .map((c) => (127397 + c.charCodeAt(0)).toString(16))
+    .join("-");
+  return `https://cdn.jsdelivr.net/npm/twemoji@14.0.2/assets/72x72/${hex}.png`;
+}

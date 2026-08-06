@@ -121,6 +121,21 @@ body {
   color: var(--ink);
 }
 
+.trip-form__country-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.trip-form__country-row select {
+  flex: 1;
+}
+
+.trip-form__flag-preview {
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
 .trip-form__error {
   color: var(--stamp-red);
   font-size: 0.82rem;
@@ -186,7 +201,11 @@ body {
 }
 
 .trip-list__flag {
-  font-size: 1.1rem;
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
 .trip-list__note {
