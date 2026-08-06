@@ -1,4 +1,4 @@
-const CACHE_NAME = "schengen-days-v2";
+const CACHE_NAME = "schengen-days-v3";
 
 self.addEventListener("install", (event) => {
   self.skipWaiting();

@@ -31,14 +31,18 @@ export default function TripList({ trips, onRemove, onEdit, editingId }: Props) 
           className={`trip-list__item${editingId === trip.id ? " trip-list__item--editing" : ""}`}
         >
           <div className="trip-list__row">
-            {trip.country && (
-              <img
-                className="trip-list__flag"
-                src={flagImageUrl(trip.country)}
-                alt={trip.country}
-                width={20}
-                height={20}
-              />
+            {(trip.entryCountry || trip.exitCountry) && (
+              <span className="trip-list__flags">
+                {trip.entryCountry && (
+                  <img className="trip-list__flag" src={flagImageUrl(trip.entryCountry)} alt={trip.entryCountry} width={20} height={20} />
+                )}
+                {trip.exitCountry && trip.exitCountry !== trip.entryCountry && (
+                  <>
+                    <span className="trip-list__flag-arrow">→</span>
+                    <img className="trip-list__flag" src={flagImageUrl(trip.exitCountry)} alt={trip.exitCountry} width={20} height={20} />
+                  </>
+                )}
+              </span>
             )}
             <span className="trip-list__dates">
               {formatDate(trip.entry)} → {formatDate(trip.exit)}

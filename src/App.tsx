@@ -18,8 +18,15 @@ export default function App() {
 
   const handleEdit = (trip: Trip) => setEditingTrip(trip);
   const handleCancelEdit = () => setEditingTrip(null);
-  const handleUpdate = (id: string, entry: string, exit: string, country?: string, note?: string) => {
-    updateTrip(id, entry, exit, country, note);
+  const handleUpdate = (
+    id: string,
+    entry: string,
+    exit: string,
+    entryCountry?: string,
+    exitCountry?: string,
+    note?: string
+  ) => {
+    updateTrip(id, entry, exit, entryCountry, exitCountry, note);
     setEditingTrip(null);
   };
   const handleRemove = (id: string) => {

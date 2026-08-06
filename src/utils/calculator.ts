@@ -2,7 +2,8 @@ export interface Trip {
   id: string;
   entry: string; // formato ISO "YYYY-MM-DD"
   exit: string;  // formato ISO "YYYY-MM-DD"
-  country?: string; // codice paese ISO (es. "FR")
+  entryCountry?: string; // codice paese ISO di ingresso (es. "FR")
+  exitCountry?: string;  // codice paese ISO di uscita
   note?: string;
 }
 

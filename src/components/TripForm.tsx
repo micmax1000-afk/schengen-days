@@ -4,9 +4,16 @@ import { useLanguage } from "../i18n/LanguageContext";
 import { SCHENGEN_COUNTRIES, flagImageUrl } from "../data/schengenCountries";
 
 interface Props {
-  onAdd: (entry: string, exit: string, country?: string, note?: string) => void;
+  onAdd: (entry: string, exit: string, entryCountry?: string, exitCountry?: string, note?: string) => void;
   editingTrip?: Trip | null;
-  onUpdate?: (id: string, entry: string, exit: string, country?: string, note?: string) => void;
+  onUpdate?: (
+    id: string,
+    entry: string,
+    exit: string,
+    entryCountry?: string,
+    exitCountry?: string,
+    note?: string
+  ) => void;
   onCancelEdit?: () => void;
 }
 
@@ -14,7 +21,8 @@ export default function TripForm({ onAdd, editingTrip, onUpdate, onCancelEdit }:
   const { t } = useLanguage();
   const [entry, setEntry] = useState("");
   const [exit, setExit] = useState("");
-  const [country, setCountry] = useState("");
+  const [entryCountry, setEntryCountry] = useState("");
+  const [exitCountry, setExitCountry] = useState("");
   const [note, setNote] = useState("");
   const [error, setError] = useState<string | null>(null);
 
@@ -22,7 +30,8 @@ export default function TripForm({ onAdd, editingTrip, onUpdate, onCancelEdit }:
     if (editingTrip) {
       setEntry(editingTrip.entry);
       setExit(editingTrip.exit);
-      setCountry(editingTrip.country ?? "");
+      setEntryCountry(editingTrip.entryCountry ?? "");
+      setExitCountry(editingTrip.exitCountry ?? "");
       setNote(editingTrip.note ?? "");
       setError(null);
     }
@@ -38,16 +47,18 @@ export default function TripForm({ onAdd, editingTrip, onUpdate, onCancelEdit }:
       setError(t.errorExitBeforeEntry);
       return;
     }
-    const countryValue = country || undefined;
+    const entryC = entryCountry || undefined;
+    const exitC = exitCountry || undefined;
     const noteValue = note.trim() || undefined;
     if (editingTrip && onUpdate) {
-      onUpdate(editingTrip.id, entry, exit, countryValue, noteValue);
+      onUpdate(editingTrip.id, entry, exit, entryC, exitC, noteValue);
     } else {
-      onAdd(entry, exit, countryValue, noteValue);
+      onAdd(entry, exit, entryC, exitC, noteValue);
     }
     setEntry("");
     setExit("");
-    setCountry("");
+    setEntryCountry("");
+    setExitCountry("");
     setNote("");
     setError(null);
   };
@@ -55,7 +66,8 @@ export default function TripForm({ onAdd, editingTrip, onUpdate, onCancelEdit }:
   const handleCancel = () => {
     setEntry("");
     setExit("");
-    setCountry("");
+    setEntryCountry("");
+    setExitCountry("");
     setNote("");
     setError(null);
     onCancelEdit?.();
@@ -75,12 +87,12 @@ export default function TripForm({ onAdd, editingTrip, onUpdate, onCancelEdit }:
       </div>
       <div className="trip-form__fields">
         <label>
-          {t.country}
+          {t.entryCountry}
           <span className="trip-form__country-row">
-            {country && (
-              <img src={flagImageUrl(country)} alt={country} width={20} height={20} className="trip-form__flag-preview" />
+            {entryCountry && (
+              <img src={flagImageUrl(entryCountry)} alt={entryCountry} width={20} height={20} className="trip-form__flag-preview" />
             )}
-            <select value={country} onChange={(e) => setCountry(e.target.value)}>
+            <select value={entryCountry} onChange={(e) => setEntryCountry(e.target.value)}>
               <option value="">{t.countryPlaceholder}</option>
               {SCHENGEN_COUNTRIES.map((c) => (
                 <option key={c.code} value={c.code}>
@@ -91,6 +103,24 @@ export default function TripForm({ onAdd, editingTrip, onUpdate, onCancelEdit }:
           </span>
         </label>
         <label>
+          {t.exitCountry}
+          <span className="trip-form__country-row">
+            {exitCountry && (
+              <img src={flagImageUrl(exitCountry)} alt={exitCountry} width={20} height={20} className="trip-form__flag-preview" />
+            )}
+            <select value={exitCountry} onChange={(e) => setExitCountry(e.target.value)}>
+              <option value="">{t.countryPlaceholder}</option>
+              {SCHENGEN_COUNTRIES.map((c) => (
+                <option key={c.code} value={c.code}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+          </span>
+        </label>
+      </div>
+      <div className="trip-form__fields">
+        <label className="trip-form__note-label">
           {t.note}
           <input
             type="text"

@@ -65,5 +65,5 @@ export function flagImageUrl(code?: string): string {
     .split("")
     .map((c) => (127397 + c.charCodeAt(0)).toString(16))
     .join("-");
-  return `https://cdn.jsdelivr.net/npm/twemoji@14.0.2/assets/72x72/${hex}.png`;
+  return `https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/72x72/${hex}.png`;
 }
