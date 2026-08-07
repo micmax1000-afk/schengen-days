@@ -3,6 +3,6 @@
       "target": {
         "namespace": "android_app",
         "package_name": "schengendays.micmax1000_afk.twa",
-        "sha256_cert_fingerprints": ["9E:92:27:C6:CF:60:DF:B5:F8:27:15:24:6A:7A:CE:EF:25:AF:06:23:6E:26:FD:AD:5E:F8:AD:72:F5:B1:FF:43"]
+        "sha256_cert_fingerprints": ["36:A5:68:66:2F:46:3C:E9:85:2D:44:57:03:1B:2C:90:3C:28:02:C7:6E:7E:90:94:A3:E0:D6:37:C7:4D:BF:A0"]
       }
     }]
