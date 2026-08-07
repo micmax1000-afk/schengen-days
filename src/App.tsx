@@ -52,6 +52,13 @@ export default function App() {
       </main>
       <footer className="app__footer">
         <p>{t.footerNote}</p>
+        <p className="app__disclaimer">{t.disclaimer}</p>
+        <p className="app__disclaimer">{t.liabilityDisclaimer}</p>
+        <p>
+          <a href="privacy.html" target="_blank" rel="noopener noreferrer">
+            {t.privacyLink}
+          </a>
+        </p>
       </footer>
     </div>
   );

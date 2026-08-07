@@ -582,6 +582,19 @@ body {
   color: #9098a3;
 }
 
+.app__footer p {
+  margin: 4px 0;
+}
+
+.app__disclaimer {
+  font-style: italic;
+}
+
+.app__footer a {
+  color: #5b6470;
+  text-decoration: underline;
+}
+
 @media (max-width: 420px) {
   .app-header {
     flex-wrap: wrap;
