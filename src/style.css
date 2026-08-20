@@ -302,6 +302,73 @@ body {
   border-radius: var(--radius);
   padding: 20px;
   position: relative;
+  text-align: center;
+}
+
+.summary__row {
+  text-align: left;
+}
+
+.summary__ring-wrap {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 16px;
+}
+
+.summary__ring {
+  width: 100%;
+  height: 100%;
+}
+
+.summary__ring-bg {
+  fill: none;
+  stroke: var(--paper-line);
+  stroke-width: 12;
+}
+
+.summary__ring-fg {
+  fill: none;
+  stroke-width: 12;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.4s ease;
+}
+
+.summary__ring-fg--ok {
+  stroke: var(--petrol);
+}
+
+.summary__ring-fg--warning {
+  stroke: var(--amber);
+}
+
+.summary__ring-fg--over {
+  stroke: var(--stamp-red);
+}
+
+.summary__ring-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.summary__ring-number {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.summary__ring-label {
+  margin-top: 4px;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #5b6470;
 }
 
 .summary__row {
@@ -325,30 +392,8 @@ body {
   font-weight: 600;
 }
 
-.summary__bar {
-  margin: 18px 0 14px;
-  height: 8px;
-  border-radius: 999px;
-  background: var(--paper-line);
-  overflow: hidden;
-}
-
-.summary__bar-fill {
-  height: 100%;
-  background: var(--petrol);
-  transition: width 0.2s ease;
-}
-
-.summary--warning .summary__bar-fill {
-  background: var(--amber);
-}
-
-.summary--over .summary__bar-fill {
-  background: var(--stamp-red);
-}
-
 .summary__status {
-  margin: 0;
+  margin: 18px 0 0;
   font-weight: 500;
 }
 
@@ -602,4 +647,128 @@ body {
   .summary__value {
     font-size: 1.3rem;
   }
+}
+
+/* Etichetta facoltativa nel form (es. "lascia vuoto se in corso") */
+.trip-form__optional {
+  font-weight: 400;
+  font-style: italic;
+  color: #9098a3;
+  font-size: 0.75rem;
+}
+
+/* Conto alla rovescia per il viaggio in corso, nell'elenco viaggi */
+.trip-list__countdown {
+  margin: 6px 0 0;
+  padding-left: 2px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.trip-list__countdown--ok {
+  color: var(--petrol);
+}
+
+.trip-list__countdown--warning {
+  color: var(--amber);
+}
+
+.trip-list__countdown--over {
+  color: var(--stamp-red);
+}
+
+/* Selettore profilo */
+.profile-switcher {
+  background: #fff;
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+}
+
+.profile-switcher__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-switcher__select {
+  flex: 1;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 8px 10px;
+  border: 1px solid var(--paper-line);
+  border-radius: 6px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.profile-switcher__icon-btn {
+  background: none;
+  border: 1px solid var(--paper-line);
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  color: var(--ink);
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.profile-switcher__icon-btn:hover {
+  background: var(--paper);
+}
+
+.profile-switcher__inline-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.profile-switcher__inline-form input {
+  flex: 1;
+  font-family: "Space Grotesk", sans-serif;
+  padding: 8px 10px;
+  border: 1px solid var(--paper-line);
+  border-radius: 6px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.profile-switcher__inline-form button {
+  background: var(--petrol);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Avviso quando un viaggio comprometterebbe uno già pianificato più avanti */
+.trip-form__conflict {
+  background: #fbeceb;
+  border: 1px solid var(--stamp-red);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.trip-form__conflict p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--stamp-red);
+}
+
+.trip-form__conflict p + p {
+  margin-top: 6px;
+}
+
+.summary__next-entry {
+  margin: 10px 0 0;
+  font-size: 0.85rem;
+  color: #5b6470;
+}
+
+.summary__next-entry strong {
+  color: var(--ink);
 }

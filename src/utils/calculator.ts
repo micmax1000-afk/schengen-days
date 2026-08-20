@@ -1,7 +1,7 @@
 export interface Trip {
   id: string;
   entry: string; // formato ISO "YYYY-MM-DD"
-  exit: string;  // formato ISO "YYYY-MM-DD"
+  exit?: string; // formato ISO "YYYY-MM-DD" — vuoto/assente = viaggio ancora in corso
   entryCountry?: string; // codice paese ISO di ingresso (es. "FR")
   exitCountry?: string;  // codice paese ISO di uscita
   note?: string;
@@ -20,16 +20,29 @@ function toISO(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
 
-/** Numero di giorni di un viaggio, ingresso e uscita inclusi. */
+/** Vero se il viaggio è ancora in corso (nessuna data di uscita impostata). */
+export function isOngoing(trip: Trip): boolean {
+  return !trip.exit;
+}
+
+/** Data di uscita "effettiva" di un viaggio: quella impostata, oppure oggi se ancora in corso. */
+function effectiveExit(trip: Trip): string {
+  return trip.exit && trip.exit.length > 0 ? trip.exit : toISO(new Date());
+}
+
+/** Numero di giorni di un viaggio, ingresso e uscita inclusi. Se il viaggio
+ *  è ancora in corso, conta i giorni fino a oggi. */
 export function tripDuration(trip: Trip): number {
   const entry = parseISO(trip.entry);
-  const exit = parseISO(trip.exit);
+  const exit = parseISO(effectiveExit(trip));
   return Math.round((exit.getTime() - entry.getTime()) / MS_PER_DAY) + 1;
 }
 
-/** Verifica che un viaggio sia valido (uscita non precedente all'ingresso). */
-export function isValidTrip(entry: string, exit: string): boolean {
-  if (!entry || !exit) return false;
+/** Verifica che un viaggio sia valido: serve solo l'ingresso; se è impostata
+ *  anche l'uscita, questa non può precedere l'ingresso. */
+export function isValidTrip(entry: string, exit?: string): boolean {
+  if (!entry) return false;
+  if (!exit) return true;
   return parseISO(exit).getTime() >= parseISO(entry).getTime();
 }
 
@@ -47,7 +60,7 @@ export function daysUsedInWindow(trips: Trip[], referenceDate: Date = new Date()
   for (const trip of trips) {
     if (!isValidTrip(trip.entry, trip.exit)) continue;
     const entry = parseISO(trip.entry);
-    const exit = parseISO(trip.exit);
+    const exit = parseISO(effectiveExit(trip));
 
     const start = entry.getTime() > windowStart.getTime() ? entry : windowStart;
     const end = exit.getTime() < ref.getTime() ? exit : ref;
@@ -93,7 +106,7 @@ export function tripContaining(dateISO: string, trips: Trip[]): Trip | undefined
   const d = parseISO(dateISO).getTime();
   return trips.find((t) => {
     if (!isValidTrip(t.entry, t.exit)) return false;
-    return d >= parseISO(t.entry).getTime() && d <= parseISO(t.exit).getTime();
+    return d >= parseISO(t.entry).getTime() && d <= parseISO(effectiveExit(t)).getTime();
   });
 }
 
@@ -106,6 +119,65 @@ export function isDateInWindow(dateISO: string, referenceDate: Date = new Date()
 }
 
 export { toISO };
+
+export interface FutureConflict {
+  trip: Trip;
+  used: number;
+}
+
+/**
+ * Verifica se aggiungere/modificare `candidate` farebbe superare i 90 giorni
+ * per uno o più viaggi già pianificati più avanti nel tempo. Restituisce
+ * l'elenco dei viaggi futuri "compromessi", con quanti giorni risulterebbero
+ * usati nella loro finestra di 180 giorni se il candidato venisse salvato.
+ */
+export function findFutureConflicts(existingTrips: Trip[], candidate: Trip): FutureConflict[] {
+  if (!isValidTrip(candidate.entry, candidate.exit)) return [];
+
+  const others = existingTrips.filter((t) => t.id !== candidate.id);
+  const allWithCandidate = [...others, candidate];
+  const conflicts: FutureConflict[] = [];
+
+  for (const trip of others) {
+    // Consideriamo solo viaggi futuri con date certe (non in corso) che
+    // iniziano dopo il candidato: sono quelli che potrebbero "subire" il
+    // nuovo viaggio.
+    if (!trip.exit || trip.entry <= candidate.entry) continue;
+    if (!isValidTrip(trip.entry, trip.exit)) continue;
+
+    const referenceDate = new Date(`${trip.exit}T00:00:00Z`);
+    const used = daysUsedInWindow(allWithCandidate, referenceDate);
+    if (used > MAX_DAYS) {
+      conflicts.push({ trip, used });
+    }
+  }
+
+  return conflicts;
+}
+
+/**
+ * Calcola la prossima data (a partire da oggi) in cui sarebbe possibile
+ * entrare nell'area Schengen restando almeno un giorno senza superare il
+ * limite di 90/180, tenendo conto dei viaggi già registrati. Se oggi stesso
+ * è già disponibile, restituisce la data di oggi.
+ */
+export function nextAvailableEntry(
+  trips: Trip[],
+  referenceDate: Date = new Date(),
+  horizonDays = 200
+): string {
+  const start = new Date(
+    Date.UTC(referenceDate.getFullYear(), referenceDate.getMonth(), referenceDate.getDate())
+  );
+  for (let i = 0; i < horizonDays; i++) {
+    const candidate = new Date(start.getTime() + i * MS_PER_DAY);
+    const candidateISO = toISO(candidate);
+    const probeTrips = [...trips, { id: "__probe__", entry: candidateISO, exit: candidateISO }];
+    const used = daysUsedInWindow(probeTrips, candidate);
+    if (used <= MAX_DAYS) return candidateISO;
+  }
+  return toISO(start);
+}
 
 export interface StaySimulation {
   /** Vero se già al momento dell'ingresso il limite risulta superato (viaggi esistenti troppo fitti). */

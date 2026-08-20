@@ -17,6 +17,10 @@ Poi apri l'indirizzo mostrato in terminale (di solito `http://localhost:5173`).
 
 ## Pubblicarla gratis su GitHub Pages
 
+Il progetto include già un workflow automatico (`.github/workflows/deploy.yml`):
+ogni volta che carichi modifiche sul branch `main`, GitHub compila e pubblica
+da solo il sito, senza bisogno di lanciare `npm run deploy` a mano.
+
 1. Crea una repository su GitHub, ad esempio `schengen-days`.
 2. Se il nome della repo è diverso, aggiorna `base` in `vite.config.ts`.
 3. Carica il progetto:
@@ -28,15 +32,22 @@ Poi apri l'indirizzo mostrato in terminale (di solito `http://localhost:5173`).
    git remote add origin https://github.com/<tuo-utente>/schengen-days.git
    git push -u origin main
    ```
-4. Pubblica:
-   ```bash
-   npm install
-   npm run build
-   npm run deploy
-   ```
-5. Su GitHub, in **Settings → Pages**, seleziona il branch `gh-pages`.
-   Dopo qualche minuto l'app sarà online su:
-   `https://<tuo-utente>.github.io/schengen-days/`
+4. Su GitHub, vai in **Settings → Pages** e imposta **Source** su
+   **"GitHub Actions"** (non "Deploy from a branch").
+5. Vai nella scheda **Actions** della repository: dovresti vedere il
+   workflow "Pubblica su GitHub Pages" partire da solo. Aspetta che
+   finisca (pallino verde ✓).
+6. Il sito sarà online su `https://<tuo-utente>.github.io/schengen-days/`
+
+Da questo momento, per pubblicare un aggiornamento basta:
+```bash
+git add .
+git commit -m "La tua modifica"
+git push
+```
+GitHub Actions si occupa da solo di compilare e pubblicare — non serve
+più `npm run deploy` (il comando resta disponibile come alternativa
+manuale, se preferisci).
 
 ## Struttura
 
@@ -55,19 +66,25 @@ src/
   style.css
 ```
 
-## Versione attuale: 2.0 (PWA + multilingua)
+## Versione attuale: 2.2
 
 - Calendario grafico mensile, modifica/eliminazione viaggio
 - Simulazione di un futuro ingresso
+- **Viaggio in corso**: lascia vuota la data di uscita per un viaggio
+  ancora in corso e vedi il conto alla rovescia dei giorni rimanenti
+- **Profili multipli**: gestisci più persone (famiglia, clienti) dallo
+  stesso dispositivo, ciascuna con i propri viaggi salvati separatamente
 - Installabile come app (PWA), con funzionamento offline
-- **8 lingue**: italiano, inglese, cinese, arabo, spagnolo, francese,
-  portoghese, russo, hindi — selezionabili dal menu in alto, con
-  un'opzione "Lingua di sistema" che segue automaticamente quella del
-  dispositivo, e supporto RTL per l'arabo
-- **Note di viaggio e bandiera del paese** per ogni viaggio registrato
-- **Backup manuale**: esporta tutti i viaggi in un file .json e
-  reimportali in qualsiasi momento (utile prima di cancellare i dati
-  del browser, cambiare telefono, o semplicemente per sicurezza)
+- **10 lingue**: italiano, inglese, cinese, arabo, ebraico, spagnolo,
+  francese, portoghese, russo, hindi — selezionabili dal menu in alto,
+  con un'opzione "Lingua di sistema" che segue automaticamente quella
+  del dispositivo, e supporto RTL per arabo ed ebraico
+- **Note di viaggio, paese di ingresso e di uscita** (con bandiera) per
+  ogni viaggio registrato
+- **Backup manuale**: esporta/condividi tutti i profili in un file
+  .json e reimportali in qualsiasi momento
+- **Link al calcolatore ufficiale** della Commissione Europea e
+  clausola di responsabilità nel footer
 
 ### Come installarla
 

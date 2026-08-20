@@ -1,15 +1,16 @@
 import { useState, useEffect, FormEvent } from "react";
-import { isValidTrip, Trip } from "../utils/calculator";
+import { isValidTrip, Trip, findFutureConflicts } from "../utils/calculator";
 import { useLanguage } from "../i18n/LanguageContext";
 import { SCHENGEN_COUNTRIES, flagImageUrl } from "../data/schengenCountries";
 
 interface Props {
-  onAdd: (entry: string, exit: string, entryCountry?: string, exitCountry?: string, note?: string) => void;
+  trips: Trip[];
+  onAdd: (entry: string, exit: string | undefined, entryCountry?: string, exitCountry?: string, note?: string) => void;
   editingTrip?: Trip | null;
   onUpdate?: (
     id: string,
     entry: string,
-    exit: string,
+    exit: string | undefined,
     entryCountry?: string,
     exitCountry?: string,
     note?: string
@@ -23,7 +24,7 @@ function formatPreviewDate(iso: string): string {
   return `${d}/${m}/${y.slice(2)}`;
 }
 
-export default function TripForm({ onAdd, editingTrip, onUpdate, onCancelEdit }: Props) {
+export default function TripForm({ trips, onAdd, editingTrip, onUpdate, onCancelEdit }: Props) {
   const { t } = useLanguage();
   const [entry, setEntry] = useState("");
   const [exit, setExit] = useState("");
@@ -32,10 +33,15 @@ export default function TripForm({ onAdd, editingTrip, onUpdate, onCancelEdit }:
   const [note, setNote] = useState("");
   const [error, setError] = useState<string | null>(null);
 
+  const conflicts =
+    entry && exit && isValidTrip(entry, exit)
+      ? findFutureConflicts(trips, { id: editingTrip?.id ?? "__new__", entry, exit })
+      : [];
+
   useEffect(() => {
     if (editingTrip) {
       setEntry(editingTrip.entry);
-      setExit(editingTrip.exit);
+      setExit(editingTrip.exit ?? "");
       setEntryCountry(editingTrip.entryCountry ?? "");
       setExitCountry(editingTrip.exitCountry ?? "");
       setNote(editingTrip.note ?? "");
@@ -45,21 +51,22 @@ export default function TripForm({ onAdd, editingTrip, onUpdate, onCancelEdit }:
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!entry || !exit) {
+    if (!entry) {
       setError(t.errorBothDates);
       return;
     }
-    if (!isValidTrip(entry, exit)) {
+    if (!isValidTrip(entry, exit || undefined)) {
       setError(t.errorExitBeforeEntry);
       return;
     }
     const entryC = entryCountry || undefined;
     const exitC = exitCountry || undefined;
+    const exitValue = exit || undefined;
     const noteValue = note.trim() || undefined;
     if (editingTrip && onUpdate) {
-      onUpdate(editingTrip.id, entry, exit, entryC, exitC, noteValue);
+      onUpdate(editingTrip.id, entry, exitValue, entryC, exitC, noteValue);
     } else {
-      onAdd(entry, exit, entryC, exitC, noteValue);
+      onAdd(entry, exitValue, entryC, exitC, noteValue);
     }
     setEntry("");
     setExit("");
@@ -106,8 +113,8 @@ export default function TripForm({ onAdd, editingTrip, onUpdate, onCancelEdit }:
         </div>
         <div className="trip-form__column">
           <label>
-            {t.exitDate}
-            <input type="date" value={exit} onChange={(e) => setExit(e.target.value)} required />
+            {t.exitDate} <span className="trip-form__optional">({t.ongoingHint})</span>
+            <input type="date" value={exit} onChange={(e) => setExit(e.target.value)} />
           </label>
           <label>
             {t.exitCountry}
@@ -162,6 +169,15 @@ export default function TripForm({ onAdd, editingTrip, onUpdate, onCancelEdit }:
               {formatPreviewDate(exit)}
             </span>
           </span>
+        </div>
+      )}
+      {conflicts.length > 0 && (
+        <div className="trip-form__conflict">
+          {conflicts.map(({ trip, used }) => (
+            <p key={trip.id}>
+              {t.futureConflictWarning(formatPreviewDate(trip.entry), formatPreviewDate(trip.exit!), used)}
+            </p>
+          ))}
         </div>
       )}
       {error && <p className="trip-form__error">{error}</p>}
