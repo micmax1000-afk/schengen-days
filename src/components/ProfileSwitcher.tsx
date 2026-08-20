@@ -95,7 +95,7 @@ export default function ProfileSwitcher({ profiles, activeProfileId, onSwitch, o
             autoFocus
           />
           <button type="button" onClick={confirmAdd}>
-            {t.add}
+            {t.addProfile}
           </button>
         </div>
       )}
