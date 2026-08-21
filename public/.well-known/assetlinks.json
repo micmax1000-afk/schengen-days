@@ -11,6 +11,6 @@
       "target": {
         "namespace": "android_app",
         "package_name": "schengendayscalculator.micmax1000_afk.twa",
-        "sha256_cert_fingerprints": ["BB:6A:0A:63:26:30:0D:38:0B:9E:1E:80:F6:A8:0B:59:9F:9A:C8:13:4E:90:61:F1:82:CB:56:43:9A:20:46:97"]
+        "sha256_cert_fingerprints": ["24:A4:BF:E0:E1:46:0A:39:09:F3:28:49:D8:29:10:4F:9F:67:EE:86:0E:81:33:B5:5E:71:57:95:E3:FE:D8:B7"]
       }
     }]
