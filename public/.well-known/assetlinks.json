@@ -5,4 +5,12 @@
         "package_name": "schengendays.micmax1000_afk.twa",
         "sha256_cert_fingerprints": ["36:A5:68:66:2F:46:3C:E9:85:2D:44:57:03:1B:2C:90:3C:28:02:C7:6E:7E:90:94:A3:E0:D6:37:C7:4D:BF:A0"]
       }
+    },
+    {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "schengendayscalculator.micmax1000_afk.twa",
+        "sha256_cert_fingerprints": ["BB:6A:0A:63:26:30:0D:38:0B:9E:1E:80:F6:A8:0B:59:9F:9A:C8:13:4E:90:61:F1:82:CB:56:43:9A:20:46:97"]
+      }
     }]
