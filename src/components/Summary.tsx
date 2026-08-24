@@ -1,4 +1,4 @@
-import { ComplianceStatus, Trip, nextAvailableEntry } from "../utils/calculator";
+import { ComplianceStatus, Trip, nextAvailableEntry, currentTripProjection } from "../utils/calculator";
 import { useLanguage } from "../i18n/LanguageContext";
 
 interface Props {
@@ -31,6 +31,7 @@ export default function Summary({ status, trips }: Props) {
   const todayISO = new Date().toISOString().slice(0, 10);
   const nextEntry = nextAvailableEntry(trips);
   const isAvailableToday = nextEntry === todayISO;
+  const projection = currentTripProjection(trips);
 
   return (
     <section className={`summary summary--${status.level}`}>
@@ -71,6 +72,12 @@ export default function Summary({ status, trips }: Props) {
         {t.nextAvailableEntry}{" "}
         <strong>{isAvailableToday ? t.availableToday : formatDate(nextEntry)}</strong>
       </p>
+
+      {projection && (
+        <p className="summary__projection">
+          {t.currentTripProjection(formatDate(projection.exitISO), projection.used, Math.max(0, projection.remaining))}
+        </p>
+      )}
     </section>
   );
 }

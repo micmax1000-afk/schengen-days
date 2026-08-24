@@ -32,12 +32,22 @@ body {
 }
 
 .app-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
   border-bottom: 2px solid var(--ink);
   padding-bottom: 16px;
   margin-bottom: 24px;
+}
+
+.app-header__top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.app-header__controls {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
@@ -53,6 +63,7 @@ body {
   border-radius: 6px;
   background: #fff;
   color: var(--ink);
+  align-self: flex-end;
 }
 
 .app-header__stamp {
@@ -677,41 +688,48 @@ body {
   color: var(--stamp-red);
 }
 
-/* Selettore profilo */
+/* Selettore profilo (compatto, nell'header) */
 .profile-switcher {
-  background: #fff;
-  border: 1px solid var(--paper-line);
-  border-radius: var(--radius);
-  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.profile-switcher__label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #5b6470;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .profile-switcher__row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .profile-switcher__select {
-  flex: 1;
   font-family: "Space Grotesk", sans-serif;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  padding: 8px 10px;
+  padding: 6px 8px;
   border: 1px solid var(--paper-line);
   border-radius: 6px;
-  background: var(--paper);
+  background: #fff;
   color: var(--ink);
+  max-width: 140px;
 }
 
 .profile-switcher__icon-btn {
   background: none;
   border: 1px solid var(--paper-line);
   border-radius: 6px;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   cursor: pointer;
   color: var(--ink);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   flex-shrink: 0;
 }
 
@@ -722,7 +740,7 @@ body {
 .profile-switcher__inline-form {
   display: flex;
   gap: 8px;
-  margin-top: 10px;
+  margin-top: 6px;
 }
 
 .profile-switcher__inline-form input {
@@ -733,6 +751,7 @@ body {
   border-radius: 6px;
   background: var(--paper);
   color: var(--ink);
+  min-width: 0;
 }
 
 .profile-switcher__inline-form button {
@@ -771,4 +790,13 @@ body {
 
 .summary__next-entry strong {
   color: var(--ink);
+}
+
+.summary__projection {
+  margin: 8px 0 0;
+  font-size: 0.82rem;
+  color: #5b6470;
+  background: var(--paper);
+  border-radius: 8px;
+  padding: 8px 12px;
 }

@@ -161,6 +161,28 @@ export function findFutureConflicts(existingTrips: Trip[], candidate: Trip): Fut
  * limite di 90/180, tenendo conto dei viaggi già registrati. Se oggi stesso
  * è già disponibile, restituisce la data di oggi.
  */
+/**
+ * Se oggi è in corso (o inizia oggi) un viaggio con una data di uscita
+ * futura già pianificata, calcola quanti giorni risulteranno usati e quanti
+ * ne resteranno una volta completato quel viaggio come previsto. Utile per
+ * non confondere l'utente quando registra un viaggio che inizia oggi: il
+ * riepilogo mostra i giorni usati "ad oggi", non quelli del viaggio intero.
+ */
+export function currentTripProjection(
+  trips: Trip[],
+  referenceDate: Date = new Date()
+): { used: number; remaining: number; exitISO: string } | null {
+  const todayISO = toISO(referenceDate);
+  const activeFutureTrip = trips.find(
+    (t) => t.exit && t.entry <= todayISO && t.exit > todayISO
+  );
+  if (!activeFutureTrip || !activeFutureTrip.exit) return null;
+
+  const exitDate = new Date(`${activeFutureTrip.exit}T00:00:00Z`);
+  const used = daysUsedInWindow(trips, exitDate);
+  return { used, remaining: MAX_DAYS - used, exitISO: activeFutureTrip.exit };
+}
+
 export function nextAvailableEntry(
   trips: Trip[],
   referenceDate: Date = new Date(),

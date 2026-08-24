@@ -43,6 +43,7 @@ export interface Dict {
   statusOver: string;
   nextAvailableEntry: string;
   availableToday: string;
+  currentTripProjection: (exitDate: string, used: number, remaining: number) => string;
   legendTrip: string;
   legendWindow: string;
   prevMonth: string;
@@ -107,6 +108,7 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "Limite dépassée !",
     nextAvailableEntry: "Prochaine entrée possible :",
     availableToday: "vous pouvez entrer dès aujourd'hui",
+    currentTripProjection: (ed, u, r) => `En complétant ce séjour comme prévu (jusqu'au ${ed}), vous aurez utilisé ${u} jours au total, avec ${r} restants.`,
     legendTrip: "jour dans l'espace Schengen",
     legendWindow: "dans la fenêtre de 180 jours",
     prevMonth: "Mois précédent",
@@ -169,6 +171,7 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "המגבלה חורגה!",
     nextAvailableEntry: "הכניסה הבאה האפשרית:",
     availableToday: "ניתן להיכנס כבר היום",
+    currentTripProjection: (ed, u, r) => `בהשלמת נסיעה זו כמתוכנן (עד ${ed}), תהיה בסך הכל ניצול של ${u} ימים, עם ${r} נותרים.`,
     legendTrip: "יום בשנגן",
     legendWindow: "בתוך חלון 180 הימים",
     prevMonth: "החודש הקודם",
@@ -231,6 +234,7 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "Limite superato!",
     nextAvailableEntry: "Prossimo ingresso disponibile:",
     availableToday: "puoi entrare da oggi",
+    currentTripProjection: (ed, u, r) => `Completando questo viaggio come pianificato (fino al ${ed}), avrai usato ${u} giorni in totale, con ${r} residui.`,
     legendTrip: "giorno in Schengen",
     legendWindow: "dentro la finestra 180gg",
     prevMonth: "Mese precedente",
@@ -293,6 +297,7 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "Limit exceeded!",
     nextAvailableEntry: "Next available entry:",
     availableToday: "you can enter today",
+    currentTripProjection: (ed, u, r) => `Completing this trip as planned (until ${ed}), you will have used ${u} days in total, with ${r} remaining.`,
     legendTrip: "day in Schengen",
     legendWindow: "inside the 180-day window",
     prevMonth: "Previous month",
@@ -355,6 +360,7 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "已超出限制！",
     nextAvailableEntry: "下次可入境日期：",
     availableToday: "您今天即可入境",
+    currentTripProjection: (ed, u, r) => `按计划完成此次行程（至 ${ed}）后，您将总共使用 ${u} 天，剩余 ${r} 天。`,
     legendTrip: "在申根区的一天",
     legendWindow: "180天窗口内",
     prevMonth: "上个月",
@@ -417,6 +423,7 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "تم تجاوز الحد!",
     nextAvailableEntry: "تاريخ الدخول المتاح التالي:",
     availableToday: "يمكنك الدخول اليوم",
+    currentTripProjection: (ed, u, r) => `عند إتمام هذه الرحلة كما هو مخطط (حتى ${ed})، ستكون قد استخدمت ${u} يومًا إجماليًا، ويتبقى لك ${r} يومًا.`,
     legendTrip: "يوم داخل شنغن",
     legendWindow: "ضمن نافذة الـ180 يومًا",
     prevMonth: "الشهر السابق",
@@ -479,6 +486,7 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "¡Límite superado!",
     nextAvailableEntry: "Próxima entrada disponible:",
     availableToday: "puedes entrar hoy mismo",
+    currentTripProjection: (ed, u, r) => `Al completar este viaje según lo previsto (hasta el ${ed}), habrás usado ${u} días en total, con ${r} restantes.`,
     legendTrip: "día en Schengen",
     legendWindow: "dentro de la ventana de 180 días",
     prevMonth: "Mes anterior",
@@ -541,6 +549,7 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "Limite ultrapassado!",
     nextAvailableEntry: "Próxima entrada disponível:",
     availableToday: "pode entrar já hoje",
+    currentTripProjection: (ed, u, r) => `Ao completar esta viagem conforme planeado (até ${ed}), terá usado ${u} dias no total, com ${r} restantes.`,
     legendTrip: "dia em Schengen",
     legendWindow: "dentro da janela de 180 dias",
     prevMonth: "Mês anterior",
@@ -603,6 +612,7 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "Лимит превышен!",
     nextAvailableEntry: "Следующая доступная дата въезда:",
     availableToday: "вы можете въехать уже сегодня",
+    currentTripProjection: (ed, u, r) => `Завершив эту поездку по плану (до ${ed}), вы используете в общей сложности ${u} дней, из них ${r} останется.`,
     legendTrip: "день в Шенгене",
     legendWindow: "в окне 180 дней",
     prevMonth: "Предыдущий месяц",
@@ -665,6 +675,7 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "सीमा पार हो गई!",
     nextAvailableEntry: "अगली उपलब्ध प्रवेश तिथि:",
     availableToday: "आप आज ही प्रवेश कर सकते हैं",
+    currentTripProjection: (ed, u, r) => `इस यात्रा को योजना अनुसार पूरा करने पर (तक ${ed}), आपने कुल ${u} दिन उपयोग किए होंगे, ${r} दिन शेष रहेंगे।`,
     legendTrip: "शेंगेन में दिन",
     legendWindow: "180-दिन की खिड़की के भीतर",
     prevMonth: "पिछला महीना",

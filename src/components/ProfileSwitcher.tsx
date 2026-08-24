@@ -22,12 +22,18 @@ export default function ProfileSwitcher({ profiles, activeProfileId, onSwitch, o
 
   const startRename = () => {
     setNameDraft(active?.name ?? "");
+    setAdding(false);
     setEditing(true);
   };
 
   const confirmRename = () => {
     if (active && nameDraft.trim()) onRename(active.id, nameDraft.trim());
     setEditing(false);
+  };
+
+  const startAdd = () => {
+    setEditing(false);
+    setAdding(true);
   };
 
   const confirmAdd = () => {
@@ -37,13 +43,16 @@ export default function ProfileSwitcher({ profiles, activeProfileId, onSwitch, o
   };
 
   return (
-    <section className="profile-switcher">
+    <div className="profile-switcher">
+      <label className="profile-switcher__label" htmlFor="profile-select">
+        👤 {t.profileLabel}
+      </label>
       <div className="profile-switcher__row">
         <select
+          id="profile-select"
           className="profile-switcher__select"
           value={activeProfileId}
           onChange={(e) => onSwitch(e.target.value)}
-          aria-label={t.profileLabel}
         >
           {profiles.map((p) => (
             <option key={p.id} value={p.id}>
@@ -54,7 +63,7 @@ export default function ProfileSwitcher({ profiles, activeProfileId, onSwitch, o
         <button type="button" onClick={startRename} className="profile-switcher__icon-btn" aria-label={t.renameProfile}>
           ✎
         </button>
-        <button type="button" onClick={() => setAdding(true)} className="profile-switcher__icon-btn" aria-label={t.addProfile}>
+        <button type="button" onClick={startAdd} className="profile-switcher__icon-btn" aria-label={t.addProfile}>
           +
         </button>
         {profiles.length > 1 && (
@@ -99,6 +108,6 @@ export default function ProfileSwitcher({ profiles, activeProfileId, onSwitch, o
           </button>
         </div>
       )}
-    </section>
+    </div>
   );
 }

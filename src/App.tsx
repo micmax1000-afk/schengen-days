@@ -6,7 +6,6 @@ import Summary from "./components/Summary";
 import CalendarView from "./components/CalendarView";
 import SimulateEntry from "./components/SimulateEntry";
 import BackupControls from "./components/BackupControls";
-import ProfileSwitcher from "./components/ProfileSwitcher";
 import { useProfiles } from "./utils/useProfiles";
 import { getComplianceStatus, Trip } from "./utils/calculator";
 import { useLanguage } from "./i18n/LanguageContext";
@@ -54,16 +53,15 @@ export default function App() {
 
   return (
     <div className="app">
-      <Header />
+      <Header
+        profiles={profiles}
+        activeProfileId={activeProfileId}
+        onSwitchProfile={handleSwitchProfile}
+        onAddProfile={addProfile}
+        onRenameProfile={renameProfile}
+        onDeleteProfile={deleteProfile}
+      />
       <main className="app__main">
-        <ProfileSwitcher
-          profiles={profiles}
-          activeProfileId={activeProfileId}
-          onSwitch={handleSwitchProfile}
-          onAdd={addProfile}
-          onRename={renameProfile}
-          onDelete={deleteProfile}
-        />
         <Summary status={status} trips={trips} />
         <TripForm
           trips={trips}
