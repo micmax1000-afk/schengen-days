@@ -22,6 +22,7 @@ export interface Dict {
   ongoingHint: string;
   ongoingLabel: string;
   countdownPrefix: string;
+  countdownUntil: string;
   entryCountry: string;
   exitCountry: string;
   countryPlaceholder: string;
@@ -91,6 +92,7 @@ export const translations: Record<Lang, Dict> = {
     ongoingHint: "laissez vide si en cours",
     ongoingLabel: "En cours",
     countdownPrefix: "Jours restants pour ce séjour :",
+    countdownUntil: "jusqu'au",
     exitDate: "Date de sortie",
     add: "+ Ajouter un séjour",
     saveChanges: "Enregistrer les modifications",
@@ -149,6 +151,7 @@ export const translations: Record<Lang, Dict> = {
     ongoingHint: "השאירו ריק אם עדיין בעיצומה",
     ongoingLabel: "בעיצומה",
     countdownPrefix: "ימים שנותרו לנסיעה זו:",
+    countdownUntil: "עד",
     exitDate: "תאריך יציאה",
     entryCountry: "מדינת כניסה",
     exitCountry: "מדינת יציאה",
@@ -217,6 +220,7 @@ export const translations: Record<Lang, Dict> = {
     ongoingHint: "lascia vuoto se in corso",
     ongoingLabel: "In corso",
     countdownPrefix: "Giorni rimanenti per questo viaggio:",
+    countdownUntil: "fino al",
     exitDate: "Data uscita",
     add: "+ Aggiungi viaggio",
     saveChanges: "Salva modifiche",
@@ -280,6 +284,7 @@ export const translations: Record<Lang, Dict> = {
     ongoingHint: "leave empty if ongoing",
     ongoingLabel: "Ongoing",
     countdownPrefix: "Days remaining for this trip:",
+    countdownUntil: "until",
     exitDate: "Exit date",
     add: "+ Add trip",
     saveChanges: "Save changes",
@@ -343,6 +348,7 @@ export const translations: Record<Lang, Dict> = {
     ongoingHint: "如仍在进行中请留空",
     ongoingLabel: "进行中",
     countdownPrefix: "本次行程剩余天数：",
+    countdownUntil: "至",
     exitDate: "离境日期",
     add: "+ 添加行程",
     saveChanges: "保存修改",
@@ -406,6 +412,7 @@ export const translations: Record<Lang, Dict> = {
     ongoingHint: "اتركه فارغًا إذا كانت الرحلة مستمرة",
     ongoingLabel: "مستمرة",
     countdownPrefix: "الأيام المتبقية لهذه الرحلة:",
+    countdownUntil: "حتى",
     exitDate: "تاريخ الخروج",
     add: "+ إضافة رحلة",
     saveChanges: "حفظ التعديلات",
@@ -469,6 +476,7 @@ export const translations: Record<Lang, Dict> = {
     ongoingHint: "deja vacío si está en curso",
     ongoingLabel: "En curso",
     countdownPrefix: "Días restantes para este viaje:",
+    countdownUntil: "hasta el",
     exitDate: "Fecha de salida",
     add: "+ Añadir viaje",
     saveChanges: "Guardar cambios",
@@ -532,6 +540,7 @@ export const translations: Record<Lang, Dict> = {
     ongoingHint: "deixe vazio se estiver em curso",
     ongoingLabel: "Em curso",
     countdownPrefix: "Dias restantes para esta viagem:",
+    countdownUntil: "até",
     exitDate: "Data de saída",
     add: "+ Adicionar viagem",
     saveChanges: "Guardar alterações",
@@ -595,6 +604,7 @@ export const translations: Record<Lang, Dict> = {
     ongoingHint: "оставьте пустым, если поездка продолжается",
     ongoingLabel: "В процессе",
     countdownPrefix: "Осталось дней для этой поездки:",
+    countdownUntil: "до",
     exitDate: "Дата выезда",
     add: "+ Добавить поездку",
     saveChanges: "Сохранить изменения",
@@ -658,6 +668,7 @@ export const translations: Record<Lang, Dict> = {
     ongoingHint: "यदि जारी है तो खाली छोड़ें",
     ongoingLabel: "जारी है",
     countdownPrefix: "इस यात्रा के लिए शेष दिन:",
+    countdownUntil: "तक",
     exitDate: "निकास तिथि",
     add: "+ यात्रा जोड़ें",
     saveChanges: "बदलाव सहेजें",

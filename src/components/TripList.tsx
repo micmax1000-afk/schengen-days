@@ -1,4 +1,4 @@
-import { Trip, tripDuration, sortTripsDesc, isOngoing } from "../utils/calculator";
+import { Trip, tripDuration, sortTripsDesc, isOngoing, simulateStay } from "../utils/calculator";
 import { useLanguage } from "../i18n/LanguageContext";
 import { flagImageUrl } from "../data/schengenCountries";
 
@@ -30,6 +30,12 @@ export default function TripList({ trips, onRemove, onEdit, editingId, remaining
       {sorted.map((trip) => {
         const ongoing = isOngoing(trip);
         const countdownLevel = remainingDays <= 3 ? "over" : remainingDays <= 20 ? "warning" : "ok";
+        let deadlineISO: string | null = null;
+        if (ongoing) {
+          const others = trips.filter((t2) => t2.id !== trip.id);
+          const sim = simulateStay(others, trip.entry);
+          if (!sim.alreadyOverAtEntry) deadlineISO = sim.maxExit;
+        }
         return (
           <li
             key={trip.id}
@@ -67,6 +73,7 @@ export default function TripList({ trips, onRemove, onEdit, editingId, remaining
             {ongoing && (
               <p className={`trip-list__countdown trip-list__countdown--${countdownLevel}`}>
                 {t.countdownPrefix} {Math.max(0, remainingDays)} {t.daysUnit}
+                {deadlineISO && ` (${t.countdownUntil} ${formatDate(deadlineISO)})`}
               </p>
             )}
             {trip.note && <p className="trip-list__note">{trip.note}</p>}
