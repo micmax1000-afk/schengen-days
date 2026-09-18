@@ -6,25 +6,12 @@ import Summary from "./components/Summary";
 import CalendarView from "./components/CalendarView";
 import SimulateEntry from "./components/SimulateEntry";
 import BackupControls from "./components/BackupControls";
-import { useProfiles } from "./utils/useProfiles";
+import { useLocalTrips } from "./utils/useLocalTrips";
 import { getComplianceStatus, Trip } from "./utils/calculator";
 import { useLanguage } from "./i18n/LanguageContext";
 
 export default function App() {
-  const {
-    trips,
-    addTrip,
-    removeTrip,
-    updateTrip,
-    exportAll,
-    importAll,
-    profiles,
-    activeProfileId,
-    setActiveProfileId,
-    addProfile,
-    renameProfile,
-    deleteProfile,
-  } = useProfiles();
+  const { trips, addTrip, removeTrip, updateTrip, exportTrips, importTrips } = useLocalTrips();
   const [editingTrip, setEditingTrip] = useState<Trip | null>(null);
   const status = getComplianceStatus(trips);
   const { t } = useLanguage();
@@ -46,21 +33,10 @@ export default function App() {
     if (editingTrip?.id === id) setEditingTrip(null);
     removeTrip(id);
   };
-  const handleSwitchProfile = (id: string) => {
-    setActiveProfileId(id);
-    setEditingTrip(null);
-  };
 
   return (
     <div className="app">
-      <Header
-        profiles={profiles}
-        activeProfileId={activeProfileId}
-        onSwitchProfile={handleSwitchProfile}
-        onAddProfile={addProfile}
-        onRenameProfile={renameProfile}
-        onDeleteProfile={deleteProfile}
-      />
+      <Header />
       <main className="app__main">
         <Summary status={status} trips={trips} />
         <TripForm
@@ -79,7 +55,7 @@ export default function App() {
         />
         <CalendarView trips={trips} />
         <SimulateEntry trips={trips} />
-        <BackupControls exportTrips={exportAll} importTrips={importAll} />
+        <BackupControls exportTrips={exportTrips} importTrips={importTrips} />
       </main>
       <footer className="app__footer">
         <p>{t.footerNote}</p>
