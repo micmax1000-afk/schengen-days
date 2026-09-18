@@ -90,6 +90,18 @@ body {
   color: #5b6470;
 }
 
+.app-header__disclaimer {
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  background: #fdf3e0;
+  border: 1px solid var(--amber);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #7a5410;
+  line-height: 1.4;
+}
+
 .app__main {
   display: flex;
   flex-direction: column;
@@ -799,4 +811,34 @@ body {
   background: var(--paper);
   border-radius: 8px;
   padding: 8px 12px;
+}
+
+.app__sources {
+  margin: 14px 0;
+  text-align: left;
+  background: var(--paper);
+  border: 1px solid var(--paper-line);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.app__sources-title {
+  margin: 0 0 6px;
+  font-weight: 600;
+  font-size: 0.78rem;
+  color: var(--ink);
+}
+
+.app__sources-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.78rem;
+}
+
+.app__sources-list li {
+  margin-bottom: 4px;
+}
+
+.app__sources-list a {
+  color: var(--petrol);
 }

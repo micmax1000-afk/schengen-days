@@ -85,15 +85,50 @@ export default function App() {
         <p>{t.footerNote}</p>
         <p className="app__disclaimer">{t.disclaimer}</p>
         <p className="app__disclaimer">{t.liabilityDisclaimer}</p>
+
+        <div className="app__sources">
+          <p className="app__sources-title">{t.officialSourcesTitle}</p>
+          <ul className="app__sources-list">
+            <li>
+              <a
+                href="https://home-affairs.ec.europa.eu/policies/schengen/schengen-area_en"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t.officialSourceSchengenArea}
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://eur-lex.europa.eu/eli/reg/2016/399/oj"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t.officialSourceRegulation}
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://ec.europa.eu/assets/home/visa-calculator/calculator.htm?lang=en"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t.officialCalculatorLink}
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://travel-europe.europa.eu/en/ees"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t.officialSourceEES}
+              </a>
+            </li>
+          </ul>
+        </div>
+
         <p>
-          <a
-            href="https://ec.europa.eu/assets/home/visa-calculator/calculator.htm?lang=en"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {t.officialCalculatorLink}
-          </a>
-          {" · "}
           <a href="privacy.html" target="_blank" rel="noopener noreferrer">
             {t.privacyLink}
           </a>

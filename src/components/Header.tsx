@@ -30,6 +30,7 @@ export default function Header({
           <p>{t.appSubtitle}</p>
         </div>
       </div>
+      <p className="app-header__disclaimer">⚠️ {t.disclaimer}</p>
       <div className="app-header__controls">
         <ProfileSwitcher
           profiles={profiles}

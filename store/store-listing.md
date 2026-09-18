@@ -26,6 +26,13 @@ No account, no server, no ads. All your data stays exclusively on your device �
 
 Independent application, not affiliated with the European Union or any government. It does not replace official checks or declarations required at borders — it's a planning aid for your travels.
 
+OFFICIAL SOURCES
+This app applies the public "90 days in 180" rule established by the European Union authorities. You can consult the official sources directly:
+- Schengen Area (European Commission): https://home-affairs.ec.europa.eu/policies/schengen/schengen-area_en
+- Regulation (EU) 2016/399 (90/180-day rule): https://eur-lex.europa.eu/eli/reg/2016/399/oj
+- Official calculator (European Commission): https://ec.europa.eu/assets/home/visa-calculator/calculator.htm?lang=en
+- EU Entry/Exit System (EES): https://travel-europe.europa.eu/en/ees
+
 DISCLAIMER
 This app is provided for informational purposes only, "as is", with no guarantee of calculation accuracy. We accept no liability for any calculation errors, delays, inconvenience, or consequences — including any penalties or entry denials — resulting from the use of this app. Always verify your days on the official websites of the relevant European authorities (e.g. the European Commission's official calculator) or by contacting border authorities before traveling.
 
