@@ -1,0 +1,16 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "schengendays.micmax1000_afk.twa",
+        "sha256_cert_fingerprints": ["36:A5:68:66:2F:46:3C:E9:85:2D:44:57:03:1B:2C:90:3C:28:02:C7:6E:7E:90:94:A3:E0:D6:37:C7:4D:BF:A0"]
+      }
+    },
+    {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "schengendayscalculator.micmax1000_afk.twa",
+        "sha256_cert_fingerprints": ["24:A4:BF:E0:E1:46:0A:39:09:F3:28:49:D8:29:10:4F:9F:67:EE:86:0E:81:33:B5:5E:71:57:95:E3:FE:D8:B7"]
+      }
+    }]

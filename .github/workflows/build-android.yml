@@ -1,0 +1,55 @@
+name: Compila app Android (Capacitor)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del codice
+        uses: actions/checkout@v4
+
+      - name: Configura Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Configura Java (richiesto da Gradle/Android)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Installa le dipendenze
+        run: npm install
+
+      - name: Compila il sito web
+        run: npm run build
+
+      - name: Sincronizza con il progetto Android
+        run: npx cap sync android
+
+      - name: Ricrea la chiave di firma dal secret
+        run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > android/app/signing.keystore
+
+      - name: Crea keystore.properties con le credenziali dai secret
+        run: |
+          cat > android/keystore.properties << EOF
+          storeFile=signing.keystore
+          storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
+          keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}
+          EOF
+
+      - name: Rendi eseguibile Gradle Wrapper
+        run: chmod +x android/gradlew
+
+      - name: Compila l'App Bundle firmato (.aab)
+        run: cd android && ./gradlew bundleRelease
+
+      - name: Carica il file .aab come risultato
+        uses: actions/upload-artifact@v4
+        with:
+          name: schengen-days-android-release
+          path: android/app/build/outputs/bundle/release/app-release.aab
