@@ -26,6 +26,8 @@ jobs:
 
       - name: Compila il sito web
         run: npm run build
+        env:
+          CAPACITOR_BUILD: "true"
 
       - name: Sincronizza con il progetto Android
         run: npx cap sync android
@@ -35,12 +37,12 @@ jobs:
 
       - name: Crea keystore.properties con le credenziali dai secret
         run: |
-          cat > android/keystore.properties << EOF
+          cat > android/keystore.properties << EOF2
           storeFile=signing.keystore
           storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
           keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}
-          EOF
+          EOF2
 
       - name: Rendi eseguibile Gradle Wrapper
         run: chmod +x android/gradlew
