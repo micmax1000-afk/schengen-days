@@ -842,3 +842,10 @@ body {
 .app__sources-list a {
   color: var(--petrol);
 }
+
+.app__version {
+  margin-top: 10px;
+  font-size: 0.7rem;
+  opacity: 0.55;
+  text-align: center;
+}

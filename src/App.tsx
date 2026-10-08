@@ -9,6 +9,7 @@ import BackupControls from "./components/BackupControls";
 import { useLocalTrips } from "./utils/useLocalTrips";
 import { getComplianceStatus, Trip } from "./utils/calculator";
 import { useLanguage } from "./i18n/LanguageContext";
+import { APP_VERSION } from "./version";
 
 export default function App() {
   const { trips, addTrip, removeTrip, updateTrip, exportTrips, importTrips } = useLocalTrips();
@@ -109,6 +110,7 @@ export default function App() {
             {t.privacyLink}
           </a>
         </p>
+        <p className="app__version">v{APP_VERSION}</p>
       </footer>
     </div>
   );
