@@ -1,7 +1,7 @@
 import { useState, useEffect, FormEvent } from "react";
 import { isValidTrip, Trip, findFutureConflicts } from "../utils/calculator";
 import { useLanguage } from "../i18n/LanguageContext";
-import { SCHENGEN_COUNTRIES, flagImageUrl } from "../data/schengenCountries";
+import { schengenCountries, flagImageUrl } from "../data/schengenCountries";
 
 interface Props {
   trips: Trip[];
@@ -25,7 +25,8 @@ function formatPreviewDate(iso: string): string {
 }
 
 export default function TripForm({ trips, onAdd, editingTrip, onUpdate, onCancelEdit }: Props) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const countries = schengenCountries(lang);
   const [entry, setEntry] = useState("");
   const [exit, setExit] = useState("");
   const [entryCountry, setEntryCountry] = useState("");
@@ -102,7 +103,7 @@ export default function TripForm({ trips, onAdd, editingTrip, onUpdate, onCancel
               )}
               <select value={entryCountry} onChange={(e) => setEntryCountry(e.target.value)}>
                 <option value="">{t.countryPlaceholder}</option>
-                {SCHENGEN_COUNTRIES.map((c) => (
+                {countries.map((c) => (
                   <option key={c.code} value={c.code}>
                     {c.name}
                   </option>
@@ -124,7 +125,7 @@ export default function TripForm({ trips, onAdd, editingTrip, onUpdate, onCancel
               )}
               <select value={exitCountry} onChange={(e) => setExitCountry(e.target.value)}>
                 <option value="">{t.countryPlaceholder}</option>
-                {SCHENGEN_COUNTRIES.map((c) => (
+                {countries.map((c) => (
                   <option key={c.code} value={c.code}>
                     {c.name}
                   </option>
@@ -153,7 +154,7 @@ export default function TripForm({ trips, onAdd, editingTrip, onUpdate, onCancel
               <img src={flagImageUrl(entryCountry)} alt={entryCountry} width={18} height={18} />
             )}
             <span>
-              {SCHENGEN_COUNTRIES.find((c) => c.code === entryCountry)?.name}
+              {countries.find((c) => c.code === entryCountry)?.name}
               {entryCountry && entry ? " · " : ""}
               {formatPreviewDate(entry)}
             </span>
@@ -164,7 +165,7 @@ export default function TripForm({ trips, onAdd, editingTrip, onUpdate, onCancel
               <img src={flagImageUrl(exitCountry)} alt={exitCountry} width={18} height={18} />
             )}
             <span>
-              {SCHENGEN_COUNTRIES.find((c) => c.code === exitCountry)?.name}
+              {countries.find((c) => c.code === exitCountry)?.name}
               {exitCountry && exit ? " · " : ""}
               {formatPreviewDate(exit)}
             </span>
