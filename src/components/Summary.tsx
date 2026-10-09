@@ -1,4 +1,4 @@
-import { ComplianceStatus, Trip, nextAvailableEntry, currentTripProjection, simulateStay } from "../utils/calculator";
+import { ComplianceStatus, Trip, nextAvailableEntry, todayISO as getTodayISO, currentTripProjection, simulateStay } from "../utils/calculator";
 import { useLanguage } from "../i18n/LanguageContext";
 
 interface Props {
@@ -28,7 +28,7 @@ export default function Summary({ status, trips }: Props) {
   const fraction = remainingClamped / 90;
   const dashOffset = CIRCUMFERENCE * (1 - fraction);
 
-  const todayISO = new Date().toISOString().slice(0, 10);
+  const todayISO = getTodayISO();
   const nextEntry = nextAvailableEntry(trips);
   const isAvailableToday = nextEntry === todayISO;
   const projection = currentTripProjection(trips);

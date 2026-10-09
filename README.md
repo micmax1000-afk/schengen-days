@@ -15,6 +15,12 @@ npm run dev
 
 Poi apri l'indirizzo mostrato in terminale (di solito `http://localhost:5173`).
 
+Per eseguire i test del calcolo dei giorni:
+
+```bash
+npm test
+```
+
 ## Pubblicarla gratis su GitHub Pages
 
 Il progetto include già un workflow automatico (`.github/workflows/deploy.yml`):
