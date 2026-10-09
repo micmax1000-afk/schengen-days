@@ -24,6 +24,9 @@ jobs:
       - name: Installa le dipendenze
         run: npm install
 
+      - name: Esegue i test del calcolo
+        run: npm test
+
       - name: Compila il sito web
         run: npm run build
         env:

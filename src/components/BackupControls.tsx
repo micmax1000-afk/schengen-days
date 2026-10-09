@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { useLanguage } from "../i18n/LanguageContext";
+import { todayISO } from "../utils/calculator";
 
 interface Props {
   exportTrips: () => string;
@@ -16,7 +17,7 @@ export default function BackupControls({ exportTrips, importTrips }: Props) {
     const blob = new Blob([json], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
-    const date = new Date().toISOString().slice(0, 10);
+    const date = todayISO();
     a.href = url;
     a.download = `schengen-days-backup-${date}.json`;
     a.click();
@@ -25,7 +26,7 @@ export default function BackupControls({ exportTrips, importTrips }: Props) {
 
   const handleShare = async () => {
     const json = exportTrips();
-    const date = new Date().toISOString().slice(0, 10);
+    const date = todayISO();
     const file = new File([json], `schengen-days-backup-${date}.json`, { type: "application/json" });
 
     let shared = false;

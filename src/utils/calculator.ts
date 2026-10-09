@@ -20,6 +20,17 @@ function toISO(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
 
+/** Converte una data "di calendario" (letta con l'ora locale del dispositivo)
+ *  nella mezzanotte UTC dello stesso giorno, il formato usato internamente. */
+function localDay(date: Date): Date {
+  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+}
+
+/** Data di oggi (ora locale del dispositivo) in formato ISO "YYYY-MM-DD". */
+export function todayISO(now: Date = new Date()): string {
+  return toISO(localDay(now));
+}
+
 /** Vero se il viaggio è ancora in corso (nessuna data di uscita impostata). */
 export function isOngoing(trip: Trip): boolean {
   return !trip.exit;
@@ -27,7 +38,7 @@ export function isOngoing(trip: Trip): boolean {
 
 /** Data di uscita "effettiva" di un viaggio: quella impostata, oppure oggi se ancora in corso. */
 function effectiveExit(trip: Trip): string {
-  return trip.exit && trip.exit.length > 0 ? trip.exit : toISO(new Date());
+  return trip.exit && trip.exit.length > 0 ? trip.exit : todayISO();
 }
 
 /** Numero di giorni di un viaggio, ingresso e uscita inclusi. Se il viaggio
@@ -52,7 +63,11 @@ export function isValidTrip(entry: string, exit?: string): boolean {
  * sommando tutti i viaggi senza contare due volte i giorni sovrapposti.
  */
 export function daysUsedInWindow(trips: Trip[], referenceDate: Date = new Date()): number {
-  const ref = new Date(Date.UTC(referenceDate.getFullYear(), referenceDate.getMonth(), referenceDate.getDate()));
+  return usedInWindowUTC(trips, localDay(referenceDate));
+}
+
+/** Come daysUsedInWindow, ma `ref` è già una mezzanotte UTC (es. da parseISO). */
+function usedInWindowUTC(trips: Trip[], ref: Date): number {
   const windowStart = new Date(ref.getTime() - (WINDOW_SIZE - 1) * MS_PER_DAY);
 
   const occupied = new Set<string>();
@@ -112,7 +127,7 @@ export function tripContaining(dateISO: string, trips: Trip[]): Trip | undefined
 
 /** Vero se la data indicata rientra nella finestra dei 180 giorni terminante in referenceDate. */
 export function isDateInWindow(dateISO: string, referenceDate: Date = new Date()): boolean {
-  const ref = new Date(Date.UTC(referenceDate.getFullYear(), referenceDate.getMonth(), referenceDate.getDate()));
+  const ref = localDay(referenceDate);
   const windowStart = new Date(ref.getTime() - (WINDOW_SIZE - 1) * MS_PER_DAY);
   const d = parseISO(dateISO).getTime();
   return d >= windowStart.getTime() && d <= ref.getTime();
@@ -145,8 +160,7 @@ export function findFutureConflicts(existingTrips: Trip[], candidate: Trip): Fut
     if (!trip.exit || trip.entry <= candidate.entry) continue;
     if (!isValidTrip(trip.entry, trip.exit)) continue;
 
-    const referenceDate = new Date(`${trip.exit}T00:00:00Z`);
-    const used = daysUsedInWindow(allWithCandidate, referenceDate);
+    const used = usedInWindowUTC(allWithCandidate, parseISO(trip.exit));
     if (used > MAX_DAYS) {
       conflicts.push({ trip, used });
     }
@@ -172,14 +186,13 @@ export function currentTripProjection(
   trips: Trip[],
   referenceDate: Date = new Date()
 ): { used: number; remaining: number; exitISO: string } | null {
-  const todayISO = toISO(referenceDate);
+  const today = todayISO(referenceDate);
   const activeFutureTrip = trips.find(
-    (t) => t.exit && t.entry <= todayISO && t.exit > todayISO
+    (t) => t.exit && t.entry <= today && t.exit > today
   );
   if (!activeFutureTrip || !activeFutureTrip.exit) return null;
 
-  const exitDate = new Date(`${activeFutureTrip.exit}T00:00:00Z`);
-  const used = daysUsedInWindow(trips, exitDate);
+  const used = usedInWindowUTC(trips, parseISO(activeFutureTrip.exit));
   return { used, remaining: MAX_DAYS - used, exitISO: activeFutureTrip.exit };
 }
 
@@ -188,14 +201,12 @@ export function nextAvailableEntry(
   referenceDate: Date = new Date(),
   horizonDays = 200
 ): string {
-  const start = new Date(
-    Date.UTC(referenceDate.getFullYear(), referenceDate.getMonth(), referenceDate.getDate())
-  );
+  const start = localDay(referenceDate);
   for (let i = 0; i < horizonDays; i++) {
     const candidate = new Date(start.getTime() + i * MS_PER_DAY);
     const candidateISO = toISO(candidate);
     const probeTrips = [...trips, { id: "__probe__", entry: candidateISO, exit: candidateISO }];
-    const used = daysUsedInWindow(probeTrips, candidate);
+    const used = usedInWindowUTC(probeTrips, candidate);
     if (used <= MAX_DAYS) return candidateISO;
   }
   return toISO(start);
@@ -223,7 +234,7 @@ export function simulateStay(trips: Trip[], entryISO: string, maxHorizonDays = 9
   for (let i = 0; i < maxHorizonDays; i++) {
     const candidateExit = new Date(entry.getTime() + i * MS_PER_DAY);
     const simulatedTrips = [...trips, { id: "__sim__", entry: entryISO, exit: toISO(candidateExit) }];
-    const used = daysUsedInWindow(simulatedTrips, candidateExit);
+    const used = usedInWindowUTC(simulatedTrips, candidateExit);
     if (used > MAX_DAYS) break;
     lastValid = candidateExit;
   }
