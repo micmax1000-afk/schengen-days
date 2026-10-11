@@ -58,6 +58,12 @@ describe.each(["Europe/Rome", "America/New_York", "Pacific/Auckland", "UTC"])("f
   it("calcola lo stato di conformità", () => {
     expect(getComplianceStatus([trip("a", "2026-01-01", "2026-03-11")], local("2026-03-11")).level).toBe("ok"); // 70
     expect(getComplianceStatus([trip("a", "2026-01-01", "2026-03-12")], local("2026-03-12")).level).toBe("warning"); // 71
+    expect(getComplianceStatus([trip("a", "2026-01-01", "2026-03-30")], local("2026-03-30")).level).toBe("warning"); // 89
+    expect(getComplianceStatus([trip("a", "2026-01-01", "2026-03-31")], local("2026-03-31"))).toMatchObject({
+      level: "full",
+      used: 90,
+      remaining: 0,
+    });
     expect(getComplianceStatus([trip("a", "2026-01-01", "2026-04-01")], local("2026-04-01")).level).toBe("over"); // 91
   });
 
@@ -95,6 +101,15 @@ describe.each(["Europe/Rome", "America/New_York", "Pacific/Auckland", "UTC"])("f
       exitISO: "2026-03-20",
     });
     expect(currentTripProjection(trips, local("2026-03-20"))).toBeNull();
+  });
+
+  it("caso reale: 90 giorni dal 15/04 al 13/07, controllo l'11/10", () => {
+    const trips = [trip("a", "2026-04-15", "2026-07-13")];
+    expect(tripDuration(trips[0])).toBe(90);
+    expect(getComplianceStatus(trips, local("2026-10-11"))).toMatchObject({ level: "full", used: 90, remaining: 0 });
+    // Il 15/04 esce dalla finestra il 12/10: da quel giorno si può rientrare
+    expect(nextAvailableEntry(trips, local("2026-10-11"))).toBe("2026-10-12");
+    expect(getComplianceStatus(trips, local("2026-10-12"))).toMatchObject({ level: "warning", used: 89 });
   });
 
   it("trova il prossimo ingresso disponibile", () => {

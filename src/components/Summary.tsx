@@ -20,12 +20,15 @@ export default function Summary({ status, trips }: Props) {
   const LABELS: Record<ComplianceStatus["level"], { icon: string; text: string }> = {
     ok: { icon: "🟢", text: t.statusOk },
     warning: { icon: "🟡", text: t.statusWarning },
+    full: { icon: "🟠", text: t.statusFull },
     over: { icon: "🔴", text: t.statusOver },
   };
 
   const { icon, text } = LABELS[status.level];
   const remainingClamped = Math.max(0, Math.min(90, status.remaining));
-  const fraction = remainingClamped / 90;
+  // Senza giorni rimasti il cerchio si mostra pieno nel colore dello stato
+  // (arancione = limite raggiunto, rosso = superato), invece che vuoto.
+  const fraction = remainingClamped === 0 ? 1 : remainingClamped / 90;
   const dashOffset = CIRCUMFERENCE * (1 - fraction);
 
   const todayISO = getTodayISO();

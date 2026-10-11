@@ -96,18 +96,20 @@ export interface ComplianceStatus {
   used: number;
   remaining: number;
   overLimit: boolean;
-  level: "ok" | "warning" | "over";
+  level: "ok" | "warning" | "full" | "over";
 }
 
 /**
- * Stato di conformità: "ok" fino a 70 giorni usati, "warning" da 71 a 90,
- * "over" oltre i 90 giorni consentiti.
+ * Stato di conformità: "ok" fino a 70 giorni usati, "warning" da 71 a 89,
+ * "full" a 90 esatti (in regola, ma oggi non si può entrare né restare un
+ * giorno in più), "over" oltre i 90 giorni consentiti.
  */
 export function getComplianceStatus(trips: Trip[], referenceDate: Date = new Date()): ComplianceStatus {
   const used = daysUsedInWindow(trips, referenceDate);
   const remaining = MAX_DAYS - used;
   let level: ComplianceStatus["level"] = "ok";
   if (used > MAX_DAYS) level = "over";
+  else if (used === MAX_DAYS) level = "full";
   else if (used >= 71) level = "warning";
   return { used, remaining, overLimit: used > MAX_DAYS, level };
 }
