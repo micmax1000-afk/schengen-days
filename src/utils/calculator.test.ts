@@ -110,6 +110,9 @@ describe.each(["Europe/Rome", "America/New_York", "Pacific/Auckland", "UTC"])("f
     // Il 15/04 esce dalla finestra il 12/10: da quel giorno si può rientrare
     expect(nextAvailableEntry(trips, local("2026-10-11"))).toBe("2026-10-12");
     expect(getComplianceStatus(trips, local("2026-10-12"))).toMatchObject({ level: "warning", used: 89 });
+    // Entrando il 12/10 ogni giorno se ne libera uno: si può restare 90 giorni,
+    // fino al 09/01/27 (quando il 13/07 esce dalla finestra)
+    expect(simulateStay(trips, "2026-10-12")).toMatchObject({ daysAllowed: 90, maxExit: "2027-01-09" });
   });
 
   it("trova il prossimo ingresso disponibile", () => {

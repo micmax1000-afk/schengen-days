@@ -35,7 +35,9 @@ export default function Summary({ status, trips }: Props) {
   const nextEntry = nextAvailableEntry(trips);
   const isAvailableToday = nextEntry === todayISO;
   const projection = currentTripProjection(trips);
-  const todayStay = isAvailableToday ? simulateStay(trips, todayISO) : null;
+  // Fin quando si potrebbe restare entrando alla prossima data disponibile
+  // (oggi o più avanti), mostrato sempre accanto alla data di ingresso.
+  const nextStay = simulateStay(trips, nextEntry);
 
   return (
     <section className={`summary summary--${status.level}`}>
@@ -79,8 +81,8 @@ export default function Summary({ status, trips }: Props) {
       <p className="summary__next-entry">
         {t.nextAvailableEntry}{" "}
         <strong>{isAvailableToday ? t.availableToday : formatDate(nextEntry)}</strong>
-        {isAvailableToday && todayStay && !todayStay.alreadyOverAtEntry && todayStay.maxExit && (
-          <> ({t.countdownUntil} <strong>{formatDate(todayStay.maxExit)}</strong>)</>
+        {!nextStay.alreadyOverAtEntry && nextStay.maxExit && (
+          <> ({t.countdownUntil} <strong>{formatDate(nextStay.maxExit)}</strong>)</>
         )}
       </p>
 
