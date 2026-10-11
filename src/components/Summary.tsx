@@ -55,17 +55,21 @@ export default function Summary({ status, trips }: Props) {
       </div>
 
       <div className="summary__row">
-        <div>
+        <div className="summary__stat">
           <p className="summary__label">{t.totalLast180}</p>
-          <p className="summary__value">{status.used} {t.daysUnit}</p>
+          <p className="summary__value">
+            {status.used}<span className="summary__unit"> {t.daysUnit}</span>
+          </p>
         </div>
-        <div>
+        <div className="summary__stat">
           <p className="summary__label">{t.daysRemaining}</p>
-          <p className="summary__value">{Math.max(0, status.remaining)} {t.daysUnit}</p>
+          <p className="summary__value">
+            {Math.max(0, status.remaining)}<span className="summary__unit"> {t.daysUnit}</span>
+          </p>
         </div>
       </div>
 
-      <p className="summary__status">
+      <p className={`summary__status summary__status--${status.level}`}>
         {icon} {text}
       </p>
 

@@ -59,8 +59,8 @@ export default function App() {
         <BackupControls exportTrips={exportTrips} importTrips={importTrips} />
       </main>
       <footer className="app__footer">
+        <p className="app__notice">⚠️ {t.disclaimer}</p>
         <p>{t.footerNote}</p>
-        <p className="app__disclaimer">{t.disclaimer}</p>
         <p className="app__disclaimer">{t.liabilityDisclaimer}</p>
 
         <div className="app__sources">
