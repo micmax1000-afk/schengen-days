@@ -78,14 +78,32 @@ export default function Summary({ status, trips }: Props) {
         {icon} {text}
       </p>
 
-      <p className="summary__next-entry">
-        {t.nextAvailableEntry}{" "}
-        <strong>{isAvailableToday ? t.availableToday : formatDate(nextEntry)}</strong>
-        {!nextStay.alreadyOverAtEntry && nextStay.maxExit && (
-          <> ({t.countdownUntil} <strong>{formatDate(nextStay.maxExit)}</strong>)</>
+      <div className="summary__next">
+        <div className="summary__next-row">
+          <div className="summary__next-cell">
+            <p className="summary__label">{t.nextEntryLabel}</p>
+            <p className={`summary__next-date${isAvailableToday ? " summary__next-date--today" : ""}`}>
+              {isAvailableToday ? t.todayLabel : formatDate(nextEntry)}
+            </p>
+            {isAvailableToday && <p className="summary__next-sub">{formatDate(nextEntry)}</p>}
+          </div>
+          {!nextStay.alreadyOverAtEntry && nextStay.maxExit && (
+            <div className="summary__next-cell">
+              <p className="summary__label">{t.stayUntilLabel}</p>
+              <p className="summary__next-date">{formatDate(nextStay.maxExit)}</p>
+              <p className="summary__next-sub">
+                {nextStay.daysAllowed} {t.daysUnit}
+              </p>
+            </div>
+          )}
+        </div>
+        {nextStay.limitingTrip && (
+          <p className="summary__planned-note">
+            <span aria-hidden="true">📅</span>
+            {t.limitedByPlanned(formatDate(nextStay.limitingTrip.entry), formatDate(nextStay.limitingTrip.exit!))}
+          </p>
         )}
-      </p>
-      {nextStay.limitedByPlanned && <p className="summary__planned-note">{t.limitedByPlanned}</p>}
+      </div>
 
       {projection && (
         <p className="summary__projection">

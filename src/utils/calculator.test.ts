@@ -123,9 +123,9 @@ describe.each(["Europe/Rome", "America/New_York", "Pacific/Auckland", "UTC"])("f
     expect(simulateStay(planned, "2026-10-12")).toMatchObject({
       daysAllowed: 60,
       maxExit: "2026-12-10",
-      limitedByPlanned: true,
+      limitingTrip: planned[0],
     });
-    expect(simulateStay([], "2026-10-12").limitedByPlanned).toBe(false);
+    expect(simulateStay([], "2026-10-12").limitingTrip).toBeNull();
     // Restando fino al 10/12 il viaggio pianificato resta valido
     expect(
       findFutureConflicts(planned, trip("s", "2026-10-12", "2026-12-10"))
@@ -155,7 +155,7 @@ describe.each(["Europe/Rome", "America/New_York", "Pacific/Auckland", "UTC"])("f
       alreadyOverAtEntry: false,
       daysAllowed: 90,
       maxExit: "2026-03-31",
-      limitedByPlanned: false,
+      limitingTrip: null,
     });
     const trips = [trip("a", "2026-01-01", "2026-01-30")]; // 30 giorni
     expect(simulateStay(trips, "2026-02-01")).toMatchObject({ daysAllowed: 60, maxExit: "2026-04-01" });
@@ -163,7 +163,7 @@ describe.each(["Europe/Rome", "America/New_York", "Pacific/Auckland", "UTC"])("f
       alreadyOverAtEntry: true,
       daysAllowed: 0,
       maxExit: null,
-      limitedByPlanned: false,
+      limitingTrip: null,
     });
   });
 });

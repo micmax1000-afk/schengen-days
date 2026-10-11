@@ -206,6 +206,12 @@ export function currentTripProjection(
  * avanti: un soggiorno è valido solo se non compromette nemmeno quelli.
  */
 function stayExceedsLimit(trips: Trip[], stayEntry: string, stayExit: string): boolean {
+  return firstViolation(trips, stayEntry, stayExit) !== null;
+}
+
+/** Come stayExceedsLimit, ma restituisce il primo giorno (ISO) in cui la
+ *  finestra di 180 giorni supera i 90, oppure null se non succede mai. */
+function firstViolation(trips: Trip[], stayEntry: string, stayExit: string): string | null {
   const occupied = new Set<number>();
   const addRange = (from: string, to: string) => {
     const end = parseISO(to).getTime() / MS_PER_DAY;
@@ -227,9 +233,9 @@ function stayExceedsLimit(trips: Trip[], stayEntry: string, stayExit: string): b
     const d = days[hi];
     while (days[lo] < d - (WINDOW_SIZE - 1)) lo++;
     const windowTouchesStay = d >= stayStart && d - (WINDOW_SIZE - 1) <= stayEnd;
-    if (windowTouchesStay && hi - lo + 1 > MAX_DAYS) return true;
+    if (windowTouchesStay && hi - lo + 1 > MAX_DAYS) return toISO(new Date(d * MS_PER_DAY));
   }
-  return false;
+  return null;
 }
 
 export function nextAvailableEntry(
@@ -253,8 +259,10 @@ export interface StaySimulation {
   daysAllowed: number;
   /** Ultima data di uscita consentita (ISO), oppure null se 0 giorni sono consentiti. */
   maxExit: string | null;
-  /** Vero se il soggiorno è più corto di quanto sarebbe senza i viaggi pianificati dopo l'ingresso. */
-  limitedByPlanned: boolean;
+  /** Il viaggio già pianificato dopo l'ingresso che impedisce di restare
+   *  più a lungo (restando un giorno in più gli farebbe superare i 90
+   *  giorni), oppure null se il limite dipende solo dai viaggi passati. */
+  limitingTrip: Trip | null;
 }
 
 /**
@@ -266,25 +274,23 @@ export interface StaySimulation {
 export function simulateStay(trips: Trip[], entryISO: string, maxHorizonDays = 90): StaySimulation {
   const entry = parseISO(entryISO);
   let lastValid: Date | null = null;
+  let violationISO: string | null = null;
 
   for (let i = 0; i < maxHorizonDays; i++) {
     const candidateExit = new Date(entry.getTime() + i * MS_PER_DAY);
-    if (stayExceedsLimit(trips, entryISO, toISO(candidateExit))) break;
+    violationISO = firstViolation(trips, entryISO, toISO(candidateExit));
+    if (violationISO) break;
     lastValid = candidateExit;
   }
 
-  const daysAllowed = lastValid
-    ? Math.round((lastValid.getTime() - entry.getTime()) / MS_PER_DAY) + 1
-    : 0;
-
-  // Confronto con lo stesso calcolo senza i viaggi che iniziano dopo
-  // l'ingresso, per poter spiegare all'utente perché il soggiorno è più corto.
-  const earlier = trips.filter((t) => t.entry <= entryISO);
-  const limitedByPlanned =
-    earlier.length < trips.length && simulateStay(earlier, entryISO, maxHorizonDays).daysAllowed > daysAllowed;
+  // Se il soggiorno si ferma perché farebbe sforare un viaggio già
+  // pianificato più avanti, lo indichiamo per spiegarlo all'utente.
+  const violatedTrip = violationISO ? tripContaining(violationISO, trips) : undefined;
+  const limitingTrip = violatedTrip && violatedTrip.entry > entryISO ? violatedTrip : null;
 
   if (!lastValid) {
-    return { alreadyOverAtEntry: true, daysAllowed: 0, maxExit: null, limitedByPlanned };
+    return { alreadyOverAtEntry: true, daysAllowed: 0, maxExit: null, limitingTrip };
   }
-  return { alreadyOverAtEntry: false, daysAllowed, maxExit: toISO(lastValid), limitedByPlanned };
+  const daysAllowed = Math.round((lastValid.getTime() - entry.getTime()) / MS_PER_DAY) + 1;
+  return { alreadyOverAtEntry: false, daysAllowed, maxExit: toISO(lastValid), limitingTrip };
 }
