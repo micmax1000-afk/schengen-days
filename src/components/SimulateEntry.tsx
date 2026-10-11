@@ -1,4 +1,4 @@
-import { useState, FormEvent } from "react";
+import { useState } from "react";
 import { Trip, simulateStay } from "../utils/calculator";
 import { useLanguage } from "../i18n/LanguageContext";
 
@@ -14,25 +14,20 @@ function formatDate(iso: string): string {
 export default function SimulateEntry({ trips }: Props) {
   const { t } = useLanguage();
   const [entryDate, setEntryDate] = useState("");
-  const [result, setResult] = useState<ReturnType<typeof simulateStay> | null>(null);
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (!entryDate) return;
-    setResult(simulateStay(trips, entryDate));
-  };
+  // Ricalcolato a ogni render: si aggiorna da solo quando cambia la data o
+  // quando si aggiungono, modificano o eliminano viaggi.
+  const result = entryDate ? simulateStay(trips, entryDate) : null;
 
   return (
     <section className="simulate">
       <h2 className="simulate__title">{t.simulateTitle}</h2>
       <p className="simulate__hint">{t.simulateHint}</p>
-      <form className="simulate__form" onSubmit={handleSubmit}>
+      <div className="simulate__form">
         <label>
           {t.simulateEntryLabel}
-          <input type="date" value={entryDate} onChange={(e) => setEntryDate(e.target.value)} required />
+          <input type="date" value={entryDate} onChange={(e) => setEntryDate(e.target.value)} />
         </label>
-        <button type="submit">{t.simulateButton}</button>
-      </form>
+      </div>
 
       {result && (
         <div className={`simulate__result${result.alreadyOverAtEntry ? " simulate__result--over" : ""}`}>
@@ -41,6 +36,7 @@ export default function SimulateEntry({ trips }: Props) {
               ? t.simulateOver(formatDate(entryDate))
               : t.simulateOk(formatDate(entryDate), formatDate(result.maxExit!), result.daysAllowed)}
           </p>
+          {result.limitedByPlanned && <p className="simulate__planned-note">{t.limitedByPlanned}</p>}
         </div>
       )}
     </section>

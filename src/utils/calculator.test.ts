@@ -115,6 +115,34 @@ describe.each(["Europe/Rome", "America/New_York", "Pacific/Auckland", "UTC"])("f
     expect(simulateStay(trips, "2026-10-12")).toMatchObject({ daysAllowed: 90, maxExit: "2027-01-09" });
   });
 
+  it("la simulazione tiene conto dei viaggi già pianificati più avanti", () => {
+    // Viaggio pianificato dal 15/12 al 13/01 (30 giorni). Entrando il 12/10
+    // si può restare al massimo 60 giorni, fino al 10/12: altrimenti nella
+    // finestra che termina il 13/01 si supererebbero i 90 giorni.
+    const planned = [trip("p", "2026-12-15", "2027-01-13")];
+    expect(simulateStay(planned, "2026-10-12")).toMatchObject({
+      daysAllowed: 60,
+      maxExit: "2026-12-10",
+      limitedByPlanned: true,
+    });
+    expect(simulateStay([], "2026-10-12").limitedByPlanned).toBe(false);
+    // Restando fino al 10/12 il viaggio pianificato resta valido
+    expect(
+      findFutureConflicts(planned, trip("s", "2026-10-12", "2026-12-10"))
+    ).toEqual([]);
+    expect(findFutureConflicts(planned, trip("s", "2026-10-12", "2026-12-11"))).toHaveLength(1);
+  });
+
+  it("il prossimo ingresso non compromette i viaggi pianificati", () => {
+    // 60 giorni già fatti + 30 pianificati dal 01/12: in ottobre e novembre
+    // non si può aggiungere nemmeno un giorno senza superare il limite il
+    // 30/12. Il primo ingresso possibile è l'inizio del viaggio pianificato.
+    const trips = [trip("a", "2026-08-01", "2026-09-29"), trip("p", "2026-12-01", "2026-12-30")];
+    expect(daysUsedInWindow(trips, local("2026-12-30"))).toBe(90);
+    expect(daysUsedInWindow(trips, local("2026-10-12"))).toBe(60);
+    expect(nextAvailableEntry(trips, local("2026-10-12"))).toBe("2026-12-01");
+  });
+
   it("trova il prossimo ingresso disponibile", () => {
     const trips = [trip("a", "2026-01-01", "2026-03-31")];
     expect(nextAvailableEntry([], local("2026-04-01"))).toBe("2026-04-01");
@@ -127,6 +155,7 @@ describe.each(["Europe/Rome", "America/New_York", "Pacific/Auckland", "UTC"])("f
       alreadyOverAtEntry: false,
       daysAllowed: 90,
       maxExit: "2026-03-31",
+      limitedByPlanned: false,
     });
     const trips = [trip("a", "2026-01-01", "2026-01-30")]; // 30 giorni
     expect(simulateStay(trips, "2026-02-01")).toMatchObject({ daysAllowed: 60, maxExit: "2026-04-01" });
@@ -134,6 +163,7 @@ describe.each(["Europe/Rome", "America/New_York", "Pacific/Auckland", "UTC"])("f
       alreadyOverAtEntry: true,
       daysAllowed: 0,
       maxExit: null,
+      limitedByPlanned: false,
     });
   });
 });

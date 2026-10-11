@@ -85,6 +85,7 @@ export default function Summary({ status, trips }: Props) {
           <> ({t.countdownUntil} <strong>{formatDate(nextStay.maxExit)}</strong>)</>
         )}
       </p>
+      {nextStay.limitedByPlanned && <p className="summary__planned-note">{t.limitedByPlanned}</p>}
 
       {projection && (
         <p className="summary__projection">

@@ -42,6 +42,7 @@ export interface Dict {
   statusOk: string;
   statusWarning: string;
   statusFull: string;
+  limitedByPlanned: string;
   statusOver: string;
   tripsTitle: string;
   nextAvailableEntry: string;
@@ -56,7 +57,6 @@ export interface Dict {
   simulateTitle: string;
   simulateHint: string;
   simulateEntryLabel: string;
-  simulateButton: string;
   simulateOver: (date: string) => string;
   simulateOk: (entry: string, exit: string, days: number) => string;
   futureConflictWarning: (tripEntry: string, tripExit: string, used: number) => string;
@@ -114,6 +114,7 @@ export const translations: Record<Lang, Dict> = {
     statusOk: "Vous êtes en règle",
     statusWarning: "Attention : vous approchez de la limite",
     statusFull: "Limite atteinte : vous ne pourrez entrer qu'à partir de la date ci-dessous",
+    limitedByPlanned: "⚠️ Limité par les voyages que vous avez déjà prévus plus tard.",
     statusOver: "Limite dépassée !",
     tripsTitle: "Vos voyages",
     nextAvailableEntry: "Prochaine entrée possible :",
@@ -135,7 +136,6 @@ export const translations: Record<Lang, Dict> = {
     importConfirm: "L'importation remplacera tous les séjours actuels par ceux du fichier. Continuer ?",
     simulateHint: "« Si j'entre le [date], quand devrai-je sortir au plus tard ? »",
     simulateEntryLabel: "Date d'entrée hypothétique",
-    simulateButton: "Calculer",
     simulateOver: (d) => `🔴 D'après vos séjours déjà enregistrés, le ${d} vous dépasseriez déjà la limite : vous ne pourriez pas entrer ce jour-là sans dépasser la règle des 90/180 jours.`,
     disclaimer: "Application indépendante, non affiliée à l'Union européenne ni à aucun gouvernement.",
     privacyLink: "Politique de confidentialité",
@@ -184,6 +184,7 @@ export const translations: Record<Lang, Dict> = {
     statusOk: "הכל בסדר",
     statusWarning: "אזהרה: מתקרב למגבלה",
     statusFull: "הגעת למגבלה: תוכל להיכנס רק מהתאריך שלהלן",
+    limitedByPlanned: "⚠️ מוגבל בגלל נסיעות שכבר תכננת בהמשך.",
     statusOver: "המגבלה חורגה!",
     tripsTitle: "הנסיעות שלך",
     nextAvailableEntry: "הכניסה הבאה האפשרית:",
@@ -198,7 +199,6 @@ export const translations: Record<Lang, Dict> = {
     simulateTitle: "סימולציה של כניסה עתידית",
     simulateHint: "\"אם אכנס בתאריך [תאריך], מתי עלי לצאת לכל המאוחר?\"",
     simulateEntryLabel: "תאריך כניסה משוער",
-    simulateButton: "חשב",
     simulateOver: (d) => `🔴 בהתבסס על הנסיעות הרשומות, בתאריך ${d} כבר תהיה מעבר למגבלה: לא תוכל להיכנס באותו יום מבלי לחרוג מכלל 90/180 הימים.`,
     disclaimer: "אפליקציה עצמאית, שאינה קשורה לאיחוד האירופי או לכל ממשלה.",
     privacyLink: "מדיניות פרטיות",
@@ -254,6 +254,7 @@ export const translations: Record<Lang, Dict> = {
     statusOk: "Sei in regola",
     statusWarning: "Attenzione: ti stai avvicinando al limite",
     statusFull: "Limite raggiunto: potrai entrare solo dalla data qui sotto",
+    limitedByPlanned: "⚠️ Limitato dai viaggi che hai già pianificato più avanti.",
     statusOver: "Limite superato!",
     tripsTitle: "I tuoi viaggi",
     nextAvailableEntry: "Prossimo ingresso disponibile:",
@@ -275,7 +276,6 @@ export const translations: Record<Lang, Dict> = {
     importConfirm: "Importando sostituirai tutti i viaggi attuali con quelli del file. Continuare?",
     simulateHint: "\"Se entro il [data], quando dovrò uscire al massimo?\"",
     simulateEntryLabel: "Data ingresso ipotizzata",
-    simulateButton: "Calcola",
     simulateOver: (d) => `🔴 Con i viaggi già registrati, il ${d} risulteresti già oltre il limite: non potresti entrare quel giorno senza superare i 90/180 giorni.`,
     disclaimer: "Applicazione indipendente, non affiliata all'Unione Europea né ad alcun governo.",
     privacyLink: "Informativa sulla privacy",
@@ -324,6 +324,7 @@ export const translations: Record<Lang, Dict> = {
     statusOk: "You're in good standing",
     statusWarning: "Warning: getting close to the limit",
     statusFull: "Limit reached: you can only enter from the date below",
+    limitedByPlanned: "⚠️ Limited by trips you have already planned later on.",
     statusOver: "Limit exceeded!",
     tripsTitle: "Your trips",
     nextAvailableEntry: "Next available entry:",
@@ -345,7 +346,6 @@ export const translations: Record<Lang, Dict> = {
     importConfirm: "Importing will replace all current trips with those from the file. Continue?",
     simulateHint: "\"If I enter on [date], when must I leave at the latest?\"",
     simulateEntryLabel: "Hypothetical entry date",
-    simulateButton: "Calculate",
     simulateOver: (d) => `🔴 Based on your recorded trips, on ${d} you'd already be over the limit: you couldn't enter that day without exceeding 90/180 days.`,
     disclaimer: "Independent application, not affiliated with the European Union or any government.",
     privacyLink: "Privacy Policy",
@@ -394,6 +394,7 @@ export const translations: Record<Lang, Dict> = {
     statusOk: "情况正常",
     statusWarning: "注意：即将接近上限",
     statusFull: "已达上限：只能从以下日期起入境",
+    limitedByPlanned: "⚠️ 受您之后已计划的行程限制。",
     statusOver: "已超出限制！",
     tripsTitle: "您的行程",
     nextAvailableEntry: "下次可入境日期：",
@@ -415,7 +416,6 @@ export const translations: Record<Lang, Dict> = {
     importConfirm: "导入将用文件中的行程替换所有当前行程。是否继续？",
     simulateHint: "「如果我在[日期]入境，最晚什么时候必须离境？」",
     simulateEntryLabel: "假设的入境日期",
-    simulateButton: "计算",
     simulateOver: (d) => `🔴 根据已记录的行程，${d} 当天你已经超出限制：当天入境将超过90/180天规则。`,
     disclaimer: "独立应用程序，与欧盟或任何政府无关。",
     privacyLink: "隐私政策",
@@ -464,6 +464,7 @@ export const translations: Record<Lang, Dict> = {
     statusOk: "وضعك سليم",
     statusWarning: "تنبيه: تقترب من الحد الأقصى",
     statusFull: "تم بلوغ الحد: يمكنك الدخول فقط اعتبارًا من التاريخ أدناه",
+    limitedByPlanned: "⚠️ مقيَّد بالرحلات التي خططت لها لاحقًا.",
     statusOver: "تم تجاوز الحد!",
     tripsTitle: "رحلاتك",
     nextAvailableEntry: "تاريخ الدخول المتاح التالي:",
@@ -485,7 +486,6 @@ export const translations: Record<Lang, Dict> = {
     importConfirm: "سيؤدي الاستيراد إلى استبدال جميع الرحلات الحالية بتلك الموجودة في الملف. هل تريد المتابعة؟",
     simulateHint: "«إذا دخلت في [التاريخ]، متى يجب أن أخرج على الأكثر؟»",
     simulateEntryLabel: "تاريخ الدخول الافتراضي",
-    simulateButton: "احسب",
     simulateOver: (d) => `🔴 بناءً على رحلاتك المسجلة، في ${d} ستكون بالفعل قد تجاوزت الحد: لا يمكنك الدخول ذلك اليوم دون تجاوز قاعدة 90/180 يومًا.`,
     disclaimer: "تطبيق مستقل، غير تابع للاتحاد الأوروبي أو لأي حكومة.",
     privacyLink: "سياسة الخصوصية",
@@ -534,6 +534,7 @@ export const translations: Record<Lang, Dict> = {
     statusOk: "Estás en regla",
     statusWarning: "Atención: te acercas al límite",
     statusFull: "Límite alcanzado: solo podrás entrar a partir de la fecha indicada abajo",
+    limitedByPlanned: "⚠️ Limitado por los viajes que ya tienes planificados más adelante.",
     statusOver: "¡Límite superado!",
     tripsTitle: "Tus viajes",
     nextAvailableEntry: "Próxima entrada disponible:",
@@ -555,7 +556,6 @@ export const translations: Record<Lang, Dict> = {
     importConfirm: "Al importar se reemplazarán todos los viajes actuales por los del archivo. ¿Continuar?",
     simulateHint: "\"Si entro el [fecha], ¿cuándo debo salir como máximo?\"",
     simulateEntryLabel: "Fecha de entrada hipotética",
-    simulateButton: "Calcular",
     simulateOver: (d) => `🔴 Según tus viajes registrados, el ${d} ya estarías fuera del límite: no podrías entrar ese día sin superar los 90/180 días.`,
     disclaimer: "Aplicación independiente, no afiliada a la Unión Europea ni a ningún gobierno.",
     privacyLink: "Política de privacidad",
@@ -604,6 +604,7 @@ export const translations: Record<Lang, Dict> = {
     statusOk: "Está em conformidade",
     statusWarning: "Atenção: a aproximar-se do limite",
     statusFull: "Limite atingido: só poderá entrar a partir da data abaixo",
+    limitedByPlanned: "⚠️ Limitado pelas viagens que já tem planeadas mais à frente.",
     statusOver: "Limite ultrapassado!",
     tripsTitle: "As suas viagens",
     nextAvailableEntry: "Próxima entrada disponível:",
@@ -625,7 +626,6 @@ export const translations: Record<Lang, Dict> = {
     importConfirm: "A importação substituirá todas as viagens atuais pelas do ficheiro. Continuar?",
     simulateHint: "\"Se entrar a [data], quando devo sair no máximo?\"",
     simulateEntryLabel: "Data de entrada hipotética",
-    simulateButton: "Calcular",
     simulateOver: (d) => `🔴 Com base nas viagens já registadas, a ${d} já estaria fora do limite: não poderia entrar nesse dia sem ultrapassar os 90/180 dias.`,
     disclaimer: "Aplicação independente, não afiliada à União Europeia nem a qualquer governo.",
     privacyLink: "Política de privacidade",
@@ -674,6 +674,7 @@ export const translations: Record<Lang, Dict> = {
     statusOk: "Всё в порядке",
     statusWarning: "Внимание: приближение к лимиту",
     statusFull: "Лимит достигнут: въезд возможен только с даты ниже",
+    limitedByPlanned: "⚠️ Ограничено поездками, которые вы уже запланировали позже.",
     statusOver: "Лимит превышен!",
     tripsTitle: "Ваши поездки",
     nextAvailableEntry: "Следующая доступная дата въезда:",
@@ -695,7 +696,6 @@ export const translations: Record<Lang, Dict> = {
     importConfirm: "Импорт заменит все текущие поездки данными из файла. Продолжить?",
     simulateHint: "«Если я въеду [дата], когда мне нужно будет выехать самое позднее?»",
     simulateEntryLabel: "Предполагаемая дата въезда",
-    simulateButton: "Рассчитать",
     simulateOver: (d) => `🔴 Судя по уже записанным поездкам, ${d} лимит уже будет превышен: в этот день въезд невозможен без превышения правила 90/180 дней.`,
     disclaimer: "Независимое приложение, не связанное с Европейским союзом или каким-либо правительством.",
     privacyLink: "Политика конфиденциальности",
@@ -744,6 +744,7 @@ export const translations: Record<Lang, Dict> = {
     statusOk: "आप नियमों के अनुरूप हैं",
     statusWarning: "चेतावनी: सीमा के करीब पहुँच रहे हैं",
     statusFull: "सीमा पूरी हो गई: आप नीचे दी गई तिथि से ही प्रवेश कर सकते हैं",
+    limitedByPlanned: "⚠️ आगे पहले से योजनाबद्ध आपकी यात्राओं के कारण सीमित।",
     statusOver: "सीमा पार हो गई!",
     tripsTitle: "आपकी यात्राएँ",
     nextAvailableEntry: "अगली उपलब्ध प्रवेश तिथि:",
@@ -765,7 +766,6 @@ export const translations: Record<Lang, Dict> = {
     importConfirm: "आयात करने से सभी मौजूदा यात्राएं फ़ाइल की यात्राओं से बदल दी जाएंगी। जारी रखें?",
     simulateHint: "\"अगर मैं [तारीख] को प्रवेश करूं, तो मुझे अधिकतम कब तक निकलना होगा?\"",
     simulateEntryLabel: "काल्पनिक प्रवेश तिथि",
-    simulateButton: "गणना करें",
     simulateOver: (d) => `🔴 पहले से दर्ज यात्राओं के अनुसार, ${d} को आप पहले ही सीमा से अधिक होंगे: उस दिन 90/180 दिनों की सीमा पार किए बिना प्रवेश संभव नहीं है।`,
     disclaimer: "स्वतंत्र एप्लिकेशन, यूरोपीय संघ या किसी भी सरकार से संबद्ध नहीं।",
     privacyLink: "गोपनीयता नीति",

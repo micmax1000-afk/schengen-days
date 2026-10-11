@@ -175,7 +175,7 @@ select {
   outline: none;
   border-color: var(--petrol-light);
   box-shadow: 0 0 0 3px rgba(22, 119, 125, 0.15);
-  background: var(--card);
+  background-color: var(--card);
 }
 
 /* ---------- Riepilogo ---------- */
@@ -362,6 +362,14 @@ select {
 
 .summary__next-entry strong {
   color: var(--ink);
+}
+
+.summary__planned-note,
+.simulate__planned-note {
+  margin: 8px 0 0 !important;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--amber-dark);
 }
 
 .summary__projection {
@@ -833,21 +841,6 @@ select {
   min-width: 0;
 }
 
-.simulate__form button {
-  min-height: 46px;
-  background: var(--amber);
-  color: #fff;
-  border: none;
-  border-radius: 999px;
-  padding: 10px 22px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: filter 0.15s ease;
-}
-
-.simulate__form button:hover {
-  filter: brightness(1.08);
-}
 
 .simulate__result {
   margin-top: 14px;
