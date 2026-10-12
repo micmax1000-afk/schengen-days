@@ -251,6 +251,22 @@ function firstViolation(trips: Trip[], stayEntry: string, stayExit: string): str
   return null;
 }
 
+export interface TripCheck {
+  /** Vero se il viaggio rispetta il limite, anche per i viaggi pianificati dopo. */
+  ok: boolean;
+  /** Giorni usati nella finestra di 180 giorni che termina il giorno di uscita. */
+  usedAtExit: number;
+}
+
+/** Verifica un viaggio ipotetico con ingresso e uscita, senza salvarlo. */
+export function checkTrip(trips: Trip[], entryISO: string, exitISO: string): TripCheck {
+  const withTrip = [...trips, { id: "__check__", entry: entryISO, exit: exitISO }];
+  return {
+    ok: !stayExceedsLimit(trips, entryISO, exitISO),
+    usedAtExit: usedInWindowUTC(withTrip, parseISO(exitISO)),
+  };
+}
+
 export function nextAvailableEntry(
   trips: Trip[],
   referenceDate: Date = new Date(),

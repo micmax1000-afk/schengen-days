@@ -7,6 +7,7 @@ import {
   getComplianceStatus,
   isDateInWindow,
   nextAvailableEntry,
+  checkTrip,
   plannedDaysAfter,
   simulateStay,
   todayISO,
@@ -142,6 +143,14 @@ describe.each(["Europe/Rome", "America/New_York", "Pacific/Auckland", "UTC"])("f
     expect(daysUsedInWindow(trips, local("2026-12-30"))).toBe(90);
     expect(daysUsedInWindow(trips, local("2026-10-12"))).toBe(60);
     expect(nextAvailableEntry(trips, local("2026-10-12"))).toBe("2026-12-01");
+  });
+
+  it("verifica un viaggio ipotetico con ingresso e uscita", () => {
+    const trips = [trip("a", "2026-08-01", "2026-08-30"), trip("p", "2026-12-15", "2027-01-13")];
+    // 30 + 20 + 30 = 80 nella finestra del 13/01: va bene
+    expect(checkTrip(trips, "2026-11-01", "2026-11-20")).toEqual({ ok: true, usedAtExit: 50 });
+    // 30 + 31 + 30 = 91: non va bene, anche se al rientro (01/12) i giorni usati sono 61
+    expect(checkTrip(trips, "2026-11-01", "2026-12-01")).toEqual({ ok: false, usedAtExit: 61 });
   });
 
   it("conta i giorni pianificati dopo oggi", () => {

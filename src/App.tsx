@@ -7,13 +7,16 @@ import CalendarView from "./components/CalendarView";
 import SimulateEntry from "./components/SimulateEntry";
 import BackupControls from "./components/BackupControls";
 import { useLocalTrips } from "./utils/useLocalTrips";
-import { getComplianceStatus, Trip } from "./utils/calculator";
+import { getComplianceStatus, simulateStay, isValidTrip, Trip } from "./utils/calculator";
 import { useLanguage } from "./i18n/LanguageContext";
 import { APP_VERSION } from "./version";
 
 export default function App() {
   const { trips, addTrip, removeTrip, updateTrip, exportTrips, importTrips } = useLocalTrips();
   const [editingTrip, setEditingTrip] = useState<Trip | null>(null);
+  // Viaggio simulato: condiviso tra la simulazione e il calendario
+  const [simEntry, setSimEntry] = useState("");
+  const [simExit, setSimExit] = useState("");
   const status = getComplianceStatus(trips);
   const { t } = useLanguage();
 
@@ -30,6 +33,24 @@ export default function App() {
     updateTrip(id, entry, exit, entryCountry, exitCountry, note);
     setEditingTrip(null);
   };
+  const handleSimChange = (entry: string, exit: string) => {
+    setSimEntry(entry);
+    setSimExit(exit);
+  };
+  const handleAddPlanned = (entry: string, exit: string) => {
+    addTrip(entry, exit);
+    setSimEntry("");
+    setSimExit("");
+  };
+  // Giorni da evidenziare nel calendario: il viaggio simulato con la sua
+  // uscita, oppure (solo ingresso) fino all'uscita massima consentita.
+  const simRange = (() => {
+    if (!simEntry) return null;
+    if (simExit) return isValidTrip(simEntry, simExit) ? { entry: simEntry, exit: simExit } : null;
+    const stay = simulateStay(trips, simEntry);
+    return stay.maxExit ? { entry: simEntry, exit: stay.maxExit } : null;
+  })();
+
   const handleRemove = (id: string) => {
     if (editingTrip?.id === id) setEditingTrip(null);
     removeTrip(id);
@@ -54,8 +75,14 @@ export default function App() {
           editingId={editingTrip?.id}
           remainingDays={status.remaining}
         />
-        <CalendarView trips={trips} />
-        <SimulateEntry trips={trips} />
+        <CalendarView trips={trips} simulated={simRange} />
+        <SimulateEntry
+          trips={trips}
+          entryDate={simEntry}
+          exitDate={simExit}
+          onChange={handleSimChange}
+          onAddPlanned={handleAddPlanned}
+        />
         <BackupControls exportTrips={exportTrips} importTrips={importTrips} />
       </main>
       <footer className="app__footer">
