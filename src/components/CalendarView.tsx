@@ -80,7 +80,8 @@ export default function CalendarView({ trips }: Props) {
           const isToday = iso === todayISO;
 
           const classes = ["calendar__cell"];
-          if (inTrip) classes.push("calendar__cell--trip");
+          if (inTrip && iso > todayISO) classes.push("calendar__cell--planned");
+          else if (inTrip) classes.push("calendar__cell--trip");
           else if (inWindow) classes.push("calendar__cell--window");
           if (isToday) classes.push("calendar__cell--today");
 
@@ -94,6 +95,7 @@ export default function CalendarView({ trips }: Props) {
 
       <div className="calendar__legend">
         <span><i className="calendar__dot calendar__dot--trip" /> {t.legendTrip}</span>
+        <span><i className="calendar__dot calendar__dot--planned" /> {t.legendPlanned}</span>
         <span><i className="calendar__dot calendar__dot--window" /> {t.legendWindow}</span>
       </div>
     </section>

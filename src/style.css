@@ -623,6 +623,22 @@ select {
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 
+.trip-list__item--planned {
+  border-style: dashed;
+  border-color: var(--petrol-light);
+}
+
+.trip-list__badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--petrol-tint);
+  color: var(--petrol);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
 .trip-list__item--editing {
   background: var(--petrol-tint);
   border-color: var(--petrol-light);
@@ -857,6 +873,23 @@ select {
   border: 1px solid var(--paper-line);
 }
 
+.calendar__cell--planned {
+  color: var(--petrol);
+  font-weight: 700;
+  background-color: var(--petrol-tint);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 4px,
+    rgba(22, 119, 125, 0.14) 4px 7px
+  );
+  box-shadow: inset 0 0 0 2px var(--petrol-light);
+}
+
+.calendar__dot--planned {
+  background: var(--petrol-tint);
+  box-shadow: inset 0 0 0 1.5px var(--petrol-light);
+}
+
 /* ---------- Simulazione ---------- */
 
 .simulate__hint {
@@ -972,8 +1005,28 @@ select {
   color: var(--amber-dark);
 }
 
-.app__disclaimer {
-  font-style: italic;
+.app__legal {
+  margin: 10px 0;
+  text-align: start;
+  background: var(--card);
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius-sm);
+  color: var(--ink-soft);
+}
+
+.app__legal summary {
+  padding: 12px 14px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.app__legal p {
+  margin: 0 !important;
+  padding: 0 14px 14px;
+  font-size: 0.8rem;
+  line-height: 1.55;
 }
 
 .app__footer a {

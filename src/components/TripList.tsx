@@ -1,4 +1,4 @@
-import { Trip, tripDuration, sortTripsDesc, isOngoing, simulateStay } from "../utils/calculator";
+import { Trip, tripDuration, sortTripsDesc, isOngoing, simulateStay, todayISO } from "../utils/calculator";
 import { useLanguage } from "../i18n/LanguageContext";
 import { flagImageUrl } from "../data/schengenCountries";
 
@@ -38,6 +38,7 @@ export default function TripList({ trips, onRemove, onEdit, editingId, remaining
       <ul className="trip-list">
         {sorted.map((trip) => {
           const ongoing = isOngoing(trip);
+          const planned = trip.entry > todayISO();
           const countdownLevel = remainingDays <= 3 ? "over" : remainingDays <= 20 ? "warning" : "ok";
           let deadlineISO: string | null = null;
           if (ongoing) {
@@ -48,7 +49,9 @@ export default function TripList({ trips, onRemove, onEdit, editingId, remaining
           return (
             <li
               key={trip.id}
-              className={`trip-list__item${editingId === trip.id ? " trip-list__item--editing" : ""}`}
+              className={`trip-list__item${planned ? " trip-list__item--planned" : ""}${
+                editingId === trip.id ? " trip-list__item--editing" : ""
+              }`}
             >
               <div className="trip-list__row">
                 <span className="trip-list__main">
@@ -72,6 +75,7 @@ export default function TripList({ trips, onRemove, onEdit, editingId, remaining
                     <span className={`trip-list__days${ongoing ? " trip-list__days--ongoing" : ""}`}>
                       {tripDuration(trip)} {t.daysUnit}
                     </span>
+                    {planned && <span className="trip-list__badge">{t.plannedLabel}</span>}
                   </span>
                 </span>
                 <button className="trip-list__edit" onClick={() => onEdit(trip)} aria-label={t.editTrip}>

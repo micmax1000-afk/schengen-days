@@ -1,4 +1,4 @@
-import { ComplianceStatus, Trip, nextAvailableEntry, todayISO as getTodayISO, currentTripProjection, simulateStay } from "../utils/calculator";
+import { ComplianceStatus, Trip, nextAvailableEntry, plannedDaysAfter, todayISO as getTodayISO, currentTripProjection, simulateStay } from "../utils/calculator";
 import { useLanguage } from "../i18n/LanguageContext";
 
 interface Props {
@@ -63,13 +63,13 @@ export default function Summary({ status, trips }: Props) {
         <div className="summary__stat">
           <p className="summary__label">{t.totalLast180}</p>
           <p className="summary__value">
-            {status.used}<span className="summary__unit"> {t.daysUnit}</span>
+            {status.used}<span className="summary__unit"> / 90</span>
           </p>
         </div>
         <div className="summary__stat">
-          <p className="summary__label">{t.daysRemaining}</p>
+          <p className="summary__label">{t.plannedDays}</p>
           <p className="summary__value">
-            {Math.max(0, status.remaining)}<span className="summary__unit"> {t.daysUnit}</span>
+            {plannedDaysAfter(trips)}<span className="summary__unit"> {t.daysUnit}</span>
           </p>
         </div>
       </div>

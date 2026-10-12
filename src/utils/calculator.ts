@@ -114,6 +114,19 @@ export function getComplianceStatus(trips: Trip[], referenceDate: Date = new Dat
   return { used, remaining, overLimit: used > MAX_DAYS, level };
 }
 
+/** Numero di giorni già pianificati dopo la data di riferimento (esclusa),
+ *  senza contare due volte i giorni di viaggi sovrapposti. */
+export function plannedDaysAfter(trips: Trip[], referenceDate: Date = new Date()): number {
+  const ref = localDay(referenceDate).getTime();
+  const days = new Set<number>();
+  for (const trip of trips) {
+    if (!trip.exit || !isValidTrip(trip.entry, trip.exit)) continue;
+    const start = Math.max(parseISO(trip.entry).getTime(), ref + MS_PER_DAY);
+    for (let t = start; t <= parseISO(trip.exit).getTime(); t += MS_PER_DAY) days.add(t);
+  }
+  return days.size;
+}
+
 export function sortTripsDesc(trips: Trip[]): Trip[] {
   return [...trips].sort((a, b) => parseISO(b.entry).getTime() - parseISO(a.entry).getTime());
 }

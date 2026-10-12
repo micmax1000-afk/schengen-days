@@ -7,6 +7,7 @@ import {
   getComplianceStatus,
   isDateInWindow,
   nextAvailableEntry,
+  plannedDaysAfter,
   simulateStay,
   todayISO,
   tripDuration,
@@ -141,6 +142,13 @@ describe.each(["Europe/Rome", "America/New_York", "Pacific/Auckland", "UTC"])("f
     expect(daysUsedInWindow(trips, local("2026-12-30"))).toBe(90);
     expect(daysUsedInWindow(trips, local("2026-10-12"))).toBe(60);
     expect(nextAvailableEntry(trips, local("2026-10-12"))).toBe("2026-12-01");
+  });
+
+  it("conta i giorni pianificati dopo oggi", () => {
+    const trips = [trip("a", "2026-08-01", "2026-08-30"), trip("p", "2026-12-15", "2027-01-13"), trip("q", "2026-10-10", "2026-10-14")];
+    // 30 a Natale + 13 e 14 ottobre (il 12 è oggi, escluso)
+    expect(plannedDaysAfter(trips, local("2026-10-12"))).toBe(32);
+    expect(plannedDaysAfter([trip("o", "2026-10-01")], local("2026-10-12"))).toBe(0);
   });
 
   it("trova il prossimo ingresso disponibile", () => {

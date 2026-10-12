@@ -61,7 +61,10 @@ export default function App() {
       <footer className="app__footer">
         <p className="app__notice">⚠️ {t.disclaimer}</p>
         <p>{t.footerNote}</p>
-        <p className="app__disclaimer">{t.liabilityDisclaimer}</p>
+        <details className="app__legal">
+          <summary>{t.legalTitle}</summary>
+          <p>{t.liabilityDisclaimer}</p>
+        </details>
 
         <div className="app__sources">
           <p className="app__sources-title">{t.officialSourcesTitle}</p>
