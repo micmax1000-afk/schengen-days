@@ -1,21 +1,24 @@
-# Google Play store listing — Schengen Days Calculator
+# Google Play store listing — Schengen Days Unofficial
 
 ## Title (max 30 characters)
-Schengen Days Calculator
+Schengen Days Unofficial
 
 ## Short description (max 80 characters)
-Track your Schengen days: 90/180 rule, calendar, trip notes
+Unofficial 90/180-day Schengen calculator: trips, calendar, plans
 
 ## Full description (max 4000 characters)
 
 Keep track of your days in the Schengen area with a simple, free app — no account required.
 
-Schengen Days Calculator automatically applies the 90-days-in-180 rule (the same one used by border authorities for short stays), so you always know how many days you've used and how many you have left.
+INDEPENDENT AND UNOFFICIAL: this app is not affiliated with, endorsed by, or connected to the European Union, the European Commission, or any government.
+
+Schengen Days Unofficial is an independent app that automatically applies the 90-days-in-180 rule (the same one used by border authorities for short stays), so you always know how many days you've used and how many you have left.
 
 WHAT YOU CAN DO
 • Log every trip with entry date, exit date, country, and a personal note
 • See at a glance how many days you've used in the last 180 and how many remain
 • Browse the monthly calendar with your Schengen days highlighted
+• Plan future trips and see if they fit the 90/180 rule, including trips you have already planned
 • Simulate a future entry: "If I enter on [date], when must I leave at the latest?"
 • Export or share a backup of your trips anytime
 • Use the app offline once installed
@@ -44,7 +47,9 @@ This app is provided for informational purposes only, "as is", with no guarantee
 - **Privacy policy URL**: https://micmax1000-afk.github.io/schengen-days/privacy.html
 - **Website**: https://micmax1000-afk.github.io/schengen-days/
 - **Content rating**: suitable for everyone (no sensitive content)
-- **Icon**: store/icon-512-play.png (512×512, no transparency)
+- **Icon**: store/icon-512-play.png (512×512, no transparency). Plane taking off
+  and "90/180" on blue: no EU flag, no circle of stars (the previous icon was
+  rejected under the impersonation policy)
 - **Feature graphic**: store/feature-graphic-1024x500.png (1024×500)
 - **Screenshots**: still needed — 2-3 real phone screenshots of the app
   in use (e.g. main screen, calendar, form with flag preview)

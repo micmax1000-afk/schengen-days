@@ -256,7 +256,7 @@ export const translations: Record<Lang, Dict> = {
     importConfirm: "הייבוא יחליף את כל הנסיעות הנוכחיות באלו שבקובץ. להמשיך?",
   },
   it: {
-    appTitle: "Schengen Days Calculator",
+    appTitle: "Schengen Days Unofficial",
     appSubtitle: "Tieni sotto controllo i tuoi giorni nell'area Schengen",
     systemLanguage: "Lingua di sistema",
     entryCountry: "Paese di ingresso",
@@ -336,7 +336,7 @@ export const translations: Record<Lang, Dict> = {
     footerNote: "I dati restano solo su questo dispositivo, nel browser.",
   },
   en: {
-    appTitle: "Schengen Days Calculator",
+    appTitle: "Schengen Days Unofficial",
     appSubtitle: "Keep track of your days in the Schengen area",
     systemLanguage: "System language",
     entryCountry: "Entry country",
