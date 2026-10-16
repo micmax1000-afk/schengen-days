@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Trip, tripContaining, isDateInWindow } from "../utils/calculator";
 import { useLanguage } from "../i18n/LanguageContext";
 
 interface Props {
   trips: Trip[];
+  /** Viaggio simulato da evidenziare (date ISO incluse), se presente. */
+  simulated?: { entry: string; exit: string } | null;
 }
 
 function pad(n: number): string {
@@ -29,12 +31,21 @@ function buildMonthGrid(year: number, month: number): (number | null)[] {
   return cells;
 }
 
-export default function CalendarView({ trips }: Props) {
+export default function CalendarView({ trips, simulated }: Props) {
   const { t } = useLanguage();
   const today = new Date();
   const todayISO = localISO(today.getFullYear(), today.getMonth(), today.getDate());
   const [year, setYear] = useState(today.getFullYear());
   const [month, setMonth] = useState(today.getMonth());
+
+  // Quando si simula un viaggio, il calendario si sposta sul suo mese
+  const simEntry = simulated?.entry;
+  useEffect(() => {
+    if (!simEntry) return;
+    const [y, m] = simEntry.split("-").map(Number);
+    setYear(y);
+    setMonth(m - 1);
+  }, [simEntry]);
 
   const goPrev = () => {
     if (month === 0) {
@@ -80,7 +91,10 @@ export default function CalendarView({ trips }: Props) {
           const isToday = iso === todayISO;
 
           const classes = ["calendar__cell"];
-          if (inTrip) classes.push("calendar__cell--trip");
+          const inSim = Boolean(simulated && iso >= simulated.entry && iso <= simulated.exit);
+          if (inSim && !inTrip) classes.push("calendar__cell--simulated");
+          else if (inTrip && iso > todayISO) classes.push("calendar__cell--planned");
+          else if (inTrip) classes.push("calendar__cell--trip");
           else if (inWindow) classes.push("calendar__cell--window");
           if (isToday) classes.push("calendar__cell--today");
 
@@ -94,7 +108,11 @@ export default function CalendarView({ trips }: Props) {
 
       <div className="calendar__legend">
         <span><i className="calendar__dot calendar__dot--trip" /> {t.legendTrip}</span>
+        <span><i className="calendar__dot calendar__dot--planned" /> {t.legendPlanned}</span>
         <span><i className="calendar__dot calendar__dot--window" /> {t.legendWindow}</span>
+        {simulated && (
+          <span><i className="calendar__dot calendar__dot--simulated" /> {t.legendSimulated}</span>
+        )}
       </div>
     </section>
   );

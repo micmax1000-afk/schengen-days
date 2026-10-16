@@ -1,4 +1,4 @@
-import { ComplianceStatus, Trip, nextAvailableEntry, currentTripProjection, simulateStay } from "../utils/calculator";
+import { ComplianceStatus, Trip, nextAvailableEntry, plannedDaysAfter, todayISO as getTodayISO, currentTripProjection, simulateStay } from "../utils/calculator";
 import { useLanguage } from "../i18n/LanguageContext";
 
 interface Props {
@@ -20,19 +20,24 @@ export default function Summary({ status, trips }: Props) {
   const LABELS: Record<ComplianceStatus["level"], { icon: string; text: string }> = {
     ok: { icon: "🟢", text: t.statusOk },
     warning: { icon: "🟡", text: t.statusWarning },
+    full: { icon: "🟠", text: t.statusFull },
     over: { icon: "🔴", text: t.statusOver },
   };
 
   const { icon, text } = LABELS[status.level];
   const remainingClamped = Math.max(0, Math.min(90, status.remaining));
-  const fraction = remainingClamped / 90;
+  // Senza giorni rimasti il cerchio si mostra pieno nel colore dello stato
+  // (arancione = limite raggiunto, rosso = superato), invece che vuoto.
+  const fraction = remainingClamped === 0 ? 1 : remainingClamped / 90;
   const dashOffset = CIRCUMFERENCE * (1 - fraction);
 
-  const todayISO = new Date().toISOString().slice(0, 10);
+  const todayISO = getTodayISO();
   const nextEntry = nextAvailableEntry(trips);
   const isAvailableToday = nextEntry === todayISO;
   const projection = currentTripProjection(trips);
-  const todayStay = isAvailableToday ? simulateStay(trips, todayISO) : null;
+  // Fin quando si potrebbe restare entrando alla prossima data disponibile
+  // (oggi o più avanti), mostrato sempre accanto alla data di ingresso.
+  const nextStay = simulateStay(trips, nextEntry);
 
   return (
     <section className={`summary summary--${status.level}`}>
@@ -55,27 +60,50 @@ export default function Summary({ status, trips }: Props) {
       </div>
 
       <div className="summary__row">
-        <div>
+        <div className="summary__stat">
           <p className="summary__label">{t.totalLast180}</p>
-          <p className="summary__value">{status.used} {t.daysUnit}</p>
+          <p className="summary__value">
+            {status.used}<span className="summary__unit"> / 90</span>
+          </p>
         </div>
-        <div>
-          <p className="summary__label">{t.daysRemaining}</p>
-          <p className="summary__value">{Math.max(0, status.remaining)} {t.daysUnit}</p>
+        <div className="summary__stat">
+          <p className="summary__label">{t.plannedDays}</p>
+          <p className="summary__value">
+            {plannedDaysAfter(trips)}<span className="summary__unit"> {t.daysUnit}</span>
+          </p>
         </div>
       </div>
 
-      <p className="summary__status">
+      <p className={`summary__status summary__status--${status.level}`}>
         {icon} {text}
       </p>
 
-      <p className="summary__next-entry">
-        {t.nextAvailableEntry}{" "}
-        <strong>{isAvailableToday ? t.availableToday : formatDate(nextEntry)}</strong>
-        {isAvailableToday && todayStay && !todayStay.alreadyOverAtEntry && todayStay.maxExit && (
-          <> ({t.countdownUntil} <strong>{formatDate(todayStay.maxExit)}</strong>)</>
+      <div className="summary__next">
+        <div className="summary__next-row">
+          <div className="summary__next-cell">
+            <p className="summary__label">{t.nextEntryLabel}</p>
+            <p className={`summary__next-date${isAvailableToday ? " summary__next-date--today" : ""}`}>
+              {isAvailableToday ? t.todayLabel : formatDate(nextEntry)}
+            </p>
+            {isAvailableToday && <p className="summary__next-sub">{formatDate(nextEntry)}</p>}
+          </div>
+          {!nextStay.alreadyOverAtEntry && nextStay.maxExit && (
+            <div className="summary__next-cell">
+              <p className="summary__label">{t.stayUntilLabel}</p>
+              <p className="summary__next-date">{formatDate(nextStay.maxExit)}</p>
+              <p className="summary__next-sub">
+                {nextStay.daysAllowed} {t.daysUnit}
+              </p>
+            </div>
+          )}
+        </div>
+        {nextStay.limitingTrip && (
+          <p className="summary__planned-note">
+            <span aria-hidden="true">📅</span>
+            {t.limitedByPlanned(formatDate(nextStay.limitingTrip.entry), formatDate(nextStay.limitingTrip.exit!))}
+          </p>
         )}
-      </p>
+      </div>
 
       {projection && (
         <p className="summary__projection">

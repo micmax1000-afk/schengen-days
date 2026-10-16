@@ -1,4 +1,4 @@
-# Schengen Days Calculator
+# Schengen Days Unofficial
 
 App gratuita, senza server, per calcolare i giorni trascorsi nell'area
 Schengen secondo la regola dei 90 giorni su 180. Tutti i dati restano
@@ -14,6 +14,12 @@ npm run dev
 ```
 
 Poi apri l'indirizzo mostrato in terminale (di solito `http://localhost:5173`).
+
+Per eseguire i test del calcolo dei giorni:
+
+```bash
+npm test
+```
 
 ## Pubblicarla gratis su GitHub Pages
 

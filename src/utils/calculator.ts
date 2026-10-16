@@ -20,6 +20,17 @@ function toISO(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
 
+/** Converte una data "di calendario" (letta con l'ora locale del dispositivo)
+ *  nella mezzanotte UTC dello stesso giorno, il formato usato internamente. */
+function localDay(date: Date): Date {
+  return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+}
+
+/** Data di oggi (ora locale del dispositivo) in formato ISO "YYYY-MM-DD". */
+export function todayISO(now: Date = new Date()): string {
+  return toISO(localDay(now));
+}
+
 /** Vero se il viaggio è ancora in corso (nessuna data di uscita impostata). */
 export function isOngoing(trip: Trip): boolean {
   return !trip.exit;
@@ -27,7 +38,7 @@ export function isOngoing(trip: Trip): boolean {
 
 /** Data di uscita "effettiva" di un viaggio: quella impostata, oppure oggi se ancora in corso. */
 function effectiveExit(trip: Trip): string {
-  return trip.exit && trip.exit.length > 0 ? trip.exit : toISO(new Date());
+  return trip.exit && trip.exit.length > 0 ? trip.exit : todayISO();
 }
 
 /** Numero di giorni di un viaggio, ingresso e uscita inclusi. Se il viaggio
@@ -52,7 +63,11 @@ export function isValidTrip(entry: string, exit?: string): boolean {
  * sommando tutti i viaggi senza contare due volte i giorni sovrapposti.
  */
 export function daysUsedInWindow(trips: Trip[], referenceDate: Date = new Date()): number {
-  const ref = new Date(Date.UTC(referenceDate.getFullYear(), referenceDate.getMonth(), referenceDate.getDate()));
+  return usedInWindowUTC(trips, localDay(referenceDate));
+}
+
+/** Come daysUsedInWindow, ma `ref` è già una mezzanotte UTC (es. da parseISO). */
+function usedInWindowUTC(trips: Trip[], ref: Date): number {
   const windowStart = new Date(ref.getTime() - (WINDOW_SIZE - 1) * MS_PER_DAY);
 
   const occupied = new Set<string>();
@@ -81,20 +96,35 @@ export interface ComplianceStatus {
   used: number;
   remaining: number;
   overLimit: boolean;
-  level: "ok" | "warning" | "over";
+  level: "ok" | "warning" | "full" | "over";
 }
 
 /**
- * Stato di conformità: "ok" fino a 70 giorni usati, "warning" da 71 a 90,
- * "over" oltre i 90 giorni consentiti.
+ * Stato di conformità: "ok" fino a 70 giorni usati, "warning" da 71 a 89,
+ * "full" a 90 esatti (in regola, ma oggi non si può entrare né restare un
+ * giorno in più), "over" oltre i 90 giorni consentiti.
  */
 export function getComplianceStatus(trips: Trip[], referenceDate: Date = new Date()): ComplianceStatus {
   const used = daysUsedInWindow(trips, referenceDate);
   const remaining = MAX_DAYS - used;
   let level: ComplianceStatus["level"] = "ok";
   if (used > MAX_DAYS) level = "over";
+  else if (used === MAX_DAYS) level = "full";
   else if (used >= 71) level = "warning";
   return { used, remaining, overLimit: used > MAX_DAYS, level };
+}
+
+/** Numero di giorni già pianificati dopo la data di riferimento (esclusa),
+ *  senza contare due volte i giorni di viaggi sovrapposti. */
+export function plannedDaysAfter(trips: Trip[], referenceDate: Date = new Date()): number {
+  const ref = localDay(referenceDate).getTime();
+  const days = new Set<number>();
+  for (const trip of trips) {
+    if (!trip.exit || !isValidTrip(trip.entry, trip.exit)) continue;
+    const start = Math.max(parseISO(trip.entry).getTime(), ref + MS_PER_DAY);
+    for (let t = start; t <= parseISO(trip.exit).getTime(); t += MS_PER_DAY) days.add(t);
+  }
+  return days.size;
 }
 
 export function sortTripsDesc(trips: Trip[]): Trip[] {
@@ -112,7 +142,7 @@ export function tripContaining(dateISO: string, trips: Trip[]): Trip | undefined
 
 /** Vero se la data indicata rientra nella finestra dei 180 giorni terminante in referenceDate. */
 export function isDateInWindow(dateISO: string, referenceDate: Date = new Date()): boolean {
-  const ref = new Date(Date.UTC(referenceDate.getFullYear(), referenceDate.getMonth(), referenceDate.getDate()));
+  const ref = localDay(referenceDate);
   const windowStart = new Date(ref.getTime() - (WINDOW_SIZE - 1) * MS_PER_DAY);
   const d = parseISO(dateISO).getTime();
   return d >= windowStart.getTime() && d <= ref.getTime();
@@ -145,8 +175,7 @@ export function findFutureConflicts(existingTrips: Trip[], candidate: Trip): Fut
     if (!trip.exit || trip.entry <= candidate.entry) continue;
     if (!isValidTrip(trip.entry, trip.exit)) continue;
 
-    const referenceDate = new Date(`${trip.exit}T00:00:00Z`);
-    const used = daysUsedInWindow(allWithCandidate, referenceDate);
+    const used = usedInWindowUTC(allWithCandidate, parseISO(trip.exit));
     if (used > MAX_DAYS) {
       conflicts.push({ trip, used });
     }
@@ -172,15 +201,70 @@ export function currentTripProjection(
   trips: Trip[],
   referenceDate: Date = new Date()
 ): { used: number; remaining: number; exitISO: string } | null {
-  const todayISO = toISO(referenceDate);
+  const today = todayISO(referenceDate);
   const activeFutureTrip = trips.find(
-    (t) => t.exit && t.entry <= todayISO && t.exit > todayISO
+    (t) => t.exit && t.entry <= today && t.exit > today
   );
   if (!activeFutureTrip || !activeFutureTrip.exit) return null;
 
-  const exitDate = new Date(`${activeFutureTrip.exit}T00:00:00Z`);
-  const used = daysUsedInWindow(trips, exitDate);
+  const used = usedInWindowUTC(trips, parseISO(activeFutureTrip.exit));
   return { used, remaining: MAX_DAYS - used, exitISO: activeFutureTrip.exit };
+}
+
+/**
+ * Vero se un soggiorno da `stayEntry` a `stayExit` (inclusi), aggiunto ai
+ * viaggi esistenti, farebbe superare i 90 giorni in una qualsiasi finestra
+ * di 180 giorni che contiene almeno un giorno del soggiorno. Controlla anche
+ * le finestre successive, quindi tiene conto dei viaggi già pianificati più
+ * avanti: un soggiorno è valido solo se non compromette nemmeno quelli.
+ */
+function stayExceedsLimit(trips: Trip[], stayEntry: string, stayExit: string): boolean {
+  return firstViolation(trips, stayEntry, stayExit) !== null;
+}
+
+/** Come stayExceedsLimit, ma restituisce il primo giorno (ISO) in cui la
+ *  finestra di 180 giorni supera i 90, oppure null se non succede mai. */
+function firstViolation(trips: Trip[], stayEntry: string, stayExit: string): string | null {
+  const occupied = new Set<number>();
+  const addRange = (from: string, to: string) => {
+    const end = parseISO(to).getTime() / MS_PER_DAY;
+    for (let d = parseISO(from).getTime() / MS_PER_DAY; d <= end; d++) occupied.add(d);
+  };
+  for (const trip of trips) {
+    if (isValidTrip(trip.entry, trip.exit)) addRange(trip.entry, effectiveExit(trip));
+  }
+  addRange(stayEntry, stayExit);
+
+  const days = [...occupied].sort((a, b) => a - b);
+  const stayStart = parseISO(stayEntry).getTime() / MS_PER_DAY;
+  const stayEnd = parseISO(stayExit).getTime() / MS_PER_DAY;
+
+  // Basta controllare le finestre che terminano in un giorno trascorso in
+  // Schengen: negli altri giorni il conteggio non può essere più alto.
+  let lo = 0;
+  for (let hi = 0; hi < days.length; hi++) {
+    const d = days[hi];
+    while (days[lo] < d - (WINDOW_SIZE - 1)) lo++;
+    const windowTouchesStay = d >= stayStart && d - (WINDOW_SIZE - 1) <= stayEnd;
+    if (windowTouchesStay && hi - lo + 1 > MAX_DAYS) return toISO(new Date(d * MS_PER_DAY));
+  }
+  return null;
+}
+
+export interface TripCheck {
+  /** Vero se il viaggio rispetta il limite, anche per i viaggi pianificati dopo. */
+  ok: boolean;
+  /** Giorni usati nella finestra di 180 giorni che termina il giorno di uscita. */
+  usedAtExit: number;
+}
+
+/** Verifica un viaggio ipotetico con ingresso e uscita, senza salvarlo. */
+export function checkTrip(trips: Trip[], entryISO: string, exitISO: string): TripCheck {
+  const withTrip = [...trips, { id: "__check__", entry: entryISO, exit: exitISO }];
+  return {
+    ok: !stayExceedsLimit(trips, entryISO, exitISO),
+    usedAtExit: usedInWindowUTC(withTrip, parseISO(exitISO)),
+  };
 }
 
 export function nextAvailableEntry(
@@ -188,15 +272,11 @@ export function nextAvailableEntry(
   referenceDate: Date = new Date(),
   horizonDays = 200
 ): string {
-  const start = new Date(
-    Date.UTC(referenceDate.getFullYear(), referenceDate.getMonth(), referenceDate.getDate())
-  );
+  const start = localDay(referenceDate);
   for (let i = 0; i < horizonDays; i++) {
     const candidate = new Date(start.getTime() + i * MS_PER_DAY);
     const candidateISO = toISO(candidate);
-    const probeTrips = [...trips, { id: "__probe__", entry: candidateISO, exit: candidateISO }];
-    const used = daysUsedInWindow(probeTrips, candidate);
-    if (used <= MAX_DAYS) return candidateISO;
+    if (!stayExceedsLimit(trips, candidateISO, candidateISO)) return candidateISO;
   }
   return toISO(start);
 }
@@ -208,30 +288,38 @@ export interface StaySimulation {
   daysAllowed: number;
   /** Ultima data di uscita consentita (ISO), oppure null se 0 giorni sono consentiti. */
   maxExit: string | null;
+  /** Il viaggio già pianificato dopo l'ingresso che impedisce di restare
+   *  più a lungo (restando un giorno in più gli farebbe superare i 90
+   *  giorni), oppure null se il limite dipende solo dai viaggi passati. */
+  limitingTrip: Trip | null;
 }
 
 /**
  * Simula un ingresso futuro il giorno `entryISO` e calcola fino a quando
  * si può restare senza superare il limite di 90 giorni su 180, tenendo
- * conto dei viaggi già registrati. La finestra di 180 giorni scorre in
- * avanti giorno per giorno insieme al soggiorno simulato.
+ * conto dei viaggi già registrati, compresi quelli pianificati più avanti
+ * (il soggiorno non deve far superare il limite nemmeno a quelli).
  */
 export function simulateStay(trips: Trip[], entryISO: string, maxHorizonDays = 90): StaySimulation {
   const entry = parseISO(entryISO);
   let lastValid: Date | null = null;
+  let violationISO: string | null = null;
 
   for (let i = 0; i < maxHorizonDays; i++) {
     const candidateExit = new Date(entry.getTime() + i * MS_PER_DAY);
-    const simulatedTrips = [...trips, { id: "__sim__", entry: entryISO, exit: toISO(candidateExit) }];
-    const used = daysUsedInWindow(simulatedTrips, candidateExit);
-    if (used > MAX_DAYS) break;
+    violationISO = firstViolation(trips, entryISO, toISO(candidateExit));
+    if (violationISO) break;
     lastValid = candidateExit;
   }
 
-  if (!lastValid) {
-    return { alreadyOverAtEntry: true, daysAllowed: 0, maxExit: null };
-  }
+  // Se il soggiorno si ferma perché farebbe sforare un viaggio già
+  // pianificato più avanti, lo indichiamo per spiegarlo all'utente.
+  const violatedTrip = violationISO ? tripContaining(violationISO, trips) : undefined;
+  const limitingTrip = violatedTrip && violatedTrip.entry > entryISO ? violatedTrip : null;
 
+  if (!lastValid) {
+    return { alreadyOverAtEntry: true, daysAllowed: 0, maxExit: null, limitingTrip };
+  }
   const daysAllowed = Math.round((lastValid.getTime() - entry.getTime()) / MS_PER_DAY) + 1;
-  return { alreadyOverAtEntry: false, daysAllowed, maxExit: toISO(lastValid) };
+  return { alreadyOverAtEntry: false, daysAllowed, maxExit: toISO(lastValid), limitingTrip };
 }

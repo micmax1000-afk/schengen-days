@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'schengendayscalculator.micmax1000_afk.twa',
-  appName: 'Schengen Days Calculator',
+  appName: 'Schengen Days Unofficial',
   webDir: 'dist'
 };
 

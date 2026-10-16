@@ -1,4 +1,4 @@
-import { Trip, tripDuration, sortTripsDesc, isOngoing, simulateStay } from "../utils/calculator";
+import { Trip, tripDuration, sortTripsDesc, isOngoing, simulateStay, todayISO } from "../utils/calculator";
 import { useLanguage } from "../i18n/LanguageContext";
 import { flagImageUrl } from "../data/schengenCountries";
 
@@ -20,66 +20,86 @@ export default function TripList({ trips, onRemove, onEdit, editingId, remaining
   const { t } = useLanguage();
 
   if (trips.length === 0) {
-    return <p className="trip-list__empty">{t.noTrips}</p>;
+    return (
+      <section className="trips">
+        <h2 className="trips__title">{t.tripsTitle}</h2>
+        <p className="trip-list__empty">{t.noTrips}</p>
+      </section>
+    );
   }
 
   const sorted = sortTripsDesc(trips);
 
   return (
-    <ul className="trip-list">
-      {sorted.map((trip) => {
-        const ongoing = isOngoing(trip);
-        const countdownLevel = remainingDays <= 3 ? "over" : remainingDays <= 20 ? "warning" : "ok";
-        let deadlineISO: string | null = null;
-        if (ongoing) {
-          const others = trips.filter((t2) => t2.id !== trip.id);
-          const sim = simulateStay(others, trip.entry);
-          if (!sim.alreadyOverAtEntry) deadlineISO = sim.maxExit;
-        }
-        return (
-          <li
-            key={trip.id}
-            className={`trip-list__item${editingId === trip.id ? " trip-list__item--editing" : ""}`}
-          >
-            <div className="trip-list__row">
-              {(trip.entryCountry || trip.exitCountry) && (
-                <span className="trip-list__flags">
-                  {trip.entryCountry && (
-                    <img className="trip-list__flag" src={flagImageUrl(trip.entryCountry)} alt={trip.entryCountry} width={20} height={20} />
-                  )}
-                  {trip.exitCountry && trip.exitCountry !== trip.entryCountry && (
-                    <>
-                      <span className="trip-list__flag-arrow">→</span>
-                      <img className="trip-list__flag" src={flagImageUrl(trip.exitCountry)} alt={trip.exitCountry} width={20} height={20} />
-                    </>
-                  )}
+    <section className="trips">
+      <h2 className="trips__title">
+        {t.tripsTitle} <span className="trips__count">{trips.length}</span>
+      </h2>
+      <ul className="trip-list">
+        {sorted.map((trip) => {
+          const ongoing = isOngoing(trip);
+          const planned = trip.entry > todayISO();
+          const countdownLevel = remainingDays <= 3 ? "over" : remainingDays <= 20 ? "warning" : "ok";
+          let deadlineISO: string | null = null;
+          if (ongoing) {
+            const others = trips.filter((t2) => t2.id !== trip.id);
+            const sim = simulateStay(others, trip.entry);
+            if (!sim.alreadyOverAtEntry) deadlineISO = sim.maxExit;
+          }
+          return (
+            <li
+              key={trip.id}
+              className={`trip-list__item${planned ? " trip-list__item--planned" : ""}${
+                editingId === trip.id ? " trip-list__item--editing" : ""
+              }`}
+            >
+              <div className="trip-list__row">
+                <span className="trip-list__main">
+                  <span className="trip-list__dates">
+                    {formatDate(trip.entry)} → {ongoing ? t.ongoingLabel : formatDate(trip.exit!)}
+                  </span>
+                  <span className="trip-list__meta">
+                    {(trip.entryCountry || trip.exitCountry) && (
+                      <span className="trip-list__flags">
+                        {trip.entryCountry && (
+                          <img className="trip-list__flag" src={flagImageUrl(trip.entryCountry)} alt={trip.entryCountry} width={20} height={20} />
+                        )}
+                        {trip.exitCountry && trip.exitCountry !== trip.entryCountry && (
+                          <>
+                            <span className="trip-list__flag-arrow">→</span>
+                            <img className="trip-list__flag" src={flagImageUrl(trip.exitCountry)} alt={trip.exitCountry} width={20} height={20} />
+                          </>
+                        )}
+                      </span>
+                    )}
+                    <span className={`trip-list__days${ongoing ? " trip-list__days--ongoing" : ""}`}>
+                      {tripDuration(trip)} {t.daysUnit}
+                    </span>
+                    {planned && <span className="trip-list__badge">{t.plannedLabel}</span>}
+                  </span>
                 </span>
+                <button className="trip-list__edit" onClick={() => onEdit(trip)} aria-label={t.editTrip}>
+                  ✎
+                </button>
+                <button
+                  className="trip-list__remove"
+                  onClick={() => onRemove(trip.id)}
+                  aria-label={t.deleteTrip}
+                >
+                  ✕
+                </button>
+              </div>
+              {ongoing && (
+                <p className={`trip-list__countdown trip-list__countdown--${countdownLevel}`}>
+                  {t.countdownPrefix} {Math.max(0, remainingDays)} {t.daysUnit}
+                  {deadlineISO && ` (${t.countdownUntil} ${formatDate(deadlineISO)})`}
+                </p>
               )}
-              <span className="trip-list__dates">
-                {formatDate(trip.entry)} → {ongoing ? t.ongoingLabel : formatDate(trip.exit!)}
-              </span>
-              <span className="trip-list__days">{tripDuration(trip)} {t.daysUnit}</span>
-              <button className="trip-list__edit" onClick={() => onEdit(trip)} aria-label={t.editTrip}>
-                ✎
-              </button>
-              <button
-                className="trip-list__remove"
-                onClick={() => onRemove(trip.id)}
-                aria-label={t.deleteTrip}
-              >
-                ✕
-              </button>
-            </div>
-            {ongoing && (
-              <p className={`trip-list__countdown trip-list__countdown--${countdownLevel}`}>
-                {t.countdownPrefix} {Math.max(0, remainingDays)} {t.daysUnit}
-                {deadlineISO && ` (${t.countdownUntil} ${formatDate(deadlineISO)})`}
-              </p>
-            )}
-            {trip.note && <p className="trip-list__note">{trip.note}</p>}
-          </li>
-        );
-      })}
-    </ul>
+              {trip.note && <p className="trip-list__note">{trip.note}</p>}
+            </li>
+          );
+        })}
+      </ul>
+    </section>
   );
 }
