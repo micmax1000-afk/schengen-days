@@ -51,5 +51,6 @@ This app is provided for informational purposes only, "as is", with no guarantee
   and "90/180" on blue: no EU flag, no circle of stars (the previous icon was
   rejected under the impersonation policy)
 - **Feature graphic**: store/feature-graphic-1024x500.png (1024×500)
-- **Screenshots**: still needed — 2-3 real phone screenshots of the app
-  in use (e.g. main screen, calendar, form with flag preview)
+- **Phone screenshots**: store/screenshots/screenshot-1.png … screenshot-6.png
+  (1080×1920, 9:16, in English): summary, trip planning, calendar, trip list,
+  90-day limit warning, privacy & languages
