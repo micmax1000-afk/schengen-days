@@ -2,9 +2,11 @@ import { useLanguage } from "../i18n/LanguageContext";
 import { LANGUAGES } from "../i18n/translations";
 
 export default function LanguageSwitcher() {
-  const { selection, setLang, t } = useLanguage();
+  const { selection, setLang, t, lang } = useLanguage();
 
   return (
+    <span className="language-switcher__wrap">
+      <span className="language-switcher__chip" aria-hidden="true">🌐 {lang.toUpperCase()}</span>
     <select
       className="language-switcher"
       value={selection}
@@ -18,5 +20,6 @@ export default function LanguageSwitcher() {
         </option>
       ))}
     </select>
+    </span>
   );
 }

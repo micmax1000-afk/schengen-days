@@ -30,13 +30,7 @@ export default function TripList({ trips, onRemove, onEdit, editingId, remaining
 
   const sorted = sortTripsDesc(trips);
 
-  return (
-    <section className="trips">
-      <h2 className="trips__title">
-        {t.tripsTitle} <span className="trips__count">{trips.length}</span>
-      </h2>
-      <ul className="trip-list">
-        {sorted.map((trip) => {
+  const renderTrip = (trip: Trip) => {
           const ongoing = isOngoing(trip);
           const planned = trip.entry > todayISO();
           const countdownLevel = remainingDays <= 3 ? "over" : remainingDays <= 20 ? "warning" : "ok";
@@ -98,8 +92,31 @@ export default function TripList({ trips, onRemove, onEdit, editingId, remaining
               {trip.note && <p className="trip-list__note">{trip.note}</p>}
             </li>
           );
-        })}
-      </ul>
+  };
+
+  // Prima i viaggi in corso o futuri (dal più vicino), poi quelli passati (dal più recente)
+  const today = todayISO();
+  const isUpcoming = (tr: Trip) => !tr.exit || tr.exit >= today;
+  const upcoming = sorted.filter(isUpcoming).reverse();
+  const past = sorted.filter((tr) => !isUpcoming(tr));
+
+  return (
+    <section className="trips">
+      <h2 className="trips__title">
+        {t.tripsTitle} <span className="trips__count">{trips.length}</span>
+      </h2>
+      {upcoming.length > 0 && (
+        <>
+          <h3 className="trips__group">{t.upcomingTrips}</h3>
+          <ul className="trip-list">{upcoming.map(renderTrip)}</ul>
+        </>
+      )}
+      {past.length > 0 && (
+        <>
+          <h3 className="trips__group">{t.pastTrips}</h3>
+          <ul className="trip-list">{past.map(renderTrip)}</ul>
+        </>
+      )}
     </section>
   );
 }

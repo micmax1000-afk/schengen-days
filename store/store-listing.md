@@ -1,10 +1,10 @@
-# Google Play store listing — Schengen Days Unofficial
+# Google Play store listing — Unofficial Schengen Calculator
 
 ## Title (max 30 characters)
-Schengen Days Unofficial
+Unofficial Schengen Calculator
 
 ## Short description (max 80 characters)
-Unofficial 90/180-day Schengen calculator: trips, calendar, plans
+Schengen 90/180 calculator: track your stay days and plan trips
 
 ## Full description (max 4000 characters)
 
@@ -48,9 +48,10 @@ This app is provided for informational purposes only, "as is", with no guarantee
   (the page lives in the micmax-apps-site repository; public/privacy.html here is a copy)
 - **Website**: https://micmax1000-afk.github.io/schengen-days/
 - **Content rating**: suitable for everyone (no sensitive content)
-- **Icon**: store/icon-512-play.png (512×512, no transparency). Yellow suitcase
-  with a "90/180" tag on blue: no EU flag, no circle of stars (an earlier icon
-  was rejected under the impersonation policy)
+- **Icon**: store/icon-512-play.png (512×512, no transparency). Yellow passport
+  with a "90" entry stamp on blue: no EU flag, no circle of stars (an earlier
+  icon was rejected under the impersonation policy)
+- **App name on the phone** (under the icon): "Schengen Days"
 - **Feature graphic**: store/feature-graphic-1024x500.png (1024×500)
 - **Phone screenshots**: store/screenshots/screenshot-1.png … screenshot-6.png
   (1080×1920, 9:16, in English): summary, trip planning, calendar, trip list,

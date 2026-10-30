@@ -4,10 +4,14 @@ import { Lang, Dict, translations, LANGUAGES } from "./translations";
 const STORAGE_KEY = "schengen-days-lang";
 export type LangSelection = "system" | Lang;
 
+/** Prima lingua del telefono (in ordine di preferenza) che l'app conosce; altrimenti inglese. */
 function browserLang(): Lang {
-  const browser = navigator.language.slice(0, 2).toLowerCase();
-  const match = LANGUAGES.find((l) => l.code === browser);
-  return match ? match.code : "en";
+  const preferred = navigator.languages?.length ? navigator.languages : [navigator.language];
+  for (const tag of preferred) {
+    const match = LANGUAGES.find((l) => l.code === tag.slice(0, 2).toLowerCase());
+    if (match) return match.code;
+  }
+  return "en";
 }
 
 function loadSelection(): LangSelection {

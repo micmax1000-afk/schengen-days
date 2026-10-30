@@ -1109,33 +1109,61 @@ select {
   }
 }
 
-/* ---------- Riepilogo su sfondo blu, come l'icona ---------- */
-
-.summary {
-  background: linear-gradient(160deg, var(--brand-2) 0%, var(--brand) 60%, #002a80 100%);
-  border: none;
-  color: #fff;
-  box-shadow: 0 10px 30px rgba(0, 51, 153, 0.28);
-}
-.summary::before { display: none; }
-.summary__ring-bg { stroke: rgba(255, 255, 255, 0.16); }
-.summary__ring-fg--ok { stroke: var(--accent); }
-.summary__ring-fg--warning { stroke: #ffb020; }
-.summary__ring-fg--full { stroke: #ff8a3d; }
-.summary__ring-fg--over { stroke: #ff5c5c; }
-.summary__ring-number { color: #fff; }
-.summary__ring-label,
-.summary .summary__stat .summary__label { color: rgba(255, 255, 255, 0.72); }
-.summary__stat { background: rgba(255, 255, 255, 0.1); }
-.summary .summary__value { color: #fff; }
-.summary .summary__stat .summary__unit { color: rgba(255, 255, 255, 0.7); }
-.summary__status--ok { background: rgba(255, 204, 0, 0.16); color: var(--accent); }
-.summary__status--warning { background: #fff4d6; }
-.summary__status--full { background: #ffe8da; }
-.summary__status--over { background: #ffe1e1; }
-.summary__next { background: #fff; border: none; color: var(--ink); }
-.summary__projection { background: rgba(255, 255, 255, 0.12); color: #fff; }
-
 /* Calendario: oggi cerchiato in giallo */
 .calendar__cell--today { box-shadow: inset 0 0 0 2.5px var(--accent); }
 .calendar__cell--trip.calendar__cell--today { box-shadow: inset 0 0 0 3px var(--accent); }
+
+/* ---------- Pulsante che apre il modulo di aggiunta ---------- */
+.trip-form-toggle {
+  width: 100%;
+  min-height: 54px;
+  border: none;
+  border-radius: 999px;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.05rem;
+  box-shadow: 0 8px 20px rgba(0, 51, 153, 0.25);
+  cursor: pointer;
+}
+.trip-form__title {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+/* ---------- Benvenuto per chi non ha ancora viaggi ---------- */
+.welcome {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: var(--card);
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+}
+.welcome img { width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0; }
+.welcome h2 { margin: 0 0 6px; font-size: 1.05rem; }
+.welcome p { margin: 0; font-size: 0.88rem; line-height: 1.5; color: var(--ink-soft); }
+
+/* ---------- Selettore lingua compatto ---------- */
+.language-switcher__wrap { position: relative; display: inline-flex; }
+.language-switcher__chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border: 1px solid var(--paper-line); border-radius: 999px;
+  background: var(--card); font-size: 0.85rem; font-weight: 600; color: var(--ink);
+}
+.language-switcher__wrap .language-switcher {
+  position: absolute; inset: 0; opacity: 0; width: 100%; max-width: none; cursor: pointer;
+}
+
+/* ---------- Gruppi "In programma" / "Passati" ---------- */
+.trips__group {
+  margin: 14px 0 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+.trips__title + .trips__group { margin-top: 2px; }

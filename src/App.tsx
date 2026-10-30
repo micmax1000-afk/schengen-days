@@ -64,6 +64,15 @@ export default function App() {
       <Header />
       <main className="app__main">
         <Summary status={status} trips={trips} />
+        {trips.length === 0 && (
+          <section className="welcome">
+            <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="" />
+            <div>
+              <h2>{t.welcomeTitle}</h2>
+              <p>{t.welcomeText}</p>
+            </div>
+          </section>
+        )}
         <TripForm
           trips={trips}
           onAdd={addTrip}
