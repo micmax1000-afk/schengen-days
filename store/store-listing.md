@@ -8,36 +8,38 @@ Schengen 90/180 calculator: track your stay days and plan trips
 
 ## Full description (max 4000 characters)
 
-Keep track of your days in the Schengen area with a simple, free app — no account required.
+Keep track of your days in the Schengen Area with a simple, free app — no account required.
 
 INDEPENDENT AND UNOFFICIAL: this app is not affiliated with, endorsed by, or connected to the European Union, the European Commission, or any government.
 
-Schengen Days Unofficial is an independent app that automatically applies the 90-days-in-180 rule (the same one used by border authorities for short stays), so you always know how many days you've used and how many you have left.
+The app automatically applies the 90/180-day rule (the same one used by border authorities for short stays), so you always know how many days you have used, how many you have left and when you can enter again.
 
 WHAT YOU CAN DO
-• Log every trip with entry date, exit date, country, and a personal note
-• See at a glance how many days you've used in the last 180 and how many remain
-• Browse the monthly calendar with your Schengen days highlighted
-• Plan future trips and see if they fit the 90/180 rule, including trips you have already planned
-• Simulate a future entry: "If I enter on [date], when must I leave at the latest?"
-• Export or share a backup of your trips anytime
+• Log every trip with entry date, exit date, countries and a personal note
+• See at a glance the days used in the last 180 and the days remaining
+• Know your next possible entry and how long you can stay
+• Plan future trips: the app checks that they also fit the rule together with your other planned trips
+• Simulate a trip: "If I enter on this date, when must I leave at the latest?"
+• Get clear warnings when you approach or reach the 90-day limit
+• Browse the monthly calendar with past and planned days highlighted
+• Export or share a backup of your trips at any time
 • Use the app offline once installed
-• Available in 10 languages, with automatic device language detection
+• Available in 10 languages
 
 PRIVACY FIRST
-No account, no server, no ads. All your data stays exclusively on your device — nothing is collected, transmitted, or sold.
+No account, no server, no ads. All your data stays exclusively on your device: nothing is collected, transmitted or sold.
 
-Independent application, not affiliated with the European Union or any government. It does not replace official checks or declarations required at borders — it's a planning aid for your travels.
+It does not replace official checks or declarations required at borders: it is a planning aid for your travels.
 
 OFFICIAL SOURCES
-This app applies the public "90 days in 180" rule established by the European Union authorities. You can consult the official sources directly:
+This app applies the public "90 days in any 180-day period" rule established by the European Union. You can consult the official sources directly:
 - Schengen Area (European Commission): https://home-affairs.ec.europa.eu/policies/schengen/schengen-area_en
 - Regulation (EU) 2016/399 (90/180-day rule): https://eur-lex.europa.eu/eli/reg/2016/399/oj
 - Official calculator (European Commission): https://ec.europa.eu/assets/home/visa-calculator/calculator.htm?lang=en
 - EU Entry/Exit System (EES): https://travel-europe.europa.eu/en/ees
 
 DISCLAIMER
-This app is provided for informational purposes only, "as is", with no guarantee of calculation accuracy. We accept no liability for any calculation errors, delays, inconvenience, or consequences — including any penalties or entry denials — resulting from the use of this app. Always verify your days on the official websites of the relevant European authorities (e.g. the European Commission's official calculator) or by contacting border authorities before traveling.
+This app is provided for informational purposes only, "as is", with no guarantee of calculation accuracy. We accept no liability for any calculation errors, delays, inconvenience or consequences, including penalties or entry refusals, resulting from the use of this app. Always verify your days on the official websites of the European authorities (e.g. the European Commission's official calculator) or with border authorities before traveling.
 
 ---
 
