@@ -1,6 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap");
 
 :root {
+  /* L'app ha solo il tema chiaro: anche i controlli del browser restano chiari */
+  color-scheme: light;
   --ink: #14213d;
   --ink-soft: #5b6470;
   --ink-faint: #9098a3;
