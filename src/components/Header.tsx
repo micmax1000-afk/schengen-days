@@ -9,7 +9,7 @@ export default function Header() {
         <LanguageSwitcher />
       </div>
       <div className="app-header__top">
-        <span className="app-header__stamp">90/180</span>
+        <img className="app-header__logo" src={`${import.meta.env.BASE_URL}logo.svg`} alt="" width={56} height={56} />
         <div className="app-header__text">
           <h1>{t.appTitle}</h1>
           <p>{t.appSubtitle}</p>

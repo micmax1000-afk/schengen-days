@@ -48,9 +48,9 @@ This app is provided for informational purposes only, "as is", with no guarantee
   (the page lives in the micmax-apps-site repository; public/privacy.html here is a copy)
 - **Website**: https://micmax1000-afk.github.io/schengen-days/
 - **Content rating**: suitable for everyone (no sensitive content)
-- **Icon**: store/icon-512-play.png (512×512, no transparency). Plane taking off
-  and "90/180" on blue: no EU flag, no circle of stars (the previous icon was
-  rejected under the impersonation policy)
+- **Icon**: store/icon-512-play.png (512×512, no transparency). Yellow suitcase
+  with a "90/180" tag on blue: no EU flag, no circle of stars (an earlier icon
+  was rejected under the impersonation policy)
 - **Feature graphic**: store/feature-graphic-1024x500.png (1024×500)
 - **Phone screenshots**: store/screenshots/screenshot-1.png … screenshot-6.png
   (1080×1920, 9:16, in English): summary, trip planning, calendar, trip list,

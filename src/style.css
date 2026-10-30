@@ -6,13 +6,13 @@
   --ink: #14213d;
   --ink-soft: #5b6470;
   --ink-faint: #9098a3;
-  --paper: #f6f4ef;
+  --paper: #f2f5fb;
   --card: #ffffff;
-  --paper-line: #e6e2d8;
-  --petrol: #0f5257;
-  --petrol-light: #16777d;
-  --petrol-tint: #e6f0ef;
-  --window-tint: #eef2e9;
+  --paper-line: #dde3f0;
+  --petrol: #003399;
+  --petrol-light: #2f5fd0;
+  --petrol-tint: #e6edfb;
+  --window-tint: #e9effb;
   --stamp-red: #b23a2e;
   --red-tint: #fbeceb;
   --amber: #c98a1f;
@@ -21,6 +21,10 @@
   --orange: #d9661f;
   --orange-dark: #9a4310;
   --orange-tint: #fdebdf;
+  /* Colori dell'icona */
+  --brand: #003399;
+  --brand-2: #0a46c4;
+  --accent: #ffcc00;
   --radius: 16px;
   --radius-sm: 10px;
   --shadow: 0 1px 2px rgba(20, 33, 61, 0.05), 0 4px 16px rgba(20, 33, 61, 0.06);
@@ -77,17 +81,12 @@ select {
   min-width: 0;
 }
 
-.app-header__stamp {
-  font-family: var(--mono);
-  font-weight: 700;
-  font-size: 0.8rem;
-  color: var(--petrol);
-  border: 2px solid var(--petrol);
-  border-radius: 999px;
-  padding: 6px 10px;
-  transform: rotate(-6deg);
-  white-space: nowrap;
+.app-header__logo {
+  width: 56px;
+  height: 56px;
   flex-shrink: 0;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 51, 153, 0.25);
 }
 
 .app-header h1 {
@@ -159,7 +158,7 @@ select {
 .simulate__form input[type="date"] {
   font-family: var(--mono);
   padding-left: 42px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%230f5257' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M16 3v4M8 3v4M3 10h18'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23003399' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M16 3v4M8 3v4M3 10h18'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: 12px center;
 }
@@ -176,7 +175,7 @@ select {
 .simulate__form input:focus {
   outline: none;
   border-color: var(--petrol-light);
-  box-shadow: 0 0 0 3px rgba(22, 119, 125, 0.15);
+  box-shadow: 0 0 0 3px rgba(47, 95, 208, 0.18);
   background-color: var(--card);
 }
 
@@ -882,7 +881,7 @@ select {
   background-image: repeating-linear-gradient(
     -45deg,
     transparent 0 4px,
-    rgba(22, 119, 125, 0.14) 4px 7px
+    rgba(47, 95, 208, 0.14) 4px 7px
   );
   box-shadow: inset 0 0 0 2px var(--petrol-light);
 }
@@ -1109,3 +1108,34 @@ select {
     font-size: 1.15rem;
   }
 }
+
+/* ---------- Riepilogo su sfondo blu, come l'icona ---------- */
+
+.summary {
+  background: linear-gradient(160deg, var(--brand-2) 0%, var(--brand) 60%, #002a80 100%);
+  border: none;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 51, 153, 0.28);
+}
+.summary::before { display: none; }
+.summary__ring-bg { stroke: rgba(255, 255, 255, 0.16); }
+.summary__ring-fg--ok { stroke: var(--accent); }
+.summary__ring-fg--warning { stroke: #ffb020; }
+.summary__ring-fg--full { stroke: #ff8a3d; }
+.summary__ring-fg--over { stroke: #ff5c5c; }
+.summary__ring-number { color: #fff; }
+.summary__ring-label,
+.summary .summary__stat .summary__label { color: rgba(255, 255, 255, 0.72); }
+.summary__stat { background: rgba(255, 255, 255, 0.1); }
+.summary .summary__value { color: #fff; }
+.summary .summary__stat .summary__unit { color: rgba(255, 255, 255, 0.7); }
+.summary__status--ok { background: rgba(255, 204, 0, 0.16); color: var(--accent); }
+.summary__status--warning { background: #fff4d6; }
+.summary__status--full { background: #ffe8da; }
+.summary__status--over { background: #ffe1e1; }
+.summary__next { background: #fff; border: none; color: var(--ink); }
+.summary__projection { background: rgba(255, 255, 255, 0.12); color: #fff; }
+
+/* Calendario: oggi cerchiato in giallo */
+.calendar__cell--today { box-shadow: inset 0 0 0 2.5px var(--accent); }
+.calendar__cell--trip.calendar__cell--today { box-shadow: inset 0 0 0 3px var(--accent); }
