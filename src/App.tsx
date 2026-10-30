@@ -11,6 +11,9 @@ import { getComplianceStatus, simulateStay, isValidTrip, Trip } from "./utils/ca
 import { useLanguage } from "./i18n/LanguageContext";
 import { APP_VERSION } from "./version";
 
+/** Informativa sulla privacy pubblicata sul sito Netlify (repository micmax-apps-site). */
+const PRIVACY_URL = "https://micmax-apps.netlify.app/privacy-schengen";
+
 export default function App() {
   const { trips, addTrip, removeTrip, updateTrip, exportTrips, importTrips } = useLocalTrips();
   const [editingTrip, setEditingTrip] = useState<Trip | null>(null);
@@ -136,7 +139,9 @@ export default function App() {
         </div>
 
         <p>
-          <a href="privacy.html" target="_blank" rel="noopener noreferrer">
+          {/* Indirizzo completo: un link relativo nell'app Android punterebbe a un
+              file interno all'app invece che alla pagina pubblicata */}
+          <a href={PRIVACY_URL} target="_blank" rel="noopener noreferrer">
             {t.privacyLink}
           </a>
         </p>

@@ -44,7 +44,8 @@ This app is provided for informational purposes only, "as is", with no guarantee
 ## Notes for publishing
 
 - **Suggested category**: Travel & Local
-- **Privacy policy URL**: https://micmax1000-afk.github.io/schengen-days/privacy.html
+- **Privacy policy URL**: https://micmax-apps.netlify.app/privacy-schengen
+  (the page lives in the micmax-apps-site repository; public/privacy.html here is a copy)
 - **Website**: https://micmax1000-afk.github.io/schengen-days/
 - **Content rating**: suitable for everyone (no sensitive content)
 - **Icon**: store/icon-512-play.png (512×512, no transparency). Plane taking off
