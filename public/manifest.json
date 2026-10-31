@@ -1,6 +1,6 @@
 {
-  "name": "Schengen Days Unofficial",
-  "short_name": "Schengen Days",
+  "name": "StampDays – Schengen 90/180",
+  "short_name": "StampDays",
   "description": "Calcola i tuoi giorni nell'area Schengen secondo la regola 90/180",
   "start_url": "./",
   "scope": "./",

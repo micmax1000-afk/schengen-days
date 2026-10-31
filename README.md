@@ -1,4 +1,4 @@
-# Schengen Days Unofficial
+# StampDays – Schengen 90/180
 
 App gratuita, senza server, per calcolare i giorni trascorsi nell'area
 Schengen secondo la regola dei 90 giorni su 180. Tutti i dati restano

@@ -9,9 +9,9 @@ Dove aggiungerle: Play Console → Scheda dello store principale → Gestisci tr
 
 ## Italiano (it-IT)
 
-**Titolo** (29 caratteri)
+**Titolo** (26 caratteri)
 
-Schengen 90/180 non ufficiale
+StampDays: Schengen 90/180
 
 **Descrizione breve** (73 caratteri)
 
@@ -56,9 +56,9 @@ Questa app è fornita esclusivamente a scopo informativo, “così com’è”, 
 
 ## Español (es-ES)
 
-**Titolo** (28 caratteri)
+**Titolo** (26 caratteri)
 
-Schengen 90/180 (no oficial)
+StampDays: Schengen 90/180
 
 **Descrizione breve** (69 caratteri)
 
@@ -103,9 +103,9 @@ Esta aplicación se ofrece únicamente con fines informativos, «tal cual», sin
 
 ## Français (fr-FR)
 
-**Titolo** (30 caratteri)
+**Titolo** (26 caratteri)
 
-Schengen 90/180 (non officiel)
+StampDays: Schengen 90/180
 
 **Descrizione breve** (71 caratteri)
 
@@ -150,9 +150,9 @@ Cette application est fournie à titre informatif uniquement, « telle quelle »
 
 ## Português – Portugal (pt-PT)
 
-**Titolo** (29 caratteri)
+**Titolo** (26 caratteri)
 
-Schengen 90/180 (não oficial)
+StampDays: Schengen 90/180
 
 **Descrizione breve** (72 caratteri)
 
@@ -197,9 +197,9 @@ Esta aplicação é fornecida apenas para fins informativos, «tal como está»,
 
 ## Português – Brasil (pt-BR)
 
-**Titolo** (29 caratteri)
+**Titolo** (26 caratteri)
 
-Schengen 90/180 (não oficial)
+StampDays: Schengen 90/180
 
 **Descrizione breve** (71 caratteri)
 
@@ -244,9 +244,9 @@ Este aplicativo é fornecido apenas para fins informativos, “no estado em que 
 
 ## Русский (ru-RU)
 
-**Titolo** (28 caratteri)
+**Titolo** (26 caratteri)
 
-Шенген 90/180 (неофициально)
+StampDays: Schengen 90/180
 
 **Descrizione breve** (66 caratteri)
 
@@ -291,9 +291,9 @@ Este aplicativo é fornecido apenas para fins informativos, “no estado em que 
 
 ## 中文 – 简体 (zh-CN)
 
-**Titolo** (12 caratteri)
+**Titolo** (26 caratteri)
 
-非官方申根签证天数计算器
+StampDays: Schengen 90/180
 
 **Descrizione breve** (26 caratteri)
 
@@ -338,9 +338,9 @@ Este aplicativo é fornecido apenas para fins informativos, “no estado em que 
 
 ## العربية (ar)
 
-**Titolo** (22 caratteri)
+**Titolo** (26 caratteri)
 
-حاسبة شنغن غير الرسمية
+StampDays: Schengen 90/180
 
 **Descrizione breve** (49 caratteri)
 
@@ -385,9 +385,9 @@ Este aplicativo é fornecido apenas para fins informativos, “no estado em que 
 
 ## עברית (iw-IL)
 
-**Titolo** (19 caratteri)
+**Titolo** (26 caratteri)
 
-מחשבון שנגן לא רשמי
+StampDays: Schengen 90/180
 
 **Descrizione breve** (70 caratteri)
 
@@ -434,7 +434,7 @@ Este aplicativo é fornecido apenas para fins informativos, “no estado em que 
 
 **Titolo** (26 caratteri)
 
-अनौपचारिक शेंगेन कैलकुलेटर
+StampDays: Schengen 90/180
 
 **Descrizione breve** (76 caratteri)
 

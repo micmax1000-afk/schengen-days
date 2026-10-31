@@ -72,7 +72,7 @@ export default function BackupControls({ trips, exportTrips, importTrips }: Prop
     let shared = false;
     try {
       if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({ files: [file], title: "Schengen Days — backup" });
+        await navigator.share({ files: [file], title: "StampDays — backup" });
         shared = true;
       }
     } catch (err) {

@@ -1,7 +1,7 @@
-# Google Play store listing — Unofficial Schengen Calculator
+# Google Play store listing — StampDays: Schengen 90/180
 
 ## Title (max 30 characters)
-Unofficial Schengen Calculator
+StampDays: Schengen 90/180
 
 ## Short description (max 80 characters)
 Schengen 90/180 calculator: track your stay days and plan trips
@@ -53,7 +53,7 @@ This app is provided for informational purposes only, "as is", with no guarantee
 - **Icon**: store/icon-512-play.png (512×512, no transparency). Yellow passport
   with a "90" entry stamp on blue: no EU flag, no circle of stars (an earlier
   icon was rejected under the impersonation policy)
-- **App name on the phone** (under the icon): "Schengen Days"
+- **App name on the phone** (under the icon): "StampDays"
 - **Feature graphic**: store/feature-graphic-1024x500.png (1024×500)
 - **Phone screenshots**: store/screenshots/screenshot-1.png … screenshot-6.png
   (1080×1920, 9:16, in English): summary, trip planning, calendar, trip list,
