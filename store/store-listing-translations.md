@@ -17,7 +17,7 @@ StampDays: Schengen 90/180
 
 Calcolatore Schengen 90/180: conta i tuoi giorni, organizza i tuoi viaggi
 
-**Descrizione completa** (2752 caratteri)
+**Descrizione completa** (2935 caratteri)
 
 Tieni traccia dei tuoi giorni nell’Area Schengen con un’app semplice e gratuita — non è necessario creare un account.
 
@@ -27,12 +27,14 @@ L’app applica automaticamente la regola dei 90/180 giorni (la stessa utilizzat
 
 COSA PUOI FARE
 • Registra ogni viaggio con data di ingresso, data di uscita, paesi e una nota personale
+• Registra ingresso e uscita con un solo tocco: «Oggi sono entrato» / «Oggi sono uscito», con Annulla in caso di errore
 • Visualizza a colpo d’occhio i giorni utilizzati negli ultimi 180 e quelli rimanenti
 • Scopri la tua prossima possibile entrata e per quanto tempo puoi rimanere
 • Pianifica viaggi futuri: l’app verifica che siano conformi alla regola anche in combinazione con gli altri viaggi pianificati
-• Simula un viaggio: «Se entro in questa data, entro quando devo partire al più tardi?»
+• Simula un viaggio: «Se entro in questa data, fino a quando posso restare?»
 • Ricevi avvisi chiari quando ti avvicini o raggiungi il limite dei 90 giorni
 • Sfoglia il calendario mensile con i giorni passati e quelli pianificati evidenziati
+• Crea un rapporto PDF dei tuoi viaggi da salvare, stampare o condividere
 • Esporta o condividi un backup dei tuoi viaggi in qualsiasi momento
 • Usa l’app offline una volta installata
 • Disponibile in 10 lingue
@@ -64,7 +66,7 @@ StampDays: Schengen 90/180
 
 Calculadora de Schengen 90/180: cuenta tus días, planifica tus viajes
 
-**Descrizione completa** (2759 caratteri)
+**Descrizione completa** (2924 caratteri)
 
 Lleva un control de tus días en el Espacio Schengen con una aplicación sencilla y gratuita, sin necesidad de crear una cuenta.
 
@@ -74,12 +76,14 @@ La aplicación aplica automáticamente la regla de los 90/180 días (la misma qu
 
 QUÉ PUEDES HACER
 • Registrar cada viaje con la fecha de entrada, la fecha de salida, los países y una nota personal
+• Registra tu entrada y salida con un solo toque, y deshaz la acción si te equivocas
 • Ver de un vistazo los días utilizados en los últimos 180 y los días que te quedan
 • Saber cuándo podrás volver a entrar y cuánto tiempo podrás quedarte
 • Planificar viajes futuros: la aplicación comprueba que también cumplan la norma junto con tus otros viajes previstos
 • Simular un viaje: «Si entro en esta fecha, ¿cuándo debo salir como muy tarde?»
 • Recibe avisos claros cuando te acerques o alcances el límite de 90 días
 • Consulta el calendario mensual con los días pasados y previstos resaltados
+• Crea un informe en PDF de tus viajes para guardarlo, imprimirlo o compartirlo
 • Exporta o comparte una copia de seguridad de tus viajes en cualquier momento
 • Utiliza la aplicación sin conexión una vez instalada
 • Disponible en 10 idiomas
@@ -111,7 +115,7 @@ StampDays: Schengen 90/180
 
 Calculateur Schengen 90/180 : suivez vos jours et organisez vos voyages
 
-**Descrizione completa** (2989 caratteri)
+**Descrizione completa** (3230 caratteri)
 
 Suivez vos jours passés dans l'espace Schengen grâce à une application simple et gratuite — aucun compte requis.
 
@@ -121,12 +125,14 @@ L'application applique automatiquement la règle des 90/180 jours (la même que 
 
 CE QUE VOUS POUVEZ FAIRE
 • Enregistrer chaque voyage avec la date d'entrée, la date de sortie, les pays visités et une note personnelle
+• Enregistrez votre entrée et votre sortie de l'espace Schengen d'un simple clic, et annulez l'opération si vous vous trompez
 • Visualisez en un coup d’œil les jours utilisés au cours des 180 derniers jours et les jours restants
 • Connaissez votre prochaine entrée possible et la durée de séjour autorisée
 • Planifiez vos futurs voyages : l’application vérifie qu’ils respectent bien la règle, en tenant compte de vos autres voyages prévus
 • Simulez un voyage : « Si j’entre à cette date, quand dois-je partir au plus tard ? »
 • Recevez des alertes claires lorsque vous approchez ou atteignez la limite des 90 jours
 • Parcourez le calendrier mensuel avec les jours passés et prévus mis en évidence
+• Créez un rapport au format PDF récapitulant tous vos voyages, que vous pourrez enregistrer, imprimer ou partager
 • Exportez ou partagez une sauvegarde de vos voyages à tout moment
 • Utilisez l’application hors ligne une fois qu’elle est installée
 • Disponible en 10 langues
@@ -158,7 +164,7 @@ StampDays: Schengen 90/180
 
 Calculadora Schengen 90/180: conte os seus dias, planeie as suas viagens
 
-**Descrizione completa** (2696 caratteri)
+**Descrizione completa** (2881 caratteri)
 
 Acompanhe os seus dias no Espaço Schengen com uma aplicação simples e gratuita — não é necessário criar uma conta.
 
@@ -168,12 +174,14 @@ A aplicação aplica automaticamente a regra dos 90/180 dias (a mesma utilizada 
 
 O QUE PODE FAZER
 • Registe cada viagem com a data de entrada, a data de saída, os países e uma nota pessoal
+• Registe a sua entrada e saída do espaço Schengen com um único toque e anule a operação em caso de erro
 • Ver num relance os dias utilizados nos últimos 180 e os dias restantes
 • Saber a sua próxima entrada possível e quanto tempo pode ficar
 • Planear viagens futuras: a aplicação verifica se estas também cumprem a regra, juntamente com as suas outras viagens planeadas
 • Simular uma viagem: «Se entrar nesta data, quando devo sair, o mais tardar?»
 • Receba avisos claros quando se aproximar ou atingir o limite de 90 dias
 • Navegue pelo calendário mensal com os dias passados e planeados destacados
+• Crie um relatório em PDF das suas viagens para guardar, imprimir ou partilhar
 • Exporte ou partilhe uma cópia de segurança das suas viagens a qualquer momento
 • Utilize a aplicação offline depois de instalada
 • Disponível em 10 idiomas
@@ -205,7 +213,7 @@ StampDays: Schengen 90/180
 
 Calculadora Schengen 90/180: acompanhe seus dias e planeje suas viagens
 
-**Descrizione completa** (2712 caratteri)
+**Descrizione completa** (2881 caratteri)
 
 Acompanhe seus dias no Espaço Schengen com um aplicativo simples e gratuito — sem necessidade de criar uma conta.
 
@@ -215,12 +223,14 @@ O aplicativo aplica automaticamente a regra dos 90/180 dias (a mesma usada pelas
 
 O QUE VOCÊ PODE FAZER
 • Registrar cada viagem com data de entrada, data de saída, países e uma nota pessoal
+• Registre sua entrada e saída com um único toque e desfaça a ação caso cometa um erro
 • Veja rapidamente os dias utilizados nos últimos 180 e os dias restantes
 • Saiba qual é a sua próxima entrada possível e por quanto tempo você pode ficar
 • Planeje viagens futuras: o aplicativo verifica se elas também se encaixam na regra, juntamente com suas outras viagens planejadas
 • Simule uma viagem: “Se eu entrar nesta data, até quando devo sair, no máximo?”
 • Receba alertas claros quando se aproximar ou atingir o limite de 90 dias
 • Navegue pelo calendário mensal com os dias passados e planejados destacados
+• Crie um relatório em PDF das suas viagens para salvar, imprimir ou compartilhar
 • Exporte ou compartilhe um backup de suas viagens a qualquer momento
 • Use o aplicativo offline após a instalação
 • Disponível em 10 idiomas
@@ -252,7 +262,7 @@ StampDays: Schengen 90/180
 
 Калькулятор «Шенген 90/180»: отслеживайте дни и планируйте поездки
 
-**Descrizione completa** (2917 caratteri)
+**Descrizione completa** (3136 caratteri)
 
 Отслеживайте количество дней пребывания в Шенгенской зоне с помощью простого бесплатного приложения — регистрация не требуется.
 
@@ -262,12 +272,14 @@ StampDays: Schengen 90/180
 
 ЧТО ВЫ МОЖЕТЕ ДЕЛАТЬ
 • Регистрировать каждую поездку с указанием даты въезда, даты выезда, стран и личной заметки
+• Одним касанием зарегистрируйте свой въезд в Шенгенскую зону и выезд из нее, а в случае ошибки отмените запись
 • С одного взгляда видеть, сколько дней было использовано за последние 180 дней и сколько осталось
 • Узнавать о следующем возможном въезде и о том, как долго вы сможете оставаться
 • Планировать будущие поездки: приложение проверяет, соответствуют ли они правилу в совокупности с другими запланированными поездками
 • Моделировать поездку: «Если я въеду в эту дату, когда мне нужно уехать самое позднее?»
 • Получайте четкие предупреждения, когда вы приближаетесь к 90-дневному лимиту или достигаете его
 • Просматривайте месячный календарь с выделенными прошлыми и запланированными днями
+• Создайте отчет о своих поездках в формате PDF, чтобы сохранить его, распечатать или поделиться с другими
 • Экспортируйте или делитесь резервной копией своих поездок в любое время
 • Используйте приложение в автономном режиме после установки
 • Доступно на 10 языках
@@ -299,7 +311,7 @@ StampDays: Schengen 90/180
 
 申根90/180天计算器：记录您的停留天数并规划行程
 
-**Descrizione completa** (962 caratteri)
+**Descrizione completa** (1023 caratteri)
 
 使用这款简单免费的应用程序，轻松记录您在申根区的停留天数——无需注册账号。
 
@@ -309,12 +321,14 @@ StampDays: Schengen 90/180
 
 功能介绍
 • 记录每次行程，包括入境日期、出境日期、国家/地区及个人备注
+• 只需轻点一下，即可记录您进出申根区的记录，如果操作有误，还可以撤销
 • 一目了然地查看过去180天内已使用的天数和剩余天数
 • 了解下次可能的入境时间以及可停留时长
 • 规划未来行程：应用会核查该行程是否符合规则，并综合考虑您其他已计划的行程
 • 模拟行程：“如果我于该日期入境，最迟必须在何时离境？”
 • 当接近或达到90天限额时，会收到清晰的提醒
 • 浏览月历，过往和计划中的天数会以高亮显示
+• 生成您的行程PDF报告，以便保存、打印或分享
 • 随时导出或分享行程备份
 • 安装后即可离线使用
 • 支持10种语言
@@ -346,7 +360,7 @@ StampDays: Schengen 90/180
 
 حاسبة شينغن 90/180: تتبع أيام إقامتك وخطط لرحلاتك
 
-**Descrizione completa** (2253 caratteri)
+**Descrizione completa** (2405 caratteri)
 
 تتبع عدد الأيام التي قضيتها في منطقة شنغن باستخدام تطبيق بسيط ومجاني — دون الحاجة إلى إنشاء حساب.
 
@@ -356,12 +370,14 @@ StampDays: Schengen 90/180
 
 ما يمكنك فعله
 • تسجيل كل رحلة مع تاريخ الدخول وتاريخ الخروج والبلدان وملاحظة شخصية
+• سجل دخولك إلى منطقة شنغن وخروجك منها بنقرة واحدة، ويمكنك التراجع عن ذلك إذا ارتكبت خطأً
 • اطلع في لمحة سريعة على الأيام التي استهلكتها خلال آخر 180 يومًا والأيام المتبقية
 • اعرف موعد دخولك المحتمل التالي ومدة الإقامة المسموح بها
 • خطط لرحلاتك المستقبلية: يتحقق التطبيق من توافقها مع القاعدة جنبًا إلى جنب مع رحلاتك المخطط لها الأخرى
 • قم بمحاكاة رحلة: «إذا دخلت في هذا التاريخ، فمتى يجب أن أغادر على أقصى تقدير؟»
 • تلقي تحذيرات واضحة عند الاقتراب من حد الـ 90 يومًا أو بلوغه
 • تصفح التقويم الشهري مع تمييز الأيام الماضية والمخطط لها
+• أنشئ تقريرًا بصيغة PDF عن رحلاتك لحفظه أو طباعته أو مشاركته
 • تصدير أو مشاركة نسخة احتياطية من رحلاتك في أي وقت
 • استخدام التطبيق دون اتصال بالإنترنت بمجرد تثبيته
 • متوفر بـ 10 لغات
@@ -393,7 +409,7 @@ StampDays: Schengen 90/180
 
 מחשבון 90/180 של שנגן: עקבו אחר ימי השהייה שלכם ותכננו את הנסיעות שלכם
 
-**Descrizione completa** (2105 caratteri)
+**Descrizione completa** (2261 caratteri)
 
 עקבו אחר ימי השהייה שלכם באזור שנגן באמצעות אפליקציה פשוטה וחינמית — אין צורך בחשבון.
 
@@ -403,12 +419,14 @@ StampDays: Schengen 90/180
 
 מה תוכלו לעשות
 • לתעד כל נסיעה עם תאריך כניסה, תאריך יציאה, מדינות והערה אישית
+• תוכלו לתעד את כניסתכם לאזור שנגן ואת יציאתכם ממנו בלחיצה אחת, ולבטל את הרישום אם טעיתם
 • לראות במבט אחד את הימים שנוצלו ב-180 הימים האחרונים ואת הימים שנותרו
 • לדעת מתי תוכלו להיכנס שוב ואיך זמן תוכלו להישאר
 • לתכנן נסיעות עתידיות: האפליקציה בודקת שהן עומדות בכלל יחד עם הנסיעות האחרות שתכננתם
 • לדמות נסיעה: "אם אכנס בתאריך זה, מתי עליי לעזוב לכל המאוחר?"
 • קבלו התראות ברורות כשאתם מתקרבים או מגיעים למגבלת 90 הימים
 • עיינו בלוח השנה החודשי, שבו הימים שחלפו והימים המתוכננים מסומנים
+• צרו דוח PDF של כל הנסיעות שלכם, אותו תוכלו לשמור, להדפיס או לשתף
 • ייצאו או שתפו גיבוי של הנסיעות שלכם בכל עת
 • השתמשו באפליקציה במצב לא מקוון לאחר ההתקנה
 • זמינה ב-10 שפות
@@ -440,7 +458,7 @@ StampDays: Schengen 90/180
 
 शेंगेन 90/180 कैलकुलेटर: अपने दिनों को ट्रैक करें और यात्राओं की योजना बनाएँ
 
-**Descrizione completa** (2549 caratteri)
+**Descrizione completa** (2748 caratteri)
 
 एक सरल, मुफ़्त ऐप से शेंगेन क्षेत्र में अपने दिनों का हिसाब रखें — किसी खाते की आवश्यकता नहीं है।
 
@@ -450,12 +468,14 @@ StampDays: Schengen 90/180
 
 आप क्या कर सकते हैं
 • प्रवेश तिथि, निकास तिथि, देशों और एक व्यक्तिगत नोट के साथ हर यात्रा को लॉग करें
+• एक ही टैप से शेंगेन क्षेत्र में अपनी प्रवेश और निकास को रिकॉर्ड करें, और अगर आपसे गलती हो जाए तो उसे रद्द करें
 • पिछली 180 दिनों में उपयोग किए गए दिनों और शेष दिनों को एक नज़र में देखें
 • अपनी अगली संभावित प्रवेश तिथि और आप कितने समय तक रह सकते हैं, यह जानें
 • भविष्य की यात्राओं की योजना बनाएँ: ऐप यह जांचता है कि वे आपकी अन्य नियोजित यात्राओं के साथ मिलकर नियम में फिट बैठते हैं या नहीं
 • एक यात्रा का अनुकरण करें: "यदि मैं इस तारीख को प्रवेश करता हूँ, तो मुझे देर से कब निकलना होगा?"
 • जब आप 90-दिन की सीमा के करीब पहुँचते हैं या उसे पार कर लेते हैं तो स्पष्ट चेतावनियाँ प्राप्त करें
 • पिछले और नियोजित दिनों को हाइलाइट किए गए मासिक कैलेंडर को ब्राउज़ करें
+• अपनी सभी यात्राओं की एक PDF रिपोर्ट बनाएँ, जिसे आप सहेज, प्रिंट या साझा कर सकते हैं
 • किसी भी समय अपनी यात्राओं का बैकअप एक्सपोर्ट या शेयर करें
 • एक बार इंस्टॉल हो जाने पर ऐप का ऑफ़लाइन उपयोग करें
 • 10 भाषाओं में उपलब्ध

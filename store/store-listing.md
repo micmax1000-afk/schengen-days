@@ -16,12 +16,14 @@ The app automatically applies the 90/180-day rule (the same one used by border a
 
 WHAT YOU CAN DO
 • Log every trip with entry date, exit date, countries and a personal note
+• Log your entry and exit with a single tap, and undo it if you make a mistake
 • See at a glance the days used in the last 180 and the days remaining
 • Know your next possible entry and how long you can stay
 • Plan future trips: the app checks that they also fit the rule together with your other planned trips
 • Simulate a trip: "If I enter on this date, when must I leave at the latest?"
 • Get clear warnings when you approach or reach the 90-day limit
 • Browse the monthly calendar with past and planned days highlighted
+• Create a PDF report of your trips to save, print or share
 • Export or share a backup of your trips at any time
 • Use the app offline once installed
 • Available in 10 languages
