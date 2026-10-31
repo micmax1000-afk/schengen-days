@@ -49,6 +49,8 @@ export interface Dict {
   statusOver: string;
   tripsTitle: string;
   enteredToday: string;
+  toastEntered: (date: string) => string;
+  toastExited: (date: string) => string;
   enteredTodayHint: string;
   exitedToday: string;
   exitedTodayHint: (date: string) => string;
@@ -149,6 +151,8 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "Limite dépassée !",
     tripsTitle: "Vos voyages",
     enteredToday: "Aujourd'hui, je suis entré dans l'espace Schengen",
+    toastEntered: (d) => `Entrée dans l'espace Schengen enregistrée : ${d}`,
+    toastExited: (d) => `Sortie de l'espace Schengen enregistrée : ${d}`,
     enteredTodayHint: "Enregistrez un nouveau voyage qui commence aujourd'hui",
     exitedToday: "Aujourd'hui, j'ai quitté l'espace Schengen",
     exitedTodayHint: (d) => `Voyage en cours depuis le ${d}`,
@@ -246,6 +250,8 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "המגבלה חורגה!",
     tripsTitle: "הנסיעות שלך",
     enteredToday: "היום נכנסתי לאזור שנגן",
+    toastEntered: (d) => `כניסה רשומה לאזור שנגן: ${d}`,
+    toastExited: (d) => `יציאה רשומה מאזור שנגן: ${d}`,
     enteredTodayHint: "רשום טיול חדש שמתחיל היום",
     exitedToday: "היום יצאתי מאזור שנגן",
     exitedTodayHint: (d) => `המסע מתקיים החל מ-${d}`,
@@ -343,6 +349,8 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "Limite superato!",
     tripsTitle: "I tuoi viaggi",
     enteredToday: "Oggi sono entrato nell'area Schengen",
+    toastEntered: (d) => `Ingresso nell'area Schengen registrato: ${d}`,
+    toastExited: (d) => `Uscita dall'area Schengen registrata: ${d}`,
     enteredTodayHint: "Registra un nuovo viaggio che inizia oggi",
     exitedToday: "Oggi sono uscito dall'area Schengen",
     exitedTodayHint: (d) => `Viaggio in corso dal ${d}`,
@@ -440,6 +448,8 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "Limit exceeded!",
     tripsTitle: "Your trips",
     enteredToday: "Today I entered the Schengen Area",
+    toastEntered: (d) => `Recorded entry into the Schengen Area: ${d}`,
+    toastExited: (d) => `Recorded exit from the Schengen Area: ${d}`,
     enteredTodayHint: "Create a new trip that starts today",
     exitedToday: "Today I left the Schengen Area",
     exitedTodayHint: (d) => `Trip in progress since ${d}`,
@@ -537,6 +547,8 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "已超出限制！",
     tripsTitle: "您的行程",
     enteredToday: "今天我进入了申根区",
+    toastEntered: (d) => `已记录的申根区入境记录：${d}`,
+    toastExited: (d) => `已记录的申根区出境记录：${d}`,
     enteredTodayHint: "记录一段从今天开始的新旅程",
     exitedToday: "今天我离开了申根区",
     exitedTodayHint: (d) => `旅程自${d}起`,
@@ -634,6 +646,8 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "تم تجاوز الحد!",
     tripsTitle: "رحلاتك",
     enteredToday: "دخلت اليوم منطقة شنغن",
+    toastEntered: (d) => `تم تسجيل الدخول إلى منطقة شنغن: ${d}`,
+    toastExited: (d) => `تسجيل الخروج من منطقة شنغن: ${d}`,
     enteredTodayHint: "سجل رحلة جديدة تبدأ اليوم",
     exitedToday: "لقد غادرت اليوم منطقة شنغن",
     exitedTodayHint: (d) => `الرحلة جارية منذ ${d}`,
@@ -731,6 +745,8 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "¡Límite superado!",
     tripsTitle: "Tus viajes",
     enteredToday: "Hoy he entrado en el espacio Schengen",
+    toastEntered: (d) => `Entrada en el espacio Schengen registrada: ${d}`,
+    toastExited: (d) => `Salida del espacio Schengen registrada: ${d}`,
     enteredTodayHint: "Registra un nuevo viaje que empieza hoy",
     exitedToday: "Hoy he salido del espacio Schengen",
     exitedTodayHint: (d) => `Viaje en curso desde el ${d}`,
@@ -828,6 +844,8 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "Limite ultrapassado!",
     tripsTitle: "As suas viagens",
     enteredToday: "Hoje entrei no espaço Schengen",
+    toastEntered: (d) => `Entrada no espaço Schengen registada: ${d}`,
+    toastExited: (d) => `Saída do espaço Schengen registada: ${d}`,
     enteredTodayHint: "Regista uma nova viagem que começa hoje",
     exitedToday: "Hoje saí do espaço Schengen",
     exitedTodayHint: (d) => `Viagem em curso desde ${d}`,
@@ -925,6 +943,8 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "Лимит превышен!",
     tripsTitle: "Ваши поездки",
     enteredToday: "Сегодня я въехал в Шенгенскую зону",
+    toastEntered: (d) => `Зарегистрированный въезд в Шенгенскую зону: ${d}`,
+    toastExited: (d) => `Зарегистрированный выезд из Шенгенской зоны: ${d}`,
     enteredTodayHint: "Запишите новое путешествие, которое начинается сегодня",
     exitedToday: "Сегодня я выехал из Шенгенской зоны",
     exitedTodayHint: (d) => `Путешествие продолжается с ${d}`,
@@ -1022,6 +1042,8 @@ export const translations: Record<Lang, Dict> = {
     statusOver: "सीमा पार हो गई!",
     tripsTitle: "आपकी यात्राएँ",
     enteredToday: "मैं आज शेंगेन क्षेत्र में प्रवेश किया।",
+    toastEntered: (d) => `शेंगेन क्षेत्र में प्रवेश दर्ज: ${d}`,
+    toastExited: (d) => `शेंगेन क्षेत्र से प्रस्थान दर्ज: ${d}`,
     enteredTodayHint: "आज की तारीख के साथ प्रविष्टि दर्ज करें",
     exitedToday: "मैंने आज शेंगेन क्षेत्र छोड़ दिया।",
     exitedTodayHint: (d) => `यात्रा ${d} से जारी है`,

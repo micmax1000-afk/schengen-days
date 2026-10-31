@@ -1,6 +1,7 @@
 import { Trip, tripDuration, sortTripsDesc, isOngoing, simulateStay, todayISO } from "../utils/calculator";
 import { useLanguage } from "../i18n/LanguageContext";
 import { dayCount } from "../i18n/plural";
+import { exportReportPdf } from "../utils/exportPdf";
 import { flagImageUrl } from "../data/schengenCountries";
 
 interface Props {
@@ -18,7 +19,7 @@ function formatDate(iso: string): string {
 }
 
 export default function TripList({ trips, onRemove, onEdit, editingId, remainingDays }: Props) {
-  const { t } = useLanguage();
+  const { t, lang, isRtl } = useLanguage();
 
   if (trips.length === 0) {
     return (
@@ -105,6 +106,9 @@ export default function TripList({ trips, onRemove, onEdit, editingId, remaining
     <section className="trips">
       <h2 className="trips__title">
         {t.tripsTitle} <span className="trips__count">{trips.length}</span>
+        <button type="button" className="trips__pdf" onClick={() => exportReportPdf(trips, t, lang, isRtl)} title={t.exportPdf}>
+          📄 PDF
+        </button>
       </h2>
       {upcoming.length > 0 && (
         <>

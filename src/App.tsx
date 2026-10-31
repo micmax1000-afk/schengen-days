@@ -19,6 +19,15 @@ const PRIVACY_URL = "https://micmax-apps.netlify.app/privacy-schengen";
 export default function App() {
   const { trips, addTrip, removeTrip, updateTrip, exportTrips, importTrips } = useLocalTrips();
   const [editingTrip, setEditingTrip] = useState<Trip | null>(null);
+  // Conferma breve dopo "entrato/uscito oggi", con possibilità di annullare
+  const [toast, setToast] = useState<{ text: string; undo: () => void } | null>(null);
+  useEffect(() => {
+    if (!toast) return;
+    const timer = setTimeout(() => setToast(null), 6000);
+    return () => clearTimeout(timer);
+  }, [toast]);
+  const showToast = (text: string, undo: () => void) => setToast({ text, undo });
+  const fmt = (iso: string) => iso.split("-").reverse().map((p, i) => (i === 2 ? p.slice(2) : p)).join("/");
 
   // Chiede una recensione su Google Play una sola volta, dopo qualche viaggio registrato
   useEffect(() => {
@@ -82,8 +91,16 @@ export default function App() {
         )}
         <QuickBorder
           trips={trips}
-          onEnter={(today) => addTrip(today, undefined)}
-          onExit={(trip, today) => updateTrip(trip.id, trip.entry, today, trip.entryCountry, trip.exitCountry, trip.note)}
+          onEnter={(today) => {
+            const id = addTrip(today, undefined);
+            showToast(`✓ ${t.toastEntered(fmt(today))}`, () => removeTrip(id));
+          }}
+          onExit={(trip, today) => {
+            updateTrip(trip.id, trip.entry, today, trip.entryCountry, trip.exitCountry, trip.note);
+            showToast(`✓ ${t.toastExited(fmt(today))}`, () =>
+              updateTrip(trip.id, trip.entry, undefined, trip.entryCountry, trip.exitCountry, trip.note)
+            );
+          }}
         />
         <TripForm
           trips={trips}
@@ -99,7 +116,6 @@ export default function App() {
           editingId={editingTrip?.id}
           remainingDays={status.remaining}
         />
-        <CalendarView trips={trips} simulated={simRange} />
         <SimulateEntry
           trips={trips}
           entryDate={simEntry}
@@ -107,10 +123,25 @@ export default function App() {
           onChange={handleSimChange}
           onAddPlanned={handleAddPlanned}
         />
-        <BackupControls trips={trips} exportTrips={exportTrips} importTrips={importTrips} />
-      </main>
-      <footer className="app__footer">
+        <CalendarView trips={trips} simulated={simRange} />
         <p className="app__notice">⚠️ {t.disclaimer}</p>
+        <BackupControls exportTrips={exportTrips} importTrips={importTrips} />
+      </main>
+      {toast && (
+        <div className="toast" role="status">
+          <span>{toast.text}</span>
+          <button
+            type="button"
+            onClick={() => {
+              toast.undo();
+              setToast(null);
+            }}
+          >
+            {t.cancel}
+          </button>
+        </div>
+      )}
+      <footer className="app__footer">
         <p>{t.footerNote}</p>
         <details className="app__legal">
           <summary>{t.legalTitle}</summary>

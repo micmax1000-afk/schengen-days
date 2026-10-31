@@ -93,8 +93,9 @@ export default function TripForm({ trips, onAdd, editingTrip, onUpdate, onCancel
 
   if (!open && !editingTrip) {
     return (
-      <button type="button" className="trip-form-toggle" onClick={() => setOpen(true)}>
-        {t.add}
+      <button type="button" className="quick-border trip-form-toggle" onClick={() => setOpen(true)}>
+        <span aria-hidden="true">✏️</span>
+        {t.add.replace(/^\+\s*/, "")}
       </button>
     );
   }

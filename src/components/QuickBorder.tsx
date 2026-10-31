@@ -1,5 +1,6 @@
 import { Trip, todayISO } from "../utils/calculator";
 import { useLanguage } from "../i18n/LanguageContext";
+import { ongoingDeadline } from "../utils/urgency";
 
 interface Props {
   trips: Trip[];
@@ -16,11 +17,12 @@ function formatDate(iso: string): string {
 export default function QuickBorder({ trips, onEnter, onExit }: Props) {
   const { t } = useLanguage();
   const today = todayISO();
-  const ongoing = trips.find((tr) => !tr.exit && tr.entry <= today);
+  const deadline = ongoingDeadline(trips, today);
 
-  if (ongoing) {
+  if (deadline) {
+    const { ongoing, urgency } = deadline;
     return (
-      <button type="button" className="quick-border quick-border--exit" onClick={() => onExit(ongoing, today)}>
+      <button type="button" className={`quick-border quick-border--${urgency}`} onClick={() => onExit(ongoing, today)}>
         <span aria-hidden="true">🛫</span>
         {t.exitedToday}
         <small>{t.exitedTodayHint(formatDate(ongoing.entry))}</small>

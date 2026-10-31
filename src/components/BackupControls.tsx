@@ -1,54 +1,14 @@
 import { useRef, useState } from "react";
 import { useLanguage } from "../i18n/LanguageContext";
-import { Trip, todayISO } from "../utils/calculator";
-import { buildReportPdf } from "../utils/reportPdf";
-import { countryName } from "../data/schengenCountries";
+import { todayISO } from "../utils/calculator";
 
 interface Props {
-  trips: Trip[];
   exportTrips: () => string;
   importTrips: (json: string) => boolean;
 }
 
-/** Condivide un file (email, WhatsApp, Drive…) o, se non è possibile, lo scarica. */
-async function shareOrDownload(file: File, title: string) {
-  try {
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      await navigator.share({ files: [file], title });
-      return;
-    }
-  } catch (err) {
-    // AbortError = l'utente ha annullato volontariamente: va bene così.
-    if (err instanceof DOMException && err.name === "AbortError") return;
-  }
-  const url = URL.createObjectURL(file);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = file.name;
-  a.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-
-export default function BackupControls({ trips, exportTrips, importTrips }: Props) {
-  const { t, lang, isRtl } = useLanguage();
-  const [pdfBusy, setPdfBusy] = useState(false);
-
-  const handleExportPdf = async () => {
-    setPdfBusy(true);
-    try {
-      const blob = await buildReportPdf({
-        trips,
-        t,
-        isRtl,
-        countryName: (code) => countryName(code, lang),
-        logoUrl: `${import.meta.env.BASE_URL}logo.svg`,
-      });
-      const file = new File([blob], `schengen-days-${todayISO()}.pdf`, { type: "application/pdf" });
-      await shareOrDownload(file, t.reportTitle);
-    } finally {
-      setPdfBusy(false);
-    }
-  };
+export default function BackupControls({ exportTrips, importTrips }: Props) {
+  const { t } = useLanguage();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
@@ -104,12 +64,9 @@ export default function BackupControls({ trips, exportTrips, importTrips }: Prop
   };
 
   return (
-    <section className="backup">
-      <h2 className="backup__title">{t.backupTitle}</h2>
+    <details className="backup">
+      <summary className="backup__title">{t.backupTitle}</summary>
       <div className="backup__actions">
-        <button type="button" onClick={handleExportPdf} className="backup__pdf" disabled={pdfBusy || trips.length === 0}>
-          📄 {t.exportPdf}
-        </button>
         <button type="button" onClick={handleExport} className="backup__export">
           ⬇ {t.exportBackup}
         </button>
@@ -130,6 +87,6 @@ export default function BackupControls({ trips, exportTrips, importTrips }: Prop
       {message && (
         <p className={`backup__message backup__message--${message.type}`}>{message.text}</p>
       )}
-    </section>
+    </details>
   );
 }
