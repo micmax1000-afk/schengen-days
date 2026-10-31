@@ -4,7 +4,7 @@
 StampDays: Schengen 90/180
 
 ## Short description (max 80 characters)
-Schengen 90/180 calculator: track your stay days and plan trips
+Schengen 90/180 calculator: log entry & exit, count your days, plan trips
 
 ## Full description (max 4000 characters)
 

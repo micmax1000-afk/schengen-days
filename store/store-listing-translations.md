@@ -13,9 +13,9 @@ Dove aggiungerle: Play Console → Scheda dello store principale → Gestisci tr
 
 StampDays: Schengen 90/180
 
-**Descrizione breve** (73 caratteri)
+**Descrizione breve** (71 caratteri)
 
-Calcolatore Schengen 90/180: conta i tuoi giorni, organizza i tuoi viaggi
+Calcolatore Schengen 90/180: ingressi, uscite, giorni rimanenti, viaggi
 
 **Descrizione completa** (2935 caratteri)
 
@@ -62,9 +62,9 @@ Questa app è fornita esclusivamente a scopo informativo, “così com’è”, 
 
 StampDays: Schengen 90/180
 
-**Descrizione breve** (69 caratteri)
+**Descrizione breve** (73 caratteri)
 
-Calculadora de Schengen 90/180: cuenta tus días, planifica tus viajes
+Calculadora de Schengen 90/180: entradas, salidas, días restantes, viajes
 
 **Descrizione completa** (2924 caratteri)
 
@@ -113,7 +113,7 @@ StampDays: Schengen 90/180
 
 **Descrizione breve** (71 caratteri)
 
-Calculateur Schengen 90/180 : suivez vos jours et organisez vos voyages
+Calculateur Schengen 90/180 : entrées, sorties, jours restants, voyages
 
 **Descrizione completa** (3230 caratteri)
 
@@ -160,9 +160,9 @@ Cette application est fournie à titre informatif uniquement, « telle quelle »
 
 StampDays: Schengen 90/180
 
-**Descrizione breve** (72 caratteri)
+**Descrizione breve** (70 caratteri)
 
-Calculadora Schengen 90/180: conte os seus dias, planeie as suas viagens
+Calculadora Schengen 90/180: entradas, saídas, dias restantes, viagens
 
 **Descrizione completa** (2881 caratteri)
 
@@ -209,9 +209,9 @@ Esta aplicação é fornecida apenas para fins informativos, «tal como está»,
 
 StampDays: Schengen 90/180
 
-**Descrizione breve** (71 caratteri)
+**Descrizione breve** (70 caratteri)
 
-Calculadora Schengen 90/180: acompanhe seus dias e planeje suas viagens
+Calculadora Schengen 90/180: entradas, saídas, dias restantes, viagens
 
 **Descrizione completa** (2881 caratteri)
 
@@ -260,7 +260,7 @@ StampDays: Schengen 90/180
 
 **Descrizione breve** (66 caratteri)
 
-Калькулятор «Шенген 90/180»: отслеживайте дни и планируйте поездки
+Калькулятор «Шенген 90/180»: въезд, выезд, оставшиеся дни, поездки
 
 **Descrizione completa** (3136 caratteri)
 
@@ -307,9 +307,9 @@ StampDays: Schengen 90/180
 
 StampDays: Schengen 90/180
 
-**Descrizione breve** (26 caratteri)
+**Descrizione breve** (30 caratteri)
 
-申根90/180天计算器：记录您的停留天数并规划行程
+申根90/180天计算器：记录出入境情况、计算天数、规划行程
 
 **Descrizione completa** (1023 caratteri)
 
@@ -356,9 +356,9 @@ StampDays: Schengen 90/180
 
 StampDays: Schengen 90/180
 
-**Descrizione breve** (49 caratteri)
+**Descrizione breve** (72 caratteri)
 
-حاسبة شينغن 90/180: تتبع أيام إقامتك وخطط لرحلاتك
+حاسبة شينغن 90/180: تسجيل الدخول والخروج، وحساب الأيام، والتخطيط للرحلات
 
 **Descrizione completa** (2405 caratteri)
 
@@ -405,9 +405,9 @@ StampDays: Schengen 90/180
 
 StampDays: Schengen 90/180
 
-**Descrizione breve** (70 caratteri)
+**Descrizione breve** (64 caratteri)
 
-מחשבון 90/180 של שנגן: עקבו אחר ימי השהייה שלכם ותכננו את הנסיעות שלכם
+מחשבון שנגן 90/180: רישום כניסה ויציאה, ספירת ימים, תכנון נסיעות
 
 **Descrizione completa** (2261 caratteri)
 
@@ -454,9 +454,9 @@ StampDays: Schengen 90/180
 
 StampDays: Schengen 90/180
 
-**Descrizione breve** (76 caratteri)
+**Descrizione breve** (57 caratteri)
 
-शेंगेन 90/180 कैलकुलेटर: अपने दिनों को ट्रैक करें और यात्राओं की योजना बनाएँ
+शेंगेन 90/180 कैलकुलेटर: प्रवेश, निकास, शेष दिन, यात्राएँ
 
 **Descrizione completa** (2748 caratteri)
 
