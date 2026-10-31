@@ -356,9 +356,9 @@ StampDays: Schengen 90/180
 
 StampDays: Schengen 90/180
 
-**Descrizione breve** (72 caratteri)
+**Descrizione breve** (67 caratteri)
 
-حاسبة شينغن 90/180: تسجيل الدخول والخروج، وحساب الأيام، والتخطيط للرحلات
+حاسبة شينغن 90/180: تواريخ الدخول والخروج، الأيام المتبقية، الرحلات
 
 **Descrizione completa** (2405 caratteri)
 
