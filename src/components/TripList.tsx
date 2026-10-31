@@ -106,7 +106,7 @@ export default function TripList({ trips, onRemove, onEdit, editingId, remaining
     <section className="trips">
       <h2 className="trips__title">
         {t.tripsTitle} <span className="trips__count">{trips.length}</span>
-        <button type="button" className="trips__pdf" onClick={() => exportReportPdf(trips, t, lang, isRtl)} title={t.exportPdf}>
+        <button type="button" className="trips__pdf" onClick={() => void exportReportPdf(trips, t, lang, isRtl).catch(console.error)} title={t.exportPdf}>
           📄 PDF
         </button>
       </h2>

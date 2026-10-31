@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import { useLanguage } from "../i18n/LanguageContext";
+import { Capacitor } from "@capacitor/core";
 import { todayISO } from "../utils/calculator";
+import { shareOrDownload } from "../utils/exportPdf";
 
 interface Props {
   exportTrips: () => string;
@@ -12,38 +14,28 @@ export default function BackupControls({ exportTrips, importTrips }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
+  const backupFile = () =>
+    new File([exportTrips()], `schengen-days-backup-${todayISO()}.json`, { type: "application/json" });
+
+  // Sul web scarica il file; nell'app Android apre il foglio nativo (Salva su file, Drive, email…).
   const handleExport = () => {
-    const json = exportTrips();
-    const blob = new Blob([json], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
+    const file = backupFile();
+    if (Capacitor.isNativePlatform()) {
+      void shareOrDownload(file, "StampDays — backup").catch(console.error);
+      return;
+    }
+    const url = URL.createObjectURL(file);
     const a = document.createElement("a");
-    const date = todayISO();
     a.href = url;
-    a.download = `schengen-days-backup-${date}.json`;
+    a.download = file.name;
+    document.body.appendChild(a);
     a.click();
-    URL.revokeObjectURL(url);
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
-  const handleShare = async () => {
-    const json = exportTrips();
-    const date = todayISO();
-    const file = new File([json], `schengen-days-backup-${date}.json`, { type: "application/json" });
-
-    let shared = false;
-    try {
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({ files: [file], title: "StampDays — backup" });
-        shared = true;
-      }
-    } catch (err) {
-      // AbortError = l'utente ha annullato volontariamente: va bene così, nessun fallback.
-      if (err instanceof DOMException && err.name === "AbortError") {
-        shared = true;
-      }
-    }
-    // In ogni altro caso (condivisione non supportata, file non condivisibile,
-    // errore imprevisto) scarichiamo comunque il backup invece di non fare nulla.
-    if (!shared) handleExport();
+  const handleShare = () => {
+    void shareOrDownload(backupFile(), "StampDays — backup").catch(console.error);
   };
 
   const handleImportClick = () => {
