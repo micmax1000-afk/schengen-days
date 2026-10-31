@@ -1,7 +1,7 @@
 {
   "name": "schengen-days",
   "private": true,
-  "version": "2.2.1",
+  "version": "2.3.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,6 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@capacitor-community/in-app-review": "^8.0.0",
     "@capacitor/android": "^8.5.2",
     "@capacitor/core": "^8.5.2",
     "react": "^18.3.1",

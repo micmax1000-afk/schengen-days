@@ -1,5 +1,6 @@
 import { Trip, tripDuration, sortTripsDesc, isOngoing, simulateStay, todayISO } from "../utils/calculator";
 import { useLanguage } from "../i18n/LanguageContext";
+import { dayCount } from "../i18n/plural";
 import { flagImageUrl } from "../data/schengenCountries";
 
 interface Props {
@@ -67,7 +68,7 @@ export default function TripList({ trips, onRemove, onEdit, editingId, remaining
                       </span>
                     )}
                     <span className={`trip-list__days${ongoing ? " trip-list__days--ongoing" : ""}`}>
-                      {tripDuration(trip)} {t.daysUnit}
+                      {dayCount(t, tripDuration(trip))}
                     </span>
                     {planned && <span className="trip-list__badge">{t.plannedLabel}</span>}
                   </span>
@@ -85,7 +86,7 @@ export default function TripList({ trips, onRemove, onEdit, editingId, remaining
               </div>
               {ongoing && (
                 <p className={`trip-list__countdown trip-list__countdown--${countdownLevel}`}>
-                  {t.countdownPrefix} {Math.max(0, remainingDays)} {t.daysUnit}
+                  {t.countdownPrefix} {dayCount(t, Math.max(0, remainingDays))}
                   {deadlineISO && ` (${t.countdownUntil} ${formatDate(deadlineISO)})`}
                 </p>
               )}

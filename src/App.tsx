@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import TripForm from "./components/TripForm";
+import QuickBorder from "./components/QuickBorder";
 import TripList from "./components/TripList";
 import Summary from "./components/Summary";
 import CalendarView from "./components/CalendarView";
@@ -10,6 +11,7 @@ import { useLocalTrips } from "./utils/useLocalTrips";
 import { getComplianceStatus, simulateStay, isValidTrip, Trip } from "./utils/calculator";
 import { useLanguage } from "./i18n/LanguageContext";
 import { APP_VERSION } from "./version";
+import { maybeAskForReview } from "./utils/review";
 
 /** Informativa sulla privacy pubblicata sul sito Netlify (repository micmax-apps-site). */
 const PRIVACY_URL = "https://micmax-apps.netlify.app/privacy-schengen";
@@ -17,6 +19,11 @@ const PRIVACY_URL = "https://micmax-apps.netlify.app/privacy-schengen";
 export default function App() {
   const { trips, addTrip, removeTrip, updateTrip, exportTrips, importTrips } = useLocalTrips();
   const [editingTrip, setEditingTrip] = useState<Trip | null>(null);
+
+  // Chiede una recensione su Google Play una sola volta, dopo qualche viaggio registrato
+  useEffect(() => {
+    void maybeAskForReview(trips.length);
+  }, [trips.length]);
   // Viaggio simulato: condiviso tra la simulazione e il calendario
   const [simEntry, setSimEntry] = useState("");
   const [simExit, setSimExit] = useState("");
@@ -73,6 +80,11 @@ export default function App() {
             </div>
           </section>
         )}
+        <QuickBorder
+          trips={trips}
+          onEnter={(today) => addTrip(today, undefined)}
+          onExit={(trip, today) => updateTrip(trip.id, trip.entry, today, trip.entryCountry, trip.exitCountry, trip.note)}
+        />
         <TripForm
           trips={trips}
           onAdd={addTrip}
@@ -95,7 +107,7 @@ export default function App() {
           onChange={handleSimChange}
           onAddPlanned={handleAddPlanned}
         />
-        <BackupControls exportTrips={exportTrips} importTrips={importTrips} />
+        <BackupControls trips={trips} exportTrips={exportTrips} importTrips={importTrips} />
       </main>
       <footer className="app__footer">
         <p className="app__notice">⚠️ {t.disclaimer}</p>

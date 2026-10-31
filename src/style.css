@@ -1150,3 +1150,42 @@ select {
   color: var(--ink-soft);
 }
 .trips__title + .trips__group { margin-top: 2px; }
+
+/* ---------- Pulsante rapido "entrato / uscito oggi" ---------- */
+.quick-border {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 12px;
+  align-items: center;
+  text-align: start;
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid var(--brand);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--brand);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.3;
+  cursor: pointer;
+}
+.quick-border span { grid-row: span 2; font-size: 1.6rem; }
+.quick-border small { font-weight: 500; font-size: 0.8rem; color: var(--ink-soft); }
+.quick-border--exit { border-color: var(--orange); color: var(--orange-dark); background: #fff7f1; }
+/* "+ Aggiungi viaggio" diventa secondario rispetto al pulsante rapido */
+.trip-form-toggle { background: var(--card); color: var(--brand); border: 1.5px dashed var(--petrol-light); box-shadow: none; }
+.summary__next-date--deadline { color: var(--orange-dark); }
+
+/* Pulsante "Esporta riepilogo PDF" in evidenza nella sezione backup */
+.backup__pdf {
+  grid-column: 1 / -1;
+  min-height: 48px;
+  border: none;
+  border-radius: 999px;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 600;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+.backup__pdf:disabled { opacity: 0.5; cursor: default; }
