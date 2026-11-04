@@ -33,6 +33,8 @@ export default function TripForm({ trips, onAdd, editingTrip, onUpdate, onCancel
   const [exitCountry, setExitCountry] = useState("");
   const [note, setNote] = useState("");
   const [error, setError] = useState<string | null>(null);
+  // Il modulo resta chiuso finché non si tocca "+ Aggiungi viaggio" (o si modifica un viaggio)
+  const [open, setOpen] = useState(false);
 
   const conflicts =
     entry && exit && isValidTrip(entry, exit)
@@ -75,6 +77,7 @@ export default function TripForm({ trips, onAdd, editingTrip, onUpdate, onCancel
     setExitCountry("");
     setNote("");
     setError(null);
+    setOpen(false);
   };
 
   const handleCancel = () => {
@@ -84,8 +87,18 @@ export default function TripForm({ trips, onAdd, editingTrip, onUpdate, onCancel
     setExitCountry("");
     setNote("");
     setError(null);
+    setOpen(false);
     onCancelEdit?.();
   };
+
+  if (!open && !editingTrip) {
+    return (
+      <button type="button" className="quick-border trip-form-toggle" onClick={() => setOpen(true)}>
+        <span aria-hidden="true">✏️</span>
+        {t.add.replace(/^\+\s*/, "")}
+      </button>
+    );
+  }
 
   return (
     <form className="trip-form" onSubmit={handleSubmit}>
@@ -184,7 +197,7 @@ export default function TripForm({ trips, onAdd, editingTrip, onUpdate, onCancel
       {error && <p className="trip-form__error">{error}</p>}
       <div className="trip-form__actions">
         <button type="submit">{editingTrip ? t.saveChanges : t.add}</button>
-        {editingTrip && (
+        {(editingTrip || open) && (
           <button type="button" className="trip-form__cancel" onClick={handleCancel}>
             {t.cancel}
           </button>

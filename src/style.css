@@ -1,16 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap");
 
 :root {
+  /* L'app ha solo il tema chiaro: anche i controlli del browser restano chiari */
+  color-scheme: light;
   --ink: #14213d;
   --ink-soft: #5b6470;
   --ink-faint: #9098a3;
-  --paper: #f6f4ef;
+  --paper: #f2f5fb;
   --card: #ffffff;
-  --paper-line: #e6e2d8;
-  --petrol: #0f5257;
-  --petrol-light: #16777d;
-  --petrol-tint: #e6f0ef;
-  --window-tint: #eef2e9;
+  --paper-line: #dde3f0;
+  --petrol: #003399;
+  --petrol-light: #2f5fd0;
+  --petrol-tint: #e6edfb;
+  --window-tint: #e9effb;
   --stamp-red: #b23a2e;
   --red-tint: #fbeceb;
   --amber: #c98a1f;
@@ -19,6 +21,10 @@
   --orange: #d9661f;
   --orange-dark: #9a4310;
   --orange-tint: #fdebdf;
+  /* Colori dell'icona */
+  --brand: #003399;
+  --brand-2: #0a46c4;
+  --accent: #ffcc00;
   --radius: 16px;
   --radius-sm: 10px;
   --shadow: 0 1px 2px rgba(20, 33, 61, 0.05), 0 4px 16px rgba(20, 33, 61, 0.06);
@@ -55,51 +61,32 @@ select {
 /* ---------- Intestazione ---------- */
 
 .app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
   margin-bottom: 20px;
 }
 
-.app-header__controls {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 8px;
-}
-
-.app-header__top {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.app-header__text {
-  flex: 1;
-  min-width: 0;
-}
-
-.app-header__stamp {
-  font-family: var(--mono);
-  font-weight: 700;
-  font-size: 0.8rem;
-  color: var(--petrol);
-  border: 2px solid var(--petrol);
-  border-radius: 999px;
-  padding: 6px 10px;
-  transform: rotate(-6deg);
-  white-space: nowrap;
+.app-header__logo {
+  width: 56px;
+  height: 56px;
   flex-shrink: 0;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 51, 153, 0.25);
 }
 
-.app-header h1 {
-  margin: 0;
-  font-size: 1.3rem;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-}
-
-.app-header p {
-  margin: 4px 0 0;
-  font-size: 0.85rem;
-  line-height: 1.35;
-  color: var(--ink-soft);
+/* Testo nascosto alla vista ma letto dai lettori di schermo */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .language-switcher {
@@ -157,7 +144,7 @@ select {
 .simulate__form input[type="date"] {
   font-family: var(--mono);
   padding-left: 42px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%230f5257' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M16 3v4M8 3v4M3 10h18'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23003399' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M16 3v4M8 3v4M3 10h18'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: 12px center;
 }
@@ -174,7 +161,7 @@ select {
 .simulate__form input:focus {
   outline: none;
   border-color: var(--petrol-light);
-  box-shadow: 0 0 0 3px rgba(22, 119, 125, 0.15);
+  box-shadow: 0 0 0 3px rgba(47, 95, 208, 0.18);
   background-color: var(--card);
 }
 
@@ -880,7 +867,7 @@ select {
   background-image: repeating-linear-gradient(
     -45deg,
     transparent 0 4px,
-    rgba(22, 119, 125, 0.14) 4px 7px
+    rgba(47, 95, 208, 0.14) 4px 7px
   );
   box-shadow: inset 0 0 0 2px var(--petrol-light);
 }
@@ -1103,7 +1090,273 @@ select {
   .summary__value {
     font-size: 1.35rem;
   }
-  .app-header h1 {
-    font-size: 1.15rem;
-  }
 }
+
+/* Calendario: oggi cerchiato in giallo */
+.calendar__cell--today { box-shadow: inset 0 0 0 2.5px var(--accent); }
+.calendar__cell--trip.calendar__cell--today { box-shadow: inset 0 0 0 3px var(--accent); }
+
+/* ---------- Pulsante che apre il modulo di aggiunta ---------- */
+.trip-form-toggle {
+  width: 100%;
+  min-height: 54px;
+  border: none;
+  border-radius: 999px;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.05rem;
+  box-shadow: 0 8px 20px rgba(0, 51, 153, 0.25);
+  cursor: pointer;
+}
+.trip-form__title {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+/* ---------- Benvenuto per chi non ha ancora viaggi ---------- */
+.welcome {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: var(--card);
+  border: 1px solid var(--paper-line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+}
+.welcome img { width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0; }
+.welcome h2 { margin: 0 0 6px; font-size: 1.05rem; }
+.welcome p { margin: 0; font-size: 0.88rem; line-height: 1.5; color: var(--ink-soft); }
+
+/* ---------- Selettore lingua compatto ---------- */
+.language-switcher__wrap { position: relative; display: inline-flex; }
+.language-switcher__chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border: 1px solid var(--paper-line); border-radius: 999px;
+  background: var(--card); font-size: 0.85rem; font-weight: 600; color: var(--ink);
+}
+.language-switcher__wrap .language-switcher {
+  position: absolute; inset: 0; opacity: 0; width: 100%; max-width: none; cursor: pointer;
+}
+
+/* ---------- Gruppi "In programma" / "Passati" ---------- */
+.trips__group {
+  margin: 14px 0 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+.trips__title + .trips__group { margin-top: 2px; }
+
+/* ---------- Pulsante rapido "entrato / uscito oggi" ---------- */
+.quick-border {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 12px;
+  align-items: center;
+  text-align: start;
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid var(--brand);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--brand);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.3;
+  cursor: pointer;
+}
+.quick-border span { grid-row: span 2; font-size: 1.6rem; }
+.quick-border small { font-weight: 500; font-size: 0.8rem; color: var(--ink-soft); }
+.quick-border--exit { border-color: var(--orange); color: var(--orange-dark); background: #fff7f1; }
+/* "+ Aggiungi viaggio" diventa secondario rispetto al pulsante rapido */
+.trip-form-toggle { background: var(--card); color: var(--brand); border: 1.5px dashed var(--petrol-light); box-shadow: none; }
+.summary__next-date--deadline { color: var(--orange-dark); }
+
+
+/* ---------- Riepilogo compatto: cerchio a sinistra, numeri a destra ---------- */
+.summary {
+  display: grid;
+  grid-template-columns: 112px 1fr;
+  column-gap: 16px;
+  row-gap: 12px;
+  align-items: center;
+  padding: 20px 16px 16px;
+  text-align: start;
+}
+.summary__ring-wrap { width: 112px; height: 112px; margin: 0; grid-row: span 2; }
+.summary__ring-number { font-size: 2.05rem; }
+.summary__ring-label { font-size: 0.58rem; margin-top: 2px; }
+.summary__row { grid-column: 2; gap: 8px; }
+.summary__stat { padding: 8px 10px; gap: 4px; }
+.summary__stat .summary__label { font-size: 0.6rem; }
+.summary__value { font-size: 1.3rem; }
+.summary__status { grid-column: 2; justify-self: start; margin: 0; padding: 5px 12px; font-size: 0.82rem; }
+.summary__next, .summary__projection { grid-column: 1 / -1; margin-top: 0; }
+.summary__next-cell { padding: 10px 12px; }
+.summary__next-date { margin-top: 4px; font-size: 1.12rem; }
+.summary__next-sub { margin-top: 2px; }
+
+/* ---------- Pulsanti compatti: "entrato/uscito oggi" e "+ Aggiungi viaggio" ---------- */
+.quick-border {
+  grid-template-columns: auto 1fr;
+  column-gap: 10px;
+  padding: 10px 14px;
+  font-size: 0.92rem;
+  line-height: 1.25;
+}
+.quick-border span { grid-row: auto; font-size: 1.25rem; }
+.quick-border small { display: none; }
+.trip-form-toggle { min-height: 44px; font-size: 0.95rem; }
+
+/* ---------- Colori uniformi: blu; giallo/arancione/rosso solo vicino alla scadenza ---------- */
+.quick-border--ok, .quick-border--exit { border-color: var(--brand); color: var(--brand); background: var(--card); }
+.quick-border--warning { border-color: var(--amber); color: var(--amber-dark); background: var(--amber-tint); }
+.quick-border--full { border-color: var(--orange); color: var(--orange-dark); background: var(--orange-tint); }
+.quick-border--over { border-color: var(--stamp-red); color: var(--stamp-red); background: var(--red-tint); }
+.summary__next-date--ok { color: var(--ink); }
+.summary__next-date--warning { color: var(--amber-dark); }
+.summary__next-date--full { color: var(--orange-dark); }
+.summary__next-date--over { color: var(--stamp-red); }
+.summary__next-date--deadline { color: inherit; }
+/* La nota sul viaggio pianificato è un'informazione, non un allarme */
+.summary__planned-note, .simulate__planned-note {
+  background: var(--petrol-tint);
+  border-top-color: var(--paper-line);
+  color: var(--brand);
+}
+
+/* Stato nel riepilogo: "full" ora è rosso come "over" (scala giallo → arancione → rosso) */
+.summary__ring-fg--full { stroke: var(--orange); }
+.summary__status--full { background: var(--orange-tint); color: var(--orange-dark); }
+.summary--full::before { background: var(--orange); }
+
+/* ---------- Intestazione a striscia blu (come la copertina dello store) ---------- */
+.app-header--banner {
+  justify-content: flex-start;
+  gap: 12px;
+  margin: -16px -16px 18px;
+  padding: 18px 16px 18px;
+  background: linear-gradient(135deg, #0a46c4 0%, var(--brand) 70%);
+  border-radius: 0 0 22px 22px;
+  box-shadow: 0 6px 18px rgba(0, 51, 153, 0.22);
+}
+.app-header--banner .app-header__logo { width: 52px; height: 52px; box-shadow: none; border-radius: 12px; }
+.app-header__brand { flex: 1; min-width: 0; }
+.app-header__brand h1 { margin: 0; color: #fff; font-size: 1.45rem; line-height: 1.1; letter-spacing: -0.01em; }
+.app-header__brand p { margin: 2px 0 0; color: var(--accent); font-weight: 700; font-size: 0.9rem; }
+.app-header--banner .language-switcher__chip { background: rgba(255, 255, 255, 0.14); border-color: rgba(255, 255, 255, 0.35); color: #fff; }
+
+/* Striscia più bassa e con angoli dritti */
+.app-header--banner { padding: 10px 16px; gap: 10px; border-radius: 0; box-shadow: none; margin-bottom: 16px; }
+.app-header--banner .app-header__logo { width: 40px; height: 40px; border-radius: 10px; }
+.app-header__brand { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.app-header__brand h1 { font-size: 1.2rem; }
+.app-header__brand p { margin: 0; font-size: 0.8rem; }
+
+/* Pulsante PDF accanto a "I tuoi viaggi" */
+.trips__pdf {
+  margin-inline-start: auto;
+  padding: 5px 12px;
+  border: 1px solid var(--paper-line);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--brand);
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+/* Backup richiudibile */
+details.backup > summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 8px; margin: 0; }
+details.backup > summary::before { content: "▸"; color: var(--ink-soft); }
+details.backup[open] > summary::before { content: "▾"; }
+details.backup[open] > summary { margin-bottom: 12px; }
+
+/* ---------- Misure più compatte in tutta l'app ---------- */
+.app { padding: 12px 12px 24px; }
+.app-header--banner { margin: -12px -12px 12px; padding: 8px 12px; }
+.app__main { gap: 12px; }
+.summary { padding: 16px 14px 14px; row-gap: 10px; }
+.trip-form, .calendar, .simulate, .backup { padding: 14px; border-radius: 14px; }
+.trip-form { gap: 10px; }
+.trip-form__fields, .trip-form__column { gap: 10px; }
+.trip-form__fields input, .trip-form__fields select, .simulate__form input { min-height: 40px; padding: 7px 10px; }
+.trip-form__fields input[type="date"], .simulate__form input[type="date"] { padding-left: 38px; background-position: 10px center; }
+.trip-form button { min-height: 42px; padding: 8px 16px; font-size: 0.95rem; }
+.trips__title { margin: 2px 0 6px; font-size: 1rem; }
+.trips__group { margin: 8px 0 6px; }
+.trip-list { gap: 6px; }
+.trip-list__item { padding: 8px 6px 8px 12px; padding-inline: 12px 6px; }
+.trip-list__edit, .trip-list__remove { width: 32px; height: 32px; }
+.trip-list__countdown { margin-top: 6px; padding: 6px 8px; }
+.simulate__title { font-size: 1rem; }
+.simulate__hint { margin: 0 0 10px; font-size: 0.78rem; }
+.simulate__form { gap: 8px; }
+.simulate__result { margin-top: 10px; padding: 10px 12px; font-size: 0.85rem; }
+.calendar__nav { margin-bottom: 8px; }
+.calendar__nav button { width: 30px; height: 30px; font-size: 1rem; }
+.calendar__title { font-size: 0.95rem; }
+.calendar__grid { gap: 3px; }
+.calendar__cell { font-size: 0.74rem; }
+.calendar__legend { margin-top: 8px; font-size: 0.7rem; gap: 4px 12px; }
+.backup__export, .backup__import, .backup__share { min-height: 40px; padding: 8px 14px; }
+.app__notice { margin: 0 !important; padding: 8px 12px; font-size: 0.75rem; }
+.app__footer { margin-top: 16px; }
+.app__sources { margin: 10px 0; padding: 10px 12px; }
+/* Giorni del calendario a misura fissa: il calendario diventa molto più basso */
+.calendar__grid { justify-items: center; row-gap: 4px; }
+.calendar__cell { width: 34px; height: 34px; aspect-ratio: auto; }
+.calendar__cell--empty { width: 34px; }
+
+/* ---------- Pulsanti uguali: "entrato/uscito oggi" e "Aggiungi viaggio" ---------- */
+.quick-border, .trip-form-toggle {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  column-gap: 10px;
+  align-items: center;
+  text-align: start;
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 2px solid var(--brand);
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--brand);
+  font-weight: 700;
+  font-size: 0.92rem;
+  line-height: 1.25;
+  box-shadow: none;
+}
+.quick-border span, .trip-form-toggle span { font-size: 1.2rem; text-align: center; }
+
+/* ---------- Conferma in basso con "Annulla" ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: calc(100% - 32px);
+  padding: 10px 12px 10px 16px;
+  border-radius: 12px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.88rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+}
+.toast button {
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+/* Conferma: larga quanto il testo, va a capo solo se non entra */
+.toast { width: max-content; }

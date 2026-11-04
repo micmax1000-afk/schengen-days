@@ -1,5 +1,7 @@
 import { Trip, tripDuration, sortTripsDesc, isOngoing, simulateStay, todayISO } from "../utils/calculator";
 import { useLanguage } from "../i18n/LanguageContext";
+import { dayCount } from "../i18n/plural";
+import { exportReportPdf } from "../utils/exportPdf";
 import { flagImageUrl } from "../data/schengenCountries";
 
 interface Props {
@@ -17,7 +19,7 @@ function formatDate(iso: string): string {
 }
 
 export default function TripList({ trips, onRemove, onEdit, editingId, remainingDays }: Props) {
-  const { t } = useLanguage();
+  const { t, lang, isRtl } = useLanguage();
 
   if (trips.length === 0) {
     return (
@@ -30,13 +32,7 @@ export default function TripList({ trips, onRemove, onEdit, editingId, remaining
 
   const sorted = sortTripsDesc(trips);
 
-  return (
-    <section className="trips">
-      <h2 className="trips__title">
-        {t.tripsTitle} <span className="trips__count">{trips.length}</span>
-      </h2>
-      <ul className="trip-list">
-        {sorted.map((trip) => {
+  const renderTrip = (trip: Trip) => {
           const ongoing = isOngoing(trip);
           const planned = trip.entry > todayISO();
           const countdownLevel = remainingDays <= 3 ? "over" : remainingDays <= 20 ? "warning" : "ok";
@@ -73,7 +69,7 @@ export default function TripList({ trips, onRemove, onEdit, editingId, remaining
                       </span>
                     )}
                     <span className={`trip-list__days${ongoing ? " trip-list__days--ongoing" : ""}`}>
-                      {tripDuration(trip)} {t.daysUnit}
+                      {dayCount(t, tripDuration(trip))}
                     </span>
                     {planned && <span className="trip-list__badge">{t.plannedLabel}</span>}
                   </span>
@@ -91,15 +87,41 @@ export default function TripList({ trips, onRemove, onEdit, editingId, remaining
               </div>
               {ongoing && (
                 <p className={`trip-list__countdown trip-list__countdown--${countdownLevel}`}>
-                  {t.countdownPrefix} {Math.max(0, remainingDays)} {t.daysUnit}
+                  {t.countdownPrefix} {dayCount(t, Math.max(0, remainingDays))}
                   {deadlineISO && ` (${t.countdownUntil} ${formatDate(deadlineISO)})`}
                 </p>
               )}
               {trip.note && <p className="trip-list__note">{trip.note}</p>}
             </li>
           );
-        })}
-      </ul>
+  };
+
+  // Prima i viaggi in corso o futuri (dal più vicino), poi quelli passati (dal più recente)
+  const today = todayISO();
+  const isUpcoming = (tr: Trip) => !tr.exit || tr.exit >= today;
+  const upcoming = sorted.filter(isUpcoming).reverse();
+  const past = sorted.filter((tr) => !isUpcoming(tr));
+
+  return (
+    <section className="trips">
+      <h2 className="trips__title">
+        {t.tripsTitle} <span className="trips__count">{trips.length}</span>
+        <button type="button" className="trips__pdf" onClick={() => void exportReportPdf(trips, t, lang, isRtl).catch(console.error)} title={t.exportPdf}>
+          📄 PDF
+        </button>
+      </h2>
+      {upcoming.length > 0 && (
+        <>
+          <h3 className="trips__group">{t.upcomingTrips}</h3>
+          <ul className="trip-list">{upcoming.map(renderTrip)}</ul>
+        </>
+      )}
+      {past.length > 0 && (
+        <>
+          <h3 className="trips__group">{t.pastTrips}</h3>
+          <ul className="trip-list">{past.map(renderTrip)}</ul>
+        </>
+      )}
     </section>
   );
 }

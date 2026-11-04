@@ -61,6 +61,7 @@ export function useLocalTrips() {
   ) => {
     const trip: Trip = { id: uid(), entry, exit, entryCountry, exitCountry, note };
     setTrips((prev) => [...prev, trip]);
+    return trip.id;
   };
 
   const removeTrip = (id: string) => {

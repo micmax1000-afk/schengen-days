@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import TripForm from "./components/TripForm";
+import QuickBorder from "./components/QuickBorder";
 import TripList from "./components/TripList";
 import Summary from "./components/Summary";
 import CalendarView from "./components/CalendarView";
@@ -10,10 +11,28 @@ import { useLocalTrips } from "./utils/useLocalTrips";
 import { getComplianceStatus, simulateStay, isValidTrip, Trip } from "./utils/calculator";
 import { useLanguage } from "./i18n/LanguageContext";
 import { APP_VERSION } from "./version";
+import { maybeAskForReview } from "./utils/review";
+
+/** Informativa sulla privacy pubblicata sul sito Netlify (repository micmax-apps-site). */
+const PRIVACY_URL = "https://micmax-apps.netlify.app/privacy-schengen";
 
 export default function App() {
   const { trips, addTrip, removeTrip, updateTrip, exportTrips, importTrips } = useLocalTrips();
   const [editingTrip, setEditingTrip] = useState<Trip | null>(null);
+  // Conferma breve dopo "entrato/uscito oggi", con possibilità di annullare
+  const [toast, setToast] = useState<{ text: string; undo: () => void } | null>(null);
+  useEffect(() => {
+    if (!toast) return;
+    const timer = setTimeout(() => setToast(null), 6000);
+    return () => clearTimeout(timer);
+  }, [toast]);
+  const showToast = (text: string, undo: () => void) => setToast({ text, undo });
+  const fmt = (iso: string) => iso.split("-").reverse().map((p, i) => (i === 2 ? p.slice(2) : p)).join("/");
+
+  // Chiede una recensione su Google Play una sola volta, dopo qualche viaggio registrato
+  useEffect(() => {
+    void maybeAskForReview(trips.length);
+  }, [trips.length]);
   // Viaggio simulato: condiviso tra la simulazione e il calendario
   const [simEntry, setSimEntry] = useState("");
   const [simExit, setSimExit] = useState("");
@@ -61,6 +80,28 @@ export default function App() {
       <Header />
       <main className="app__main">
         <Summary status={status} trips={trips} />
+        {trips.length === 0 && (
+          <section className="welcome">
+            <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="" />
+            <div>
+              <h2>{t.welcomeTitle}</h2>
+              <p>{t.welcomeText}</p>
+            </div>
+          </section>
+        )}
+        <QuickBorder
+          trips={trips}
+          onEnter={(today) => {
+            const id = addTrip(today, undefined);
+            showToast(`✓ ${t.toastEntered(fmt(today))}`, () => removeTrip(id));
+          }}
+          onExit={(trip, today) => {
+            updateTrip(trip.id, trip.entry, today, trip.entryCountry, trip.exitCountry, trip.note);
+            showToast(`✓ ${t.toastExited(fmt(today))}`, () =>
+              updateTrip(trip.id, trip.entry, undefined, trip.entryCountry, trip.exitCountry, trip.note)
+            );
+          }}
+        />
         <TripForm
           trips={trips}
           onAdd={addTrip}
@@ -75,7 +116,6 @@ export default function App() {
           editingId={editingTrip?.id}
           remainingDays={status.remaining}
         />
-        <CalendarView trips={trips} simulated={simRange} />
         <SimulateEntry
           trips={trips}
           entryDate={simEntry}
@@ -83,10 +123,25 @@ export default function App() {
           onChange={handleSimChange}
           onAddPlanned={handleAddPlanned}
         />
+        <CalendarView trips={trips} simulated={simRange} />
+        <p className="app__notice">⚠️ {t.disclaimer}</p>
         <BackupControls exportTrips={exportTrips} importTrips={importTrips} />
       </main>
+      {toast && (
+        <div className="toast" role="status">
+          <span>{toast.text}</span>
+          <button
+            type="button"
+            onClick={() => {
+              toast.undo();
+              setToast(null);
+            }}
+          >
+            {t.cancel}
+          </button>
+        </div>
+      )}
       <footer className="app__footer">
-        <p className="app__notice">⚠️ {t.disclaimer}</p>
         <p>{t.footerNote}</p>
         <details className="app__legal">
           <summary>{t.legalTitle}</summary>
@@ -136,7 +191,9 @@ export default function App() {
         </div>
 
         <p>
-          <a href="privacy.html" target="_blank" rel="noopener noreferrer">
+          {/* Indirizzo completo: un link relativo nell'app Android punterebbe a un
+              file interno all'app invece che alla pagina pubblicata */}
+          <a href={PRIVACY_URL} target="_blank" rel="noopener noreferrer">
             {t.privacyLink}
           </a>
         </p>

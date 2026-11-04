@@ -1,20 +1,17 @@
 import { useLanguage } from "../i18n/LanguageContext";
 import LanguageSwitcher from "./LanguageSwitcher";
 
+/** Striscia blu in alto, come l'immagine di copertina dello store. */
 export default function Header() {
   const { t } = useLanguage();
   return (
-    <header className="app-header">
-      <div className="app-header__controls">
-        <LanguageSwitcher />
+    <header className="app-header app-header--banner">
+      <img className="app-header__logo" src={`${import.meta.env.BASE_URL}logo.svg`} alt="" width={52} height={52} />
+      <div className="app-header__brand">
+        <h1 aria-label={t.appTitle}>StampDays</h1>
+        <p>Schengen 90/180</p>
       </div>
-      <div className="app-header__top">
-        <span className="app-header__stamp">90/180</span>
-        <div className="app-header__text">
-          <h1>{t.appTitle}</h1>
-          <p>{t.appSubtitle}</p>
-        </div>
-      </div>
+      <LanguageSwitcher />
     </header>
   );
 }
