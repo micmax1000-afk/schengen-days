@@ -1,7 +1,7 @@
-# Google Play store listing — StampDays: Schengen 90/180
+# Google Play store listing — StampDays
 
 ## Title (max 30 characters)
-StampDays: Schengen 90/180
+Schengen Calculator 90/180
 
 ## Short description (max 80 characters)
 Schengen 90/180 calculator: log entry & exit, count your days, plan trips

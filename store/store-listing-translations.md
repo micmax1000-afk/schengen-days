@@ -9,9 +9,9 @@ Dove aggiungerle: Play Console → Scheda dello store principale → Gestisci tr
 
 ## Italiano (it-IT)
 
-**Titolo** (26 caratteri)
+**Titolo** (27 caratteri)
 
-StampDays: Schengen 90/180
+Calcolatore Schengen 90/180
 
 **Descrizione breve** (71 caratteri)
 
@@ -58,9 +58,9 @@ Questa app è fornita esclusivamente a scopo informativo, “così com’è”, 
 
 ## Español (es-ES)
 
-**Titolo** (26 caratteri)
+**Titolo** (30 caratteri)
 
-StampDays: Schengen 90/180
+Calculadora de Schengen 90/180
 
 **Descrizione breve** (73 caratteri)
 
@@ -107,9 +107,9 @@ Esta aplicación se ofrece únicamente con fines informativos, «tal cual», sin
 
 ## Français (fr-FR)
 
-**Titolo** (26 caratteri)
+**Titolo** (27 caratteri)
 
-StampDays: Schengen 90/180
+Calculateur Schengen 90/180
 
 **Descrizione breve** (71 caratteri)
 
@@ -156,9 +156,9 @@ Cette application est fournie à titre informatif uniquement, « telle quelle »
 
 ## Português – Portugal (pt-PT)
 
-**Titolo** (26 caratteri)
+**Titolo** (27 caratteri)
 
-StampDays: Schengen 90/180
+Calculadora Schengen 90/180
 
 **Descrizione breve** (70 caratteri)
 
@@ -205,9 +205,9 @@ Esta aplicação é fornecida apenas para fins informativos, «tal como está»,
 
 ## Português – Brasil (pt-BR)
 
-**Titolo** (26 caratteri)
+**Titolo** (27 caratteri)
 
-StampDays: Schengen 90/180
+Calculadora Schengen 90/180
 
 **Descrizione breve** (70 caratteri)
 
@@ -254,9 +254,9 @@ Este aplicativo é fornecido apenas para fins informativos, “no estado em que 
 
 ## Русский (ru-RU)
 
-**Titolo** (26 caratteri)
+**Titolo** (27 caratteri)
 
-StampDays: Schengen 90/180
+Калькулятор «Шенген 90/180»
 
 **Descrizione breve** (66 caratteri)
 
@@ -303,9 +303,9 @@ StampDays: Schengen 90/180
 
 ## 中文 – 简体 (zh-CN)
 
-**Titolo** (26 caratteri)
+**Titolo** (12 caratteri)
 
-StampDays: Schengen 90/180
+申根90/180天计算器
 
 **Descrizione breve** (30 caratteri)
 
@@ -352,9 +352,9 @@ StampDays: Schengen 90/180
 
 ## العربية (ar)
 
-**Titolo** (26 caratteri)
+**Titolo** (17 caratteri)
 
-StampDays: Schengen 90/180
+حاسبة شنغن 90/180
 
 **Descrizione breve** (67 caratteri)
 
@@ -401,9 +401,9 @@ StampDays: Schengen 90/180
 
 ## עברית (iw-IL)
 
-**Titolo** (26 caratteri)
+**Titolo** (18 caratteri)
 
-StampDays: Schengen 90/180
+מחשבון שנגן 90/180
 
 **Descrizione breve** (64 caratteri)
 
@@ -450,9 +450,9 @@ StampDays: Schengen 90/180
 
 ## हिन्दी (hi-IN)
 
-**Titolo** (26 caratteri)
+**Titolo** (23 caratteri)
 
-StampDays: Schengen 90/180
+शेंगेन कैलकुलेटर 90/180
 
 **Descrizione breve** (57 caratteri)
 
